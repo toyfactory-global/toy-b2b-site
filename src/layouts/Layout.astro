@@ -1,0 +1,49 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Premium B2B Toy Manufacturer" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							dark: '#0A0A0F',
+							gold: '#C9A84C',
+							card: '#1C1C28',
+						},
+						fontFamily: {
+							sans: ['Inter', 'sans-serif'],
+							display: ['Montserrat', 'sans-serif'],
+						}
+					}
+				}
+			}
+		</script>
+	</head>
+	<body class="bg-dark text-white font-sans">
+		<slot />
+	</body>
+</html>
+<style is:global>
+	:root {
+		--accent: 201, 168, 76;
+	}
+	html {
+		scroll-behavior: smooth;
+	}
+</style>
