@@ -61,6 +61,42 @@ const { product } = Astro.props;
 							class="w-full h-full object-contain transition-all duration-500 ease-in-out"
 						/>
 					</div>
+
+					<!-- Logistics Specs Table (New Section) -->
+					{product.specs && (
+						<div class="col-span-full mt-12 bg-white/[0.02] border border-white/5 p-8">
+							<div class="flex items-center gap-4 mb-8">
+								<span class="text-[9px] font-bold text-gold uppercase tracking-[0.4em]">Logistics Specifications</span>
+								<div class="h-px bg-white/5 flex-grow"></div>
+							</div>
+							<div class="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-12">
+								<div class="space-y-2">
+									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Packaging Size</div>
+									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.packing_size}</div>
+								</div>
+								<div class="space-y-2">
+									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Carton Dimensions</div>
+									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.carton_size}</div>
+								</div>
+								<div class="space-y-2">
+									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Inner Quantity</div>
+									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.inner_qty}</div>
+								</div>
+								<div class="space-y-2">
+									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Qty Per Carton</div>
+									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.qty_per_carton}</div>
+								</div>
+								<div class="space-y-2">
+									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">G.W. / N.W.</div>
+									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.gw_nw}</div>
+								</div>
+								<div class="space-y-2">
+									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Volume (CBM)</div>
+									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.cbm}</div>
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
 
 				<!-- RIGHT: PRODUCT INFO -->

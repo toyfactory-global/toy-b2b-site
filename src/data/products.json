@@ -5,6 +5,14 @@
     "moq": 35,
     "price": 24.46,
     "category": "Track Toys",
+    "specs": {
+      "packing_size": "35.8 x 8 x 28.7 cm",
+      "carton_size": "58 x 30 x 37.5 cm",
+      "inner_qty": "0 PCS",
+      "qty_per_carton": "7 PCS",
+      "gw_nw": "12.5 / 11.7 KG",
+      "cbm": "0.065"
+    },
     "images": [
       "/images/products/TF208740.jpg",
       "/images/products/TF208740-6.jpg",
