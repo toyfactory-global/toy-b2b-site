@@ -33,19 +33,34 @@ const { product } = Astro.props;
 				<div class="lg:col-span-7 grid grid-cols-12 gap-4 h-fit">
 					<!-- Vertical Thumbnails -->
 					<div class="col-span-2 space-y-4">
+						{product.video && (
+							<button 
+								class="thumb-btn video-thumb w-full aspect-square bg-card border border-gold p-2 flex flex-col items-center justify-center group hover:border-gold transition-all duration-300 overflow-hidden relative"
+								data-type="video"
+								data-video={product.video}
+							>
+								<div class="absolute inset-0 flex items-center justify-center z-10">
+									<svg class="w-8 h-8 text-gold drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+								</div>
+								<img src={product.images[0]} alt="Video Thumbnail" class="max-w-full max-h-full object-contain opacity-40 group-hover:opacity-60 transition" />
+								<span class="text-[8px] font-bold text-gold uppercase mt-1 z-10">Video</span>
+							</button>
+						)}
 						{product.images.map((img, idx) => (
 							<button 
-								class="thumb-btn w-full aspect-square bg-card border border-white/5 p-2 flex items-center justify-center group hover:border-gold/50 transition-all duration-300 overflow-hidden"
+								class="thumb-btn image-thumb w-full aspect-square bg-card border border-white/5 p-2 flex items-center justify-center group hover:border-gold/50 transition-all duration-300 overflow-hidden"
+								data-type="image"
 								data-index={idx}
+								data-src={img}
 							>
 								<img src={img} alt={`${product.name} ${idx + 1}`} class="max-w-full max-h-full object-contain opacity-60 group-hover:opacity-100 transition" />
 							</button>
 						))}
 					</div>
 
-					<!-- Main Image Container -->
-					<div class="col-span-10 relative bg-white/5 border border-white/5 aspect-square flex items-center justify-center p-12 overflow-hidden group">
-						<!-- Navigation Arrows -->
+					<!-- Main Image/Video Container -->
+					<div class="col-span-10 relative bg-white/5 border border-white/5 aspect-square flex items-center justify-center p-4 md:p-12 overflow-hidden group">
+						<!-- Navigation Arrows (only for images) -->
 						<button id="prev-btn" class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-gold backdrop-blur-md flex items-center justify-center rounded-full text-white hover:text-dark transition-all duration-300 opacity-0 group-hover:opacity-100 z-10 border border-white/10">
 							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
 						</button>
@@ -54,12 +69,22 @@ const { product } = Astro.props;
 							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
 						</button>
 
-						<img 
-							id="active-image"
-							src={product.images[0]} 
-							alt={product.name} 
-							class="w-full h-full object-contain transition-all duration-500 ease-in-out"
-						/>
+						<div id="media-container" class="w-full h-full relative flex items-center justify-center">
+							<img 
+								id="active-image"
+								src={product.images[0]} 
+								alt={product.name} 
+								class="w-full h-full object-contain transition-all duration-500 ease-in-out"
+							/>
+							<video 
+								id="active-video"
+								class="hidden w-full h-full object-contain"
+								controls
+								playsinline
+							>
+								<source src={product.video} type="video/mp4" />
+							</video>
+						</div>
 					</div>
 
 					<!-- Logistics Specs Table (New Section) -->
@@ -211,56 +236,80 @@ const { product } = Astro.props;
 	</footer>
 </Layout>
 
-<script define:vars={{ images: product.images }}>
+<script define:vars={{ images: product.images, video: product.video }}>
 	const mainImage = document.getElementById('active-image');
+	const mainVideo = document.getElementById('active-video');
 	const thumbBtns = document.querySelectorAll('.thumb-btn');
 	const prevBtn = document.getElementById('prev-btn');
 	const nextBtn = document.getElementById('next-btn');
 	
 	let currentIndex = 0;
+	let currentType = video ? 'video' : 'image';
 
-	const updateGallery = (index) => {
-		currentIndex = index;
-		const newSrc = images[currentIndex];
+	const updateGallery = (btn) => {
+		const type = btn.getAttribute('data-type');
 		
-		if (mainImage) {
-			mainImage.style.opacity = '0';
-			mainImage.style.transform = 'scale(0.98)';
+		// Reset current media
+		mainImage.classList.add('hidden');
+		mainVideo.classList.add('hidden');
+		mainVideo.pause();
+
+		if (type === 'video') {
+			currentType = 'video';
+			mainVideo.classList.remove('hidden');
+			mainVideo.play().catch(() => {}); // Auto-play if possible
+			prevBtn.style.display = 'none';
+			nextBtn.style.display = 'none';
+		} else {
+			currentType = 'image';
+			currentIndex = parseInt(btn.getAttribute('data-index'));
+			const src = btn.getAttribute('data-src');
 			
-			setTimeout(() => {
-				mainImage.src = newSrc;
-				mainImage.style.opacity = '1';
-				mainImage.style.transform = 'scale(1)';
-			}, 300);
+			mainImage.src = src;
+			mainImage.classList.remove('hidden');
+			prevBtn.style.display = 'flex';
+			nextBtn.style.display = 'flex';
 		}
 
-		// Update thumbnails opacity
-		thumbBtns.forEach((btn, i) => {
-			const img = btn.querySelector('img');
-			if (i === currentIndex) {
-				btn.classList.add('border-gold');
+		// Update thumbnails active state
+		thumbBtns.forEach(b => {
+			const img = b.querySelector('img');
+			if (b === btn) {
+				b.classList.add('border-gold');
+				b.classList.remove('border-white/5');
 				img.style.opacity = '1';
 			} else {
-				btn.classList.remove('border-gold');
+				b.classList.remove('border-gold');
+				b.classList.add('border-white/5');
 				img.style.opacity = '0.6';
 			}
 		});
 	};
 
-	thumbBtns.forEach((btn, i) => {
-		btn.addEventListener('click', () => updateGallery(i));
+	thumbBtns.forEach((btn) => {
+		btn.addEventListener('click', () => updateGallery(btn));
 	});
 
 	prevBtn?.addEventListener('click', () => {
-		const newIndex = (currentIndex - 1 + images.length) % images.length;
-		updateGallery(newIndex);
+		if (currentType === 'image') {
+			const newIndex = (currentIndex - 1 + images.length) % images.length;
+			const nextBtn = document.querySelector(`.image-thumb[data-index="${newIndex}"]`);
+			updateGallery(nextBtn);
+		}
 	});
 
 	nextBtn?.addEventListener('click', () => {
-		const newIndex = (currentIndex + 1) % images.length;
-		updateGallery(newIndex);
+		if (currentType === 'image') {
+			const newIndex = (currentIndex + 1) % images.length;
+			const nextBtn = document.querySelector(`.image-thumb[data-index="${newIndex}"]`);
+			updateGallery(nextBtn);
+		}
 	});
 
 	// Initialize
-	updateGallery(0);
+	if (video) {
+		updateGallery(document.querySelector('.video-thumb'));
+	} else {
+		updateGallery(document.querySelector('.image-thumb'));
+	}
 </script>
