@@ -146,6 +146,14 @@
     "moq": 240,
     "price": 6.18,
     "category": "Bubble Toys",
+    "specs": {
+      "packing_size": "9.8 x 9.8 x 37 cm",
+      "carton_size": "83 x 40.5 x 66 cm",
+      "inner_qty": "2 PCS",
+      "qty_per_carton": "48 PCS",
+      "gw_nw": "25 / 21.4 KG",
+      "cbm": "0.222"
+    },
     "images": [
       "/images/products/TF213249.jpg",
       "/images/products/TF213249-6.jpg",
@@ -162,6 +170,14 @@
     "moq": 80,
     "price": 6.67,
     "category": "Bubble Toys",
+    "specs": {
+      "packing_size": "22 x 14.5 x 20.5 cm",
+      "carton_size": "60 x 42.5 x 46.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "16 PCS",
+      "gw_nw": "13.5 / 12.5 KG",
+      "cbm": "0.119"
+    },
     "images": [
       "/images/products/TF213293.jpg",
       "/images/products/TF213293-6.jpg",
@@ -176,6 +192,14 @@
     "moq": 180,
     "price": 5.65,
     "category": "Bubble Toys",
+    "specs": {
+      "packing_size": "19 x 13 x 28.5 cm",
+      "carton_size": "81 x 39.5 x 87.5 cm",
+      "inner_qty": "Sealed Box",
+      "qty_per_carton": "36 PCS",
+      "gw_nw": "29.2 / 27.4 KG",
+      "cbm": "0.28"
+    },
     "images": [
       "/images/products/TF213301.jpg",
       "/images/products/TF213301-5.jpg",
@@ -191,6 +215,14 @@
     "moq": 180,
     "price": 5.65,
     "category": "Bubble Toys",
+    "specs": {
+      "packing_size": "19 x 13 x 28.5 cm",
+      "carton_size": "81 x 39.5 x 87.5 cm",
+      "inner_qty": "Sealed Box",
+      "qty_per_carton": "36 PCS",
+      "gw_nw": "29.2 / 27.4 KG",
+      "cbm": "0.28"
+    },
     "images": [
       "/images/products/TF213303.jpg",
       "/images/products/TF213303-6.jpg",
@@ -208,6 +240,14 @@
     "moq": 600,
     "price": 1.58,
     "category": "Bubble Toys",
+    "specs": {
+      "packing_size": "15 x 7 x 15 cm",
+      "carton_size": "84 x 31 x 76 cm",
+      "inner_qty": "E-commerce Box",
+      "qty_per_carton": "120 PCS",
+      "gw_nw": "29.5 / 28 KG",
+      "cbm": "0.198"
+    },
     "images": [
       "/images/products/TF213393.jpg",
       "/images/products/TF213393-6.jpg",
@@ -224,6 +264,14 @@
     "moq": 240,
     "price": 4.85,
     "category": "Bubble Toys",
+    "specs": {
+      "packing_size": "11 x 9 x 21 cm",
+      "carton_size": "47 x 44 x 55 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "48 PCS",
+      "gw_nw": "18 / 16.5 KG",
+      "cbm": "0.114"
+    },
     "images": [
       "/images/products/TF213395.jpg",
       "/images/products/TF213395-6.jpg",
