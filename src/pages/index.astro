@@ -127,29 +127,29 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 										loading="lazy"
 									/>
 								</div>
-								<div class="p-10 flex-grow flex flex-col">
-									<div class="flex items-center gap-3 mb-6">
-										<span class="bg-gold/10 text-gold text-[9px] font-bold px-3 py-1 uppercase tracking-widest border border-gold/20 italic">Bestseller</span>
-										<span class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">{product.id}</span>
+								<div class="p-6 flex-grow flex flex-col">
+									<div class="flex items-center gap-3 mb-2">
+										<span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20 italic">Bestseller</span>
+										<span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest">{product.id}</span>
 									</div>
-									<h4 class="text-xl font-bold text-white mb-8 uppercase tracking-tight leading-tight group-hover:text-gold transition line-clamp-2">{product.name}</h4>
+									<h4 class="text-lg font-bold text-white mb-4 uppercase tracking-tight leading-tight group-hover:text-gold transition line-clamp-2">{product.name}</h4>
 									
 									<div class="mt-auto">
-										<div class="grid grid-cols-2 gap-4 border-y border-white/5 py-6 mb-8">
+										<div class="grid grid-cols-2 gap-4 border-y border-white/5 py-4 mb-4">
 											<div>
-												<div class="text-[9px] uppercase text-gray-600 tracking-widest mb-1">Min Order</div>
-												<div class="text-xs font-bold text-gray-300">{product.moq} PCS</div>
+												<div class="text-[8px] uppercase text-gray-600 tracking-widest mb-0.5">Min Order</div>
+												<div class="text-[10px] font-bold text-gray-300">{product.moq} PCS</div>
 											</div>
 											<div>
-												<div class="text-[9px] uppercase text-gray-600 tracking-widest mb-1">Lead Time</div>
-												<div class="text-xs font-bold text-gray-300">10-15 Days</div>
+												<div class="text-[8px] uppercase text-gray-600 tracking-widest mb-0.5">Lead Time</div>
+												<div class="text-[10px] font-bold text-gray-300">10-15 Days</div>
 											</div>
 										</div>
 										<div class="flex justify-between items-end">
-											<div class="text-[10px] font-bold uppercase tracking-widest text-white">Wholesale Price</div>
-											<div class="text-3xl font-display font-extrabold text-gold">${product.price}+</div>
+											<div class="text-[8px] font-bold uppercase tracking-widest text-white">Wholesale Price</div>
+											<div class="text-2xl font-display font-extrabold text-gold">${product.price}+</div>
 										</div>
-										<div class="mt-10 w-full py-5 border border-white/10 text-center text-[10px] font-bold uppercase tracking-[0.3em] group-hover:bg-gold group-hover:text-dark transition-all duration-500 group-hover:border-gold italic">
+										<div class="mt-6 w-full py-4 border border-white/10 text-center text-[9px] font-bold uppercase tracking-[0.3em] group-hover:bg-gold group-hover:text-dark transition-all duration-500 group-hover:border-gold italic">
 											&rarr; Quote This Product
 										</div>
 									</div>
