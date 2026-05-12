@@ -312,6 +312,14 @@
     "moq": 60,
     "price": 13.62,
     "category": "Educational Toys",
+    "specs": {
+      "packing_size": "32 x 9.5 x 27 cm",
+      "carton_size": "59 x 34 x 56 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "12 PCS",
+      "gw_nw": "10.5 / 9.5 KG",
+      "cbm": "0.112"
+    },
     "images": [
       "/images/products/TF208799.jpg",
       "/images/products/TF208799-6.jpg",
@@ -327,6 +335,14 @@
     "moq": 180,
     "price": 12.69,
     "category": "Educational Toys",
+    "specs": {
+      "packing_size": "21.5 x 11 x 4.3 cm",
+      "carton_size": "45.5 x 23.5 x 42 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "36 PCS",
+      "gw_nw": "18.6 / 16.7 KG",
+      "cbm": "0.045"
+    },
     "images": [
       "/images/products/TF211030.jpg",
       "/images/products/TF211030-6.jpg",
@@ -344,6 +360,14 @@
     "moq": 160,
     "price": 4.15,
     "category": "Educational Toys",
+    "specs": {
+      "packing_size": "29 x 7 x 18 cm",
+      "carton_size": "43 x 30 x 56 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "18 PCS",
+      "gw_nw": "12 / 11 KG",
+      "cbm": "0.072"
+    },
     "images": [
       "/images/products/TF213143.jpg",
       "/images/products/TF213143-7.jpg",
@@ -362,6 +386,14 @@
     "moq": 150,
     "price": 5.54,
     "category": "Educational Toys",
+    "specs": {
+      "packing_size": "30.5 x 10 x 24 cm",
+      "carton_size": "84 x 32 x 74 cm",
+      "inner_qty": "Sealed Box",
+      "qty_per_carton": "24 PCS",
+      "gw_nw": "14.5 / 13 KG",
+      "cbm": "0.199"
+    },
     "images": [
       "/images/products/TF213184.jpg",
       "/images/products/TF213184-7.jpg",
@@ -379,6 +411,14 @@
     "moq": 50,
     "price": 21.69,
     "category": "Educational Toys",
+    "specs": {
+      "packing_size": "27.5 x 11 x 21.2 cm",
+      "carton_size": "58 x 22.5 x 58 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "10 PCS",
+      "gw_nw": "16.5 / 15.5 KG",
+      "cbm": "0.076"
+    },
     "images": [
       "/images/products/TF169001.jpg",
       "/images/products/TF169001-7.jpg",
@@ -397,6 +437,14 @@
     "moq": 120,
     "price": 6.46,
     "category": "Educational Toys",
+    "specs": {
+      "packing_size": "17 x 13.5 x 17.8 cm",
+      "carton_size": "69 x 28.5 x 56 cm",
+      "inner_qty": "Sealed Box",
+      "qty_per_carton": "24 PCS",
+      "gw_nw": "18.5 / 17 KG",
+      "cbm": "0.11"
+    },
     "images": [
       "/images/products/TF197926.jpg",
       "/images/products/TF197926-5.jpg",
