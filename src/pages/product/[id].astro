@@ -71,28 +71,28 @@ const { product } = Astro.props;
 							</div>
 							<div class="grid grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-12">
 								<div class="space-y-3">
-									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Packaging Size</div>
-									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.packing_size}</div>
+									<div class="text-[11px] text-gray-300 uppercase tracking-widest font-bold">Packaging Size</div>
+									<div class="text-base font-display font-black text-white uppercase tracking-tight">{product.specs.packing_size}</div>
 								</div>
 								<div class="space-y-3">
-									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Carton Dimensions</div>
-									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.carton_size}</div>
+									<div class="text-[11px] text-gray-300 uppercase tracking-widest font-bold">Carton Dimensions</div>
+									<div class="text-base font-display font-black text-white uppercase tracking-tight">{product.specs.carton_size}</div>
 								</div>
 								<div class="space-y-3">
-									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Inner Quantity</div>
-									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.inner_qty}</div>
+									<div class="text-[11px] text-gray-300 uppercase tracking-widest font-bold">Inner Quantity</div>
+									<div class="text-base font-display font-black text-white uppercase tracking-tight">{product.specs.inner_qty}</div>
 								</div>
 								<div class="space-y-3">
-									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Qty Per Carton</div>
-									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.qty_per_carton}</div>
+									<div class="text-[11px] text-gray-300 uppercase tracking-widest font-bold">Qty Per Carton</div>
+									<div class="text-base font-display font-black text-white uppercase tracking-tight">{product.specs.qty_per_carton}</div>
 								</div>
 								<div class="space-y-3">
-									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">G.W. / N.W.</div>
-									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.gw_nw}</div>
+									<div class="text-[11px] text-gray-300 uppercase tracking-widest font-bold">G.W. / N.W.</div>
+									<div class="text-base font-display font-black text-white uppercase tracking-tight">{product.specs.gw_nw}</div>
 								</div>
 								<div class="space-y-3">
-									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Volume (CBM)</div>
-									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.cbm}</div>
+									<div class="text-[11px] text-gray-300 uppercase tracking-widest font-bold">Volume (CBM)</div>
+									<div class="text-base font-display font-black text-white uppercase tracking-tight">{product.specs.cbm}</div>
 								</div>
 							</div>
 						</div>
@@ -147,24 +147,24 @@ const { product } = Astro.props;
 						</div>
 
 						<!-- Specifications -->
-						<div class="border-t border-white/5 pt-12">
-							<h3 class="text-[9px] font-bold uppercase tracking-[0.5em] mb-10 text-gray-500 italic underline decoration-gold underline-offset-8">Production Data</h3>
+						<div class="border-t border-white/10 pt-12">
+							<h3 class="text-[10px] font-bold uppercase tracking-[0.5em] mb-10 text-gold italic underline underline-offset-8">Production Data</h3>
 							<div class="grid grid-cols-2 gap-y-10 gap-x-12">
 								<div>
-									<div class="text-[8px] text-gray-700 uppercase tracking-[0.2em] mb-2 font-bold">Ref No.</div>
-									<div class="text-xs font-bold text-white uppercase tracking-widest italic">{product.id}</div>
+									<div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-3 font-bold">Ref No.</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight italic">{product.id}</div>
 								</div>
 								<div>
-									<div class="text-[8px] text-gray-700 uppercase tracking-[0.2em] mb-2 font-bold">Standard MOQ</div>
-									<div class="text-xs font-bold text-white uppercase tracking-widest italic">{product.moq} Units</div>
+									<div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-3 font-bold">Standard MOQ</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight italic">{product.moq} Units</div>
 								</div>
 								<div>
-									<div class="text-[8px] text-gray-700 uppercase tracking-[0.2em] mb-2 font-bold">QC Standard</div>
-									<div class="text-xs font-bold text-white uppercase tracking-widest italic">ISO-9001 / AQL 2.5</div>
+									<div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-3 font-bold">QC Standard</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight italic">ISO-9001 / AQL 2.5</div>
 								</div>
 								<div>
-									<div class="text-[8px] text-gray-700 uppercase tracking-[0.2em] mb-2 font-bold">Port of Loading</div>
-									<div class="text-xs font-bold text-white uppercase tracking-widest italic">Yantian / Shantou</div>
+									<div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-3 font-bold">Port of Loading</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight italic">Yantian / Shantou</div>
 								</div>
 							</div>
 						</div>
@@ -183,16 +183,16 @@ const { product } = Astro.props;
 					
 					<form class="grid grid-cols-1 md:grid-cols-2 gap-10">
 						<div class="space-y-4">
-							<label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Client Representative</label>
-							<input type="text" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-sm text-white uppercase tracking-widest placeholder:text-gray-700" placeholder="Full Name">
+							<label class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">Client Representative</label>
+							<input type="text" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white uppercase tracking-widest placeholder:text-gray-700" placeholder="Full Name">
 						</div>
 						<div class="space-y-4">
-							<label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Official Email</label>
-							<input type="email" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-sm text-white uppercase tracking-widest placeholder:text-gray-700" placeholder="Business Address">
+							<label class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">Official Email</label>
+							<input type="email" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white uppercase tracking-widest placeholder:text-gray-700" placeholder="Business Address">
 						</div>
 						<div class="col-span-full space-y-4">
-							<label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Project Scope</label>
-							<textarea rows="5" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-sm text-white uppercase tracking-widest leading-relaxed placeholder:text-gray-700" placeholder={`I am interested in Item: ${product.id} (${product.name}). Target quantity, branding requirements, and destination...`}></textarea>
+							<label class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">Project Scope</label>
+							<textarea rows="5" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white uppercase tracking-widest leading-relaxed placeholder:text-gray-700" placeholder={`I am interested in Item: ${product.id} (${product.name}). Target quantity, branding requirements, and destination...`}></textarea>
 						</div>
 						<button class="bg-gold text-dark font-black py-7 uppercase hover:bg-white transition tracking-[0.5em] text-xs italic shadow-[0_20px_50px_rgba(201,168,76,0.15)]">
 							Send Manufacturing Inquiry
