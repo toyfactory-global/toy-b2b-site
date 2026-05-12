@@ -1,58 +1,96 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import products from '../data/products.json';
+
+const categories = [
+  {
+    id: 'Track Toys',
+    title: 'Precision Track Systems',
+    desc: 'Advanced orbital and magnetic track toys for educational development.',
+    banner: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=80&w=1920'
+  },
+  {
+    id: 'Bubble Toys',
+    title: 'Magic Bubble Machines',
+    desc: 'High-output automatic bubble machines and wands for summer fun.',
+    banner: 'https://images.unsplash.com/photo-1559101344-9646f04c6436?auto=format&fit=crop&q=80&w=1920'
+  },
+  {
+    id: 'Educational Toys',
+    title: 'Educational & DIY',
+    desc: 'STEM-focused toys, pottery machines, and creative learning tools.',
+    banner: 'https://images.unsplash.com/photo-1515488411123-1d227447d79b?auto=format&fit=crop&q=80&w=1920'
+  },
+  {
+    id: 'Water Guns',
+    title: 'Power Water Blast',
+    desc: 'Automatic and high-capacity electric water guns for professional export.',
+    banner: 'https://images.unsplash.com/photo-1559728271-89771e16f86c?auto=format&fit=crop&q=80&w=1920'
+  }
+];
+
+const getProductsByCategory = (catId) => products.filter(p => p.category === catId);
 ---
 
-<Layout title="TOYFACTORY | Premium B2B Toy Manufacturer | OEM/ODM">
+<Layout title="TOYFACTORY | Premium B2B Toy Manufacturer | Global Export">
 	<!-- Navbar -->
-	<nav class="fixed w-full z-50 bg-dark/90 backdrop-blur-lg border-b border-white/5">
-		<div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+	<nav class="fixed w-full z-50 bg-[#0A0A0F]/90 backdrop-blur-xl border-b border-white/5">
+		<div class="max-w-[1600px] mx-auto px-8 h-24 flex items-center justify-between">
 			<div class="text-2xl font-display font-extrabold tracking-tighter text-white">
 				TOY<span class="text-gold">FACTORY</span>
 			</div>
-			<div class="hidden lg:flex gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
-				<a href="#products" class="hover:text-gold transition">Catalog</a>
-				<a href="#" class="hover:text-gold transition">Manufacturing</a>
-				<a href="#" class="hover:text-gold transition">Certificates</a>
-				<a href="#" class="hover:text-gold transition">Contact</a>
+			<div class="hidden xl:flex gap-12 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
+				{categories.map(cat => (
+					<a href={`#${cat.id.replace(/\s+/g, '-').toLowerCase()}`} class="hover:text-gold transition-colors">{cat.id}</a>
+				))}
 			</div>
-			<a href="#rfq" class="bg-gold text-dark px-8 py-3.5 font-bold text-xs uppercase tracking-widest hover:bg-white transition-all duration-300">
-				Get a Quote
-			</a>
+			<div class="flex items-center gap-8">
+				<a href="https://wa.me/861349669150" target="_blank" class="hidden sm:flex items-center gap-2 text-green-500 font-bold text-[10px] uppercase tracking-widest">
+					<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+					Online Support
+				</a>
+				<a href="#rfq" class="bg-gold text-dark px-10 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-white transition-all duration-300">
+					Start RFQ
+				</a>
+			</div>
 		</div>
 	</nav>
 
 	<main>
-		<!-- Hero Section -->
-		<section class="relative min-h-screen flex items-center overflow-hidden">
+		<!-- Large Hero Poster -->
+		<section class="relative h-[90vh] flex items-center overflow-hidden">
 			<div class="absolute inset-0 z-0">
-				<div class="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark to-dark z-10"></div>
-				<img src="https://images.unsplash.com/photo-1532330393533-443990a51d10?auto=format&fit=crop&q=80&w=1920" class="w-full h-full object-cover scale-105" alt="Factory Hero" />
+				<div class="absolute inset-0 bg-gradient-to-r from-[#0A0A0F] via-[#0A0A0F]/60 to-transparent z-10"></div>
+				<img 
+					src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&q=80&w=1920" 
+					class="w-full h-full object-cover" 
+					alt="Factory Hero" 
+				/>
 			</div>
 			
-			<div class="relative z-20 max-w-7xl mx-auto px-6 w-full pt-20">
-				<div class="max-w-3xl">
-					<div class="inline-block border border-gold/30 px-4 py-1.5 rounded-full mb-8">
-						<span class="text-[10px] font-bold uppercase tracking-[0.3em] text-gold">Factory Direct OEM/ODM</span>
+			<div class="relative z-20 max-w-[1600px] mx-auto px-8 w-full">
+				<div class="max-w-4xl">
+					<div class="inline-flex items-center gap-4 border-l-2 border-gold pl-6 mb-10">
+						<span class="text-sm font-bold uppercase tracking-[0.4em] text-gold">Premium Factory Direct</span>
 					</div>
-					<h1 class="text-6xl md:text-8xl font-display font-extrabold leading-[0.9] mb-8 uppercase tracking-tighter">
-						Crafting <span class="text-gold">Next-Gen</span> Play.
+					<h1 class="text-7xl md:text-9xl font-display font-extrabold leading-[0.85] mb-10 uppercase tracking-tighter text-white">
+						Global<br/>Supply<br/><span class="text-gold">Excellence.</span>
 					</h1>
-					<p class="text-lg md:text-xl text-gray-400 mb-12 max-w-xl leading-relaxed font-light">
-						Professional manufacturing for global toy brands. High-precision production, certified quality, and reliable lead times.
+					<p class="text-xl md:text-2xl text-gray-300 mb-14 max-w-2xl leading-relaxed font-light uppercase tracking-wide">
+						Professional OEM/ODM manufacturing for the world's leading toy distributors.
 					</p>
-					<div class="flex flex-col sm:flex-row gap-6">
-						<a href="#products" class="bg-white text-dark px-10 py-5 font-bold uppercase text-xs tracking-widest hover:bg-gold transition-all duration-500 text-center">
-							Explore Catalog
+					<div class="flex flex-wrap gap-8">
+						<a href="#products-start" class="bg-white text-dark px-12 py-6 font-bold uppercase text-xs tracking-[0.3em] hover:bg-gold hover:scale-105 transition-all duration-500">
+							View Collections
 						</a>
-						<div class="flex items-center gap-8 px-8 border-l border-white/10 hidden sm:flex">
-							<div class="text-center">
-								<div class="text-2xl font-bold font-display">15+</div>
-								<div class="text-[9px] uppercase tracking-widest text-gray-500">Days Lead Time</div>
+						<div class="flex items-center gap-12">
+							<div class="text-left">
+								<div class="text-3xl font-bold font-display text-white italic">7-Day</div>
+								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mt-1">Fast Sampling</div>
 							</div>
-							<div class="text-center">
-								<div class="text-2xl font-bold font-display">ISO</div>
-								<div class="text-[9px] uppercase tracking-widest text-gray-500">9001 Certified</div>
+							<div class="text-left">
+								<div class="text-3xl font-bold font-display text-white italic">30+</div>
+								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mt-1">Years Expert</div>
 							</div>
 						</div>
 					</div>
@@ -60,100 +98,152 @@ import products from '../data/products.json';
 			</div>
 		</section>
 
-		<!-- Features Bar -->
-		<section class="border-y border-white/5 bg-card/30 py-10">
-			<div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-				{['Global Shipping', 'Fast Sampling', 'Custom Packaging', 'Wholesale Pricing'].map(f => (
-					<div class="text-center">
-						<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{f}</span>
+		<div id="products-start"></div>
+
+		<!-- Category Sections -->
+		{categories.map((cat, index) => (
+			<section id={cat.id.replace(/\s+/g, '-').toLowerCase()} class="pb-32">
+				<!-- Category Poster -->
+				<div class="relative h-[50vh] flex items-center overflow-hidden mb-20 border-y border-white/5">
+					<div class="absolute inset-0 bg-dark/70 z-10"></div>
+					<img src={cat.banner} class="w-full h-full object-cover" alt={cat.title} />
+					<div class="relative z-20 max-w-[1600px] mx-auto px-8 w-full text-center">
+						<span class="text-gold font-bold text-xs uppercase tracking-[0.5em] mb-6 block">Collection {index + 1}</span>
+						<h2 class="text-5xl md:text-7xl font-display font-extrabold uppercase tracking-tighter text-white mb-6 italic">{cat.title}</h2>
+						<p class="max-w-2xl mx-auto text-gray-400 uppercase text-[10px] tracking-[0.3em] font-bold">{cat.desc}</p>
 					</div>
-				))}
-			</div>
-		</section>
-
-		<!-- Products Section -->
-		<section id="products" class="py-32 px-6">
-			<div class="max-w-7xl mx-auto">
-				<div class="text-center mb-24">
-					<h2 class="text-xs font-bold text-gold uppercase tracking-[0.5em] mb-4">Export Catalog</h2>
-					<h3 class="text-4xl md:text-5xl font-display font-extrabold uppercase tracking-tight">Featured Collections</h3>
-					<div class="w-12 h-1 bg-gold mx-auto mt-8"></div>
 				</div>
 
-				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-					{products.map((product) => (
-						<a href={`/product/${product.id}`} class="group bg-card border border-white/5 hover:border-gold/30 transition-all duration-500 block overflow-hidden">
-							<div class="aspect-square overflow-hidden bg-white/5 flex items-center justify-center p-8">
-								<img 
-									src={product.image} 
-									alt={product.name} 
-									class="max-w-full max-h-full object-contain group-hover:scale-110 transition duration-700 opacity-90 group-hover:opacity-100"
-									loading="lazy"
-								/>
-							</div>
-							<div class="p-8 border-t border-white/5">
-								<div class="flex justify-between items-start mb-4">
-									<span class="text-[9px] font-bold text-gold uppercase tracking-widest">{product.id}</span>
-									<span class="text-[10px] text-gray-500 uppercase">MOQ: {product.moq}</span>
+				<!-- Product Grid -->
+				<div class="max-w-[1600px] mx-auto px-8">
+					<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+						{getProductsByCategory(cat.id).map(product => (
+							<a href={`/product/${product.id}`} class="group bg-[#15151A] border border-white/5 hover:border-gold/30 transition-all duration-700 flex flex-col">
+								<div class="aspect-square overflow-hidden bg-white/5 flex items-center justify-center p-12">
+									<img 
+										src={product.image} 
+										alt={product.name} 
+										class="w-full h-full object-contain group-hover:scale-110 transition duration-1000"
+										loading="lazy"
+									/>
 								</div>
-								<h4 class="text-md font-bold text-white mb-6 uppercase tracking-tight line-clamp-1 group-hover:text-gold transition">{product.name}</h4>
-								<div class="flex justify-between items-center">
-									<span class="text-sm font-light text-gray-400">Wholesale:</span>
-									<span class="text-lg font-bold font-display">${product.price}+</span>
+								<div class="p-10 flex-grow flex flex-col">
+									<div class="flex items-center gap-3 mb-6">
+										<span class="bg-gold/10 text-gold text-[9px] font-bold px-3 py-1 uppercase tracking-widest border border-gold/20 italic">Bestseller</span>
+										<span class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">{product.id}</span>
+									</div>
+									<h4 class="text-xl font-bold text-white mb-8 uppercase tracking-tight leading-tight group-hover:text-gold transition line-clamp-2">{product.name}</h4>
+									
+									<div class="mt-auto">
+										<div class="grid grid-cols-2 gap-4 border-y border-white/5 py-6 mb-8">
+											<div>
+												<div class="text-[9px] uppercase text-gray-600 tracking-widest mb-1">Min Order</div>
+												<div class="text-xs font-bold text-gray-300">{product.moq} PCS</div>
+											</div>
+											<div>
+												<div class="text-[9px] uppercase text-gray-600 tracking-widest mb-1">Lead Time</div>
+												<div class="text-xs font-bold text-gray-300">10-15 Days</div>
+											</div>
+										</div>
+										<div class="flex justify-between items-end">
+											<div class="text-[10px] font-bold uppercase tracking-widest text-white">Wholesale Price</div>
+											<div class="text-3xl font-display font-extrabold text-gold">${product.price}+</div>
+										</div>
+										<div class="mt-10 w-full py-5 border border-white/10 text-center text-[10px] font-bold uppercase tracking-[0.3em] group-hover:bg-gold group-hover:text-dark transition-all duration-500 group-hover:border-gold italic">
+											&rarr; Quote This Product
+										</div>
+									</div>
 								</div>
-								<div class="mt-8 py-3 border border-white/10 text-center text-[9px] font-bold uppercase tracking-[0.2em] group-hover:bg-gold group-hover:text-dark transition-all duration-300">
-									View Details
-								</div>
-							</div>
-						</a>
-					))}
+							</a>
+						))}
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		))}
 
-		<!-- RFQ Banner -->
-		<section id="rfq" class="py-32 bg-gold text-dark">
-			<div class="max-w-4xl mx-auto px-6 text-center">
-				<h2 class="text-5xl md:text-6xl font-display font-extrabold mb-8 uppercase tracking-tighter italic">Ready to Scale?</h2>
-				<p class="text-lg mb-12 font-medium opacity-80 uppercase tracking-widest">Connect with our production team for a personalized volume quote.</p>
-				<div class="flex flex-col sm:flex-row justify-center gap-6">
-					<a href="https://wa.me/861349669150" target="_blank" class="bg-dark text-white px-12 py-6 font-bold uppercase text-xs tracking-[0.2em] hover:bg-white hover:text-dark transition-all duration-300">
-						WhatsApp Inquiry
-					</a>
-					<a href="mailto:contact@toyfactory.global" class="border-2 border-dark text-dark px-12 py-6 font-bold uppercase text-xs tracking-[0.2em] hover:bg-dark hover:text-white transition-all duration-300">
-						Send Email
-					</a>
+		<!-- Quote Section -->
+		<section id="rfq" class="py-40 bg-gold text-dark relative overflow-hidden">
+			<div class="absolute right-[-10%] top-[-10%] text-[20vw] font-display font-extrabold opacity-5 tracking-tighter select-none">FACTORY</div>
+			<div class="max-w-[1600px] mx-auto px-8 relative z-10">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+					<div>
+						<h2 class="text-7xl md:text-8xl font-display font-extrabold mb-10 uppercase tracking-tighter leading-[0.85] italic">Ready for<br/>Production?</h2>
+						<p class="text-xl mb-14 font-medium opacity-80 uppercase tracking-[0.2em] max-w-lg leading-relaxed">
+							Our engineering team is ready to transform your vision into market-leading products. 
+						</p>
+						<div class="flex flex-col sm:flex-row gap-8">
+							<a href="https://wa.me/861349669150" target="_blank" class="bg-dark text-white px-14 py-7 font-bold uppercase text-[10px] tracking-[0.3em] hover:scale-105 transition-all duration-300 text-center">
+								WhatsApp Support
+							</a>
+							<a href="mailto:contact@toyfactory.global" class="border-2 border-dark text-dark px-14 py-7 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-dark hover:text-white transition-all duration-300 text-center">
+								Email Proposal
+							</a>
+						</div>
+					</div>
+					<div class="bg-dark p-16 border border-dark/20">
+						<h3 class="text-white text-3xl font-display font-bold uppercase mb-10 tracking-tight italic">Quick RFQ</h3>
+						<form class="grid grid-cols-1 gap-10">
+							<input type="text" placeholder="COMPANY NAME" class="bg-transparent border-b border-white/20 p-4 text-white text-xs tracking-widest focus:border-gold outline-none uppercase placeholder:text-gray-700">
+							<input type="email" placeholder="BUSINESS EMAIL" class="bg-transparent border-b border-white/20 p-4 text-white text-xs tracking-widest focus:border-gold outline-none uppercase placeholder:text-gray-700">
+							<textarea placeholder="PROJECT DETAILS" rows="3" class="bg-transparent border-b border-white/20 p-4 text-white text-xs tracking-widest focus:border-gold outline-none uppercase placeholder:text-gray-700"></textarea>
+							<button class="bg-gold text-dark font-extrabold py-6 uppercase tracking-[0.4em] text-[10px] hover:bg-white transition-all duration-500">
+								Submit Project Inquiry
+							</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</section>
 	</main>
 
 	<!-- Footer -->
-	<footer class="py-20 border-t border-white/5 bg-dark">
-		<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16">
-			<div>
-				<div class="text-xl font-display font-extrabold tracking-tighter text-white mb-8">
-					TOY<span class="text-gold">FACTORY</span>
+	<footer class="py-32 border-t border-white/5 bg-[#050508]">
+		<div class="max-w-[1600px] mx-auto px-8">
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-24 mb-24">
+				<div class="col-span-1 md:col-span-2">
+					<div class="text-3xl font-display font-extrabold tracking-tighter text-white mb-10">
+						TOY<span class="text-gold">FACTORY</span>
+					</div>
+					<p class="text-[11px] text-gray-500 leading-[2.5] uppercase tracking-[0.2em] max-w-md">
+						Elite manufacturing infrastructure specializing in high-demand toy export. 
+						Precision engineering and global distribution standards. 
+						ISO 9001:2015 Certified Facility.
+					</p>
 				</div>
-				<p class="text-xs text-gray-500 leading-loose uppercase tracking-widest">
-					Premium toy manufacturing solutions for the global market. 
-					ISO 9001 certified facility based in China.
-				</p>
+				<div>
+					<h5 class="text-white text-[10px] font-bold uppercase tracking-[0.4em] mb-10">Capabilities</h5>
+					<div class="flex flex-col gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">
+						<a href="#" class="hover:text-gold transition">Private Label</a>
+						<a href="#" class="hover:text-gold transition">Custom Molding</a>
+						<a href="#" class="hover:text-gold transition">Fast Prototyping</a>
+						<a href="#" class="hover:text-gold transition">Logistics Support</a>
+					</div>
+				</div>
+				<div>
+					<h5 class="text-white text-[10px] font-bold uppercase tracking-[0.4em] mb-10">Resources</h5>
+					<div class="flex flex-col gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">
+						<a href="#" class="hover:text-gold transition">Export Docs</a>
+						<a href="#" class="hover:text-gold transition">Compliance</a>
+						<a href="#" class="hover:text-gold transition">Case Studies</a>
+						<a href="#" class="hover:text-gold transition">Contact</a>
+					</div>
+				</div>
 			</div>
-			<div class="flex flex-col gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-				<a href="#" class="hover:text-gold">Terms of Service</a>
-				<a href="#" class="hover:text-gold">Privacy Policy</a>
-				<a href="#" class="hover:text-gold">Export Documentation</a>
-			</div>
-			<div class="text-[10px] text-gray-600 uppercase tracking-widest leading-loose">
-				&copy; 2026 TOYFACTORY Manufacturing.<br/>
-				All manufacturing assets are proprietary.
+			<div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+				<div class="text-[9px] text-gray-700 uppercase tracking-[0.4em]">
+					&copy; 2026 TOYFACTORY Manufacturing Group.
+				</div>
+				<div class="flex gap-10 text-[9px] text-gray-700 uppercase tracking-[0.4em]">
+					<a href="#" class="hover:text-gold transition">Privacy</a>
+					<a href="#" class="hover:text-gold transition">Terms</a>
+					<a href="#" class="hover:text-gold transition">Cookies</a>
+				</div>
 			</div>
 		</div>
 	</footer>
 
 	<!-- WhatsApp Float -->
-	<a href="https://wa.me/861349669150" target="_blank" class="fixed bottom-10 right-10 bg-[#25D366] p-5 rounded-full shadow-[0_20px_50px_rgba(37,211,102,0.3)] hover:scale-110 transition-all duration-500 z-50 group">
-		<svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+	<a href="https://wa.me/861349669150" target="_blank" class="fixed bottom-12 right-12 bg-[#25D366] p-6 rounded-full shadow-[0_30px_60px_rgba(37,211,102,0.4)] hover:scale-110 transition-all duration-500 z-50 group">
+		<svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 	</a>
 </Layout>
