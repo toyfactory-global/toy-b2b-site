@@ -32,7 +32,13 @@
     "cn_name": "3D创意魔幻立体轨道车-豪华版",
     "moq": 30,
     "price": 17.45,
-    "images": ["/images/products/TF211091.jpg"],
+    "images": [
+      "/images/products/TF211091.jpg",
+      "https://sc02.alicdn.com/kf/Af23824039f3540af8f4baaa92806533aa.png",
+      "https://sc02.alicdn.com/kf/Ad0dc52a727cf4893aa5d56adcbde6177a.png",
+      "https://sc02.alicdn.com/kf/Af9dd6af95cc649bf9155ae3d0838cce1C.png",
+      "https://sc02.alicdn.com/kf/A1a02887f8f724d4eb5a03d9356979842b.png"
+    ],
     "category": "Track Toys"
   },
   {
