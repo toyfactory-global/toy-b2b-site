@@ -617,6 +617,7 @@
     "moq": 60,
     "price": 6.51,
     "category": "Water Guns",
+    "video": "/videos/TF211017.mp4",
     "specs": {
       "packing_size": "34 x 21 x 6 cm",
       "carton_size": "74.5 x 37 x 90.5 cm",
@@ -639,6 +640,7 @@
     "moq": 216,
     "price": 3.42,
     "category": "Water Guns",
+    "video": "/videos/TF211497.mp4",
     "specs": {
       "packing_size": "18 x 6.5 x 17 cm",
       "carton_size": "54.5 x 52 x 55.5 cm",
@@ -662,6 +664,7 @@
     "moq": 150,
     "price": 9.29,
     "category": "Water Guns",
+    "video": "/videos/TF211526.mp4",
     "specs": {
       "packing_size": "31 x 20 x 19 cm",
       "carton_size": "64 x 43 x 63.5 cm",
@@ -686,6 +689,7 @@
     "moq": 80,
     "price": 14.5,
     "category": "Water Guns",
+    "video": "/videos/TF211527.mp4",
     "specs": {
       "packing_size": "41.5 x 21.5 x 15 cm",
       "carton_size": "61 x 43 x 45 cm",
@@ -732,6 +736,7 @@
     "moq": 144,
     "price": 3.42,
     "category": "Water Guns",
+    "video": "/videos/TF212706.mp4",
     "specs": {
       "packing_size": "24 x 21.5 x 7.5 cm",
       "carton_size": "74 x 31.5 x 88 cm",
@@ -756,6 +761,7 @@
     "moq": 108,
     "price": 12.33,
     "category": "Water Guns",
+    "video": "/videos/TF212709.mp4",
     "specs": {
       "packing_size": "36 x 24 x 14 cm",
       "carton_size": "74 x 44 x 74 cm",
