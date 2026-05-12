@@ -118,10 +118,10 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 				<div class="max-w-[1600px] mx-auto px-8">
 					<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
 						{getProductsByCategory(cat.id).map(product => (
-							<a href={`/product/${product.id}`} class="group bg-[#15151A] border border-white/5 hover:border-gold/30 transition-all duration-700 flex flex-col">
+							<a href={`/product/${product.id}`} target="_blank" class="group bg-[#15151A] border border-white/5 hover:border-gold/30 transition-all duration-700 flex flex-col">
 								<div class="aspect-square overflow-hidden bg-white/5 flex items-center justify-center p-12">
 									<img 
-										src={product.image} 
+										src={product.images[0]} 
 										alt={product.name} 
 										class="w-full h-full object-contain group-hover:scale-110 transition duration-1000"
 										loading="lazy"

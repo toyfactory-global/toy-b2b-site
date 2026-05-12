@@ -28,13 +28,33 @@ const { product } = Astro.props;
 	<main class="py-16 md:py-32 px-6">
 		<div class="max-w-7xl mx-auto">
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24">
-				<!-- Image Section -->
-				<div class="bg-white/5 p-12 flex items-center justify-center aspect-square border border-white/5">
-					<img 
-						src={product.image} 
-						alt={product.name} 
-						class="max-w-full max-h-full object-contain"
-					/>
+				<!-- Image Section with Gallery Support -->
+				<div class="space-y-6">
+					<div class="bg-white/5 p-12 flex items-center justify-center aspect-square border border-white/5 overflow-hidden">
+						<img 
+							id="main-image"
+							src={product.images[0]} 
+							alt={product.name} 
+							class="max-w-full max-h-full object-contain transition-opacity duration-300"
+						/>
+					</div>
+					
+					{product.images.length > 1 && (
+						<div class="grid grid-cols-4 gap-4">
+							{product.images.map((img, idx) => (
+								<button 
+									class="thumbnail-btn aspect-square bg-white/5 border border-white/10 p-2 flex items-center justify-center hover:border-gold transition overflow-hidden"
+									data-src={img}
+								>
+									<img src={img} alt={`${product.name} ${idx + 1}`} class="max-w-full max-h-full object-contain" />
+								</button>
+							))}
+						</div>
+					)}
+					
+					<div class="text-[10px] text-gray-600 uppercase tracking-widest text-center mt-4">
+						Tip: You can add more images by updating the products.json file.
+					</div>
 				</div>
 
 				<!-- Content Section -->
@@ -133,3 +153,21 @@ const { product } = Astro.props;
 		<p class="text-[10px] text-gray-600 uppercase tracking-[0.3em]">&copy; 2026 TOYFACTORY Manufacturing. Global B2B Excellence.</p>
 	</footer>
 </Layout>
+
+<script>
+	const mainImage = document.getElementById('main-image');
+	const thumbBtns = document.querySelectorAll('.thumbnail-btn');
+
+	thumbBtns.forEach(btn => {
+		btn.addEventListener('click', () => {
+			const newSrc = btn.getAttribute('data-src');
+			if (mainImage && newSrc) {
+				mainImage.style.opacity = '0';
+				setTimeout(() => {
+					mainImage.src = newSrc;
+					mainImage.style.opacity = '1';
+				}, 300);
+			}
+		});
+	});
+</script>
