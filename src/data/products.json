@@ -75,6 +75,7 @@
     "moq": 30,
     "price": 17.45,
     "category": "Track Toys",
+    "video": "/videos/TF211091.mp4",
     "specs": {
       "packing_size": "42 x 29.5 x 8.5 cm",
       "carton_size": "56 x 30.5 x 43.5 cm",
