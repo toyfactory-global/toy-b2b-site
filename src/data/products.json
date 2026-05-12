@@ -530,8 +530,16 @@
     "id": "TF210965",
     "name": "Fire-Breathing MSR Automatic Water Gun (Blue)",
     "moq": 120,
-    "price": 10.1,
+    "price": 10.15,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "41 x 18.5 x 7 cm",
+      "carton_size": "57 x 42 x 56.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "24 PCS",
+      "gw_nw": "14.5 / 13 KG",
+      "cbm": "0.135"
+    },
     "images": [
       "/images/products/TF210965.jpg",
       "/images/products/TF210965-6.jpg",
@@ -636,8 +644,16 @@
     "id": "TF211526",
     "name": "Gatling Water Gun (350ml Capacity)",
     "moq": 150,
-    "price": 9.18,
+    "price": 9.29,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "31 x 20 x 19 cm",
+      "carton_size": "64 x 43 x 63.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "30 PCS",
+      "gw_nw": "20 / 18 KG",
+      "cbm": "0.175"
+    },
     "images": [
       "/images/products/TF211526.jpg",
       "/images/products/TF211526-6.jpg",
