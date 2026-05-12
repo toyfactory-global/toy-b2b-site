@@ -460,6 +460,14 @@
     "moq": 180,
     "price": 5.31,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "21.5 x 9 x 19 cm",
+      "carton_size": "58 x 44 x 59.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "36 PCS",
+      "gw_nw": "13.5 / 12 KG",
+      "cbm": "0.152"
+    },
     "images": [
       "/images/products/TF210951.jpg",
       "/images/products/TF210951-5.jpg",
@@ -472,9 +480,17 @@
   {
     "id": "TF210956",
     "name": "Space Fire-Breathing Water Gun Drum Version (Blue)",
-    "moq": 240,
-    "price": 5.08,
+    "moq": 144,
+    "price": 5.46,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "22 x 6.5 x 19 cm",
+      "carton_size": "53 x 45 x 59.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "48 PCS",
+      "gw_nw": "15.5 / 14 KG",
+      "cbm": "0.142"
+    },
     "images": [
       "/images/products/TF210956.jpg",
       "/images/products/TF210956-6.jpg",
@@ -489,9 +505,17 @@
   {
     "id": "TF210960",
     "name": "Fire-Breathing Drum Version Automatic Water Gun (Blue)",
-    "moq": 90,
-    "price": 5.72,
+    "moq": 144,
+    "price": 6.13,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "30.1 x 8.8 x 15.1 cm",
+      "carton_size": "56 x 32 x 48.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "18 PCS",
+      "gw_nw": "9 / 7 KG",
+      "cbm": "0.087"
+    },
     "images": [
       "/images/products/TF210960.jpg",
       "/images/products/TF210960-6.jpg",
@@ -520,9 +544,17 @@
   {
     "id": "TF210969",
     "name": "3rd Gen Ice Mouse Fire-Breathing Automatic Water Gun (Blue)",
-    "moq": 400,
-    "price": 2.42,
+    "moq": 240,
+    "price": 3.42,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "22.5 x 5.5 x 14 cm",
+      "carton_size": "57 x 47 x 58 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "80 PCS",
+      "gw_nw": "21 / 19 KG",
+      "cbm": "0.155"
+    },
     "images": [
       "/images/products/TF210969.jpg",
       "/images/products/TF210969-5.jpg",
@@ -535,9 +567,17 @@
   {
     "id": "TF211013",
     "name": "2nd Gen Fire-Breathing Integrated Automatic Water Gun",
-    "moq": 240,
-    "price": 5.72,
+    "moq": 144,
+    "price": 6.13,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "31.5 x 6.5 x 18.5 cm",
+      "carton_size": "79.5 x 33 x 75.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "48 PCS",
+      "gw_nw": "25 / 23.5 KG",
+      "cbm": "0.198"
+    },
     "images": [
       "/images/products/TF211013.jpg",
       "/images/products/TF211013-6.jpg",
@@ -550,9 +590,17 @@
   {
     "id": "TF211017",
     "name": "AK47 Transparent Colorful Racing Light Electric Water Gun",
-    "moq": 300,
-    "price": 6.18,
+    "moq": 60,
+    "price": 6.51,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "34 x 21 x 6 cm",
+      "carton_size": "74.5 x 37 x 90.5 cm",
+      "inner_qty": "2 PCS (Display Box)",
+      "qty_per_carton": "60 PCS",
+      "gw_nw": "23 / 21 KG",
+      "cbm": "0.249"
+    },
     "images": [
       "/images/products/TF211017.jpg",
       "/images/products/TF211017-5.jpg",
@@ -564,9 +612,17 @@
   {
     "id": "TF211497",
     "name": "2nd Gen Desert Integrated Fire-Breathing Water Gun (Transparent Blue)",
-    "moq": 360,
-    "price": 3.58,
+    "moq": 216,
+    "price": 3.42,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "18 x 6.5 x 17 cm",
+      "carton_size": "54.5 x 52 x 55.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "72 PCS",
+      "gw_nw": "20.4 / 18.9 KG",
+      "cbm": "0.157"
+    },
     "images": [
       "/images/products/TF211497.jpg",
       "/images/products/TF211497-5.jpg",
@@ -595,9 +651,17 @@
   {
     "id": "TF211527",
     "name": "Single-Tube Gatling Electric Continuous Fire Water Gun",
-    "moq": 40,
-    "price": 18.0,
+    "moq": 80,
+    "price": 14.5,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "41.5 x 21.5 x 15 cm",
+      "carton_size": "61 x 43 x 45 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "8 PCS",
+      "gw_nw": "10.3 / 8.8 KG",
+      "cbm": "0.118"
+    },
     "images": [
       "/images/products/TF211527.jpg",
       "/images/products/TF211527-6.jpg",
@@ -610,9 +674,17 @@
   {
     "id": "TF212336",
     "name": "Electric Water Gun",
-    "moq": 50,
-    "price": 10.38,
+    "moq": 100,
+    "price": 8.16,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "39 x 20 x 11 cm",
+      "carton_size": "57 x 40 x 42 cm",
+      "inner_qty": "Sealed Box",
+      "qty_per_carton": "10 PCS",
+      "gw_nw": "9.2 / 7.9 KG",
+      "cbm": "0.096"
+    },
     "images": [
       "/images/products/TF212336.jpg",
       "/images/products/TF212336-5.jpg",
@@ -625,9 +697,17 @@
   {
     "id": "TF212706",
     "name": "Ice Burst - Aurora Single Gun",
-    "moq": 240,
-    "price": 4.11,
+    "moq": 144,
+    "price": 3.42,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "24 x 21.5 x 7.5 cm",
+      "carton_size": "74 x 31.5 x 88 cm",
+      "inner_qty": "E-commerce Box",
+      "qty_per_carton": "48 PCS",
+      "gw_nw": "17.5 / 16 KG",
+      "cbm": "0.205"
+    },
     "images": [
       "/images/products/TF212706.jpg",
       "/images/products/TF212706-6.jpg",
@@ -641,9 +721,17 @@
   {
     "id": "TF212709",
     "name": "Ice Burst - Ice Flame Double Gun",
-    "moq": 90,
-    "price": 16.1,
+    "moq": 108,
+    "price": 12.33,
     "category": "Water Guns",
+    "specs": {
+      "packing_size": "36 x 24 x 14 cm",
+      "carton_size": "74 x 44 x 74 cm",
+      "inner_qty": "E-commerce Box",
+      "qty_per_carton": "18 PCS",
+      "gw_nw": "22.5 / 20.5 KG",
+      "cbm": "0.241"
+    },
     "images": [
       "/images/products/TF212709.jpg",
       "/images/products/TF212709-5.jpg",
