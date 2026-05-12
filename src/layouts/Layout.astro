@@ -7,43 +7,44 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-dark text-white">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Premium B2B Toy Manufacturer" />
+		<meta name="description" content="Premium B2B Toy Manufacturer | Global OEM/ODM Solutions" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-		<script src="https://cdn.tailwindcss.com"></script>
-		<script>
-			tailwind.config = {
-				theme: {
-					extend: {
-						colors: {
-							dark: '#0A0A0F',
-							gold: '#C9A84C',
-							card: '#1C1C28',
-						},
-						fontFamily: {
-							sans: ['Inter', 'sans-serif'],
-							display: ['Montserrat', 'sans-serif'],
-						}
-					}
-				}
-			}
-		</script>
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 	</head>
-	<body class="bg-dark text-white font-sans">
+	<body class="font-sans antialiased min-h-screen">
 		<slot />
 	</body>
 </html>
 <style is:global>
 	:root {
-		--accent: 201, 168, 76;
+		--gold: #C9A84C;
 	}
 	html {
 		scroll-behavior: smooth;
+		background: #0A0A0F;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+	}
+	/* Custom scrollbar for premium look */
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+	::-webkit-scrollbar-track {
+		background: #0A0A0F;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #C9A84C;
+		border-radius: 4px;
 	}
 </style>
