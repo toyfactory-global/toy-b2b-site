@@ -69,30 +69,30 @@ const { product } = Astro.props;
 								<span class="text-[9px] font-bold text-gold uppercase tracking-[0.4em]">Logistics Specifications</span>
 								<div class="h-px bg-white/5 flex-grow"></div>
 							</div>
-							<div class="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-12">
-								<div class="space-y-2">
-									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Packaging Size</div>
-									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.packing_size}</div>
+							<div class="grid grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-12">
+								<div class="space-y-3">
+									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Packaging Size</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.packing_size}</div>
 								</div>
-								<div class="space-y-2">
-									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Carton Dimensions</div>
-									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.carton_size}</div>
+								<div class="space-y-3">
+									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Carton Dimensions</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.carton_size}</div>
 								</div>
-								<div class="space-y-2">
-									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Inner Quantity</div>
-									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.inner_qty}</div>
+								<div class="space-y-3">
+									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Inner Quantity</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.inner_qty}</div>
 								</div>
-								<div class="space-y-2">
-									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Qty Per Carton</div>
-									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.qty_per_carton}</div>
+								<div class="space-y-3">
+									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Qty Per Carton</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.qty_per_carton}</div>
 								</div>
-								<div class="space-y-2">
-									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">G.W. / N.W.</div>
-									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.gw_nw}</div>
+								<div class="space-y-3">
+									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">G.W. / N.W.</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.gw_nw}</div>
 								</div>
-								<div class="space-y-2">
-									<div class="text-[8px] text-gray-600 uppercase tracking-widest font-bold">Volume (CBM)</div>
-									<div class="text-[11px] font-bold text-white uppercase tracking-tighter">{product.specs.cbm}</div>
+								<div class="space-y-3">
+									<div class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Volume (CBM)</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight">{product.specs.cbm}</div>
 								</div>
 							</div>
 						</div>
@@ -183,18 +183,18 @@ const { product } = Astro.props;
 					
 					<form class="grid grid-cols-1 md:grid-cols-2 gap-10">
 						<div class="space-y-4">
-							<label class="text-[8px] font-bold text-gray-600 uppercase tracking-widest ml-1">Client Representative</label>
-							<input type="text" class="w-full bg-card border border-white/5 p-5 focus:border-gold outline-none text-xs text-white uppercase tracking-widest placeholder:text-gray-800" placeholder="Full Name">
+							<label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Client Representative</label>
+							<input type="text" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-sm text-white uppercase tracking-widest placeholder:text-gray-700" placeholder="Full Name">
 						</div>
 						<div class="space-y-4">
-							<label class="text-[8px] font-bold text-gray-600 uppercase tracking-widest ml-1">Official Email</label>
-							<input type="email" class="w-full bg-card border border-white/5 p-5 focus:border-gold outline-none text-xs text-white uppercase tracking-widest placeholder:text-gray-800" placeholder="Business Address">
+							<label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Official Email</label>
+							<input type="email" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-sm text-white uppercase tracking-widest placeholder:text-gray-700" placeholder="Business Address">
 						</div>
 						<div class="col-span-full space-y-4">
-							<label class="text-[8px] font-bold text-gray-600 uppercase tracking-widest ml-1">Project Scope</label>
-							<textarea rows="4" class="w-full bg-card border border-white/5 p-5 focus:border-gold outline-none text-xs text-white uppercase tracking-widest leading-relaxed placeholder:text-gray-800" placeholder={`I am interested in Item: ${product.id} (${product.name}). Target quantity, branding requirements, and destination...`}></textarea>
+							<label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Project Scope</label>
+							<textarea rows="5" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-sm text-white uppercase tracking-widest leading-relaxed placeholder:text-gray-700" placeholder={`I am interested in Item: ${product.id} (${product.name}). Target quantity, branding requirements, and destination...`}></textarea>
 						</div>
-						<button class="bg-gold text-dark font-black py-6 uppercase hover:bg-white transition tracking-[0.4em] text-[10px] italic shadow-[0_20px_40px_rgba(201,168,76,0.1)]">
+						<button class="bg-gold text-dark font-black py-7 uppercase hover:bg-white transition tracking-[0.5em] text-xs italic shadow-[0_20px_50px_rgba(201,168,76,0.15)]">
 							Send Manufacturing Inquiry
 						</button>
 					</form>
