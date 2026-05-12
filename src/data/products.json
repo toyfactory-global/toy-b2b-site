@@ -449,6 +449,7 @@
     "moq": 120,
     "price": 6.46,
     "category": "Educational Toys",
+    "video": "/videos/TF197926.mp4",
     "specs": {
       "packing_size": "17 x 13.5 x 17.8 cm",
       "carton_size": "69 x 28.5 x 56 cm",
@@ -472,6 +473,7 @@
     "moq": 180,
     "price": 5.31,
     "category": "Water Guns",
+    "video": "/videos/TF210951.mp4",
     "specs": {
       "packing_size": "21.5 x 9 x 19 cm",
       "carton_size": "58 x 44 x 59.5 cm",
@@ -495,6 +497,7 @@
     "moq": 144,
     "price": 5.46,
     "category": "Water Guns",
+    "video": "/videos/TF210956.mp4",
     "specs": {
       "packing_size": "22 x 6.5 x 19 cm",
       "carton_size": "53 x 45 x 59.5 cm",
@@ -544,6 +547,7 @@
     "moq": 120,
     "price": 10.15,
     "category": "Water Guns",
+    "video": "/videos/TF210965.mp4",
     "specs": {
       "packing_size": "41 x 18.5 x 7 cm",
       "carton_size": "57 x 42 x 56.5 cm",
