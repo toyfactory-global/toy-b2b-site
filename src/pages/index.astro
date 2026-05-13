@@ -7,25 +7,25 @@ const categories = [
     id: 'Track Toys',
     title: 'Precision Track Systems',
     desc: 'Advanced orbital and magnetic track toys for educational development.',
-    banner: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=80&w=1920'
+    banner: '/images/cat-track.png'
   },
   {
     id: 'Bubble Toys',
     title: 'Magic Bubble Machines',
     desc: 'High-output automatic bubble machines and wands for summer fun.',
-    banner: 'https://images.unsplash.com/photo-1559101344-9646f04c6436?auto=format&fit=crop&q=80&w=1920'
+    banner: '/images/cat-bubble.png'
   },
   {
     id: 'Educational Toys',
     title: 'Educational & DIY',
     desc: 'STEM-focused toys, pottery machines, and creative learning tools.',
-    banner: 'https://images.unsplash.com/photo-1515488411123-1d227447d79b?auto=format&fit=crop&q=80&w=1920'
+    banner: '/images/cat-edu.png'
   },
   {
     id: 'Water Guns',
     title: 'Power Water Blast',
     desc: 'Automatic and high-capacity electric water guns for professional export.',
-    banner: 'https://images.unsplash.com/photo-1559728271-89771e16f86c?auto=format&fit=crop&q=80&w=1920'
+    banner: '/images/cat-water.png'
   }
 ];
 
@@ -62,36 +62,67 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 			<div class="absolute inset-0 z-0">
 				<div class="absolute inset-0 bg-gradient-to-r from-[#0A0A0F] via-[#0A0A0F]/60 to-transparent z-10"></div>
 				<img 
-					src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&q=80&w=1920" 
+					src="/images/hero-factory.png" 
 					class="w-full h-full object-cover" 
-					alt="Factory Hero" 
+					alt="Professional Toy Factory" 
 				/>
 			</div>
 			
 			<div class="relative z-20 max-w-[1600px] mx-auto px-8 w-full">
 				<div class="max-w-4xl">
 					<div class="inline-flex items-center gap-4 border-l-2 border-gold pl-6 mb-10">
-						<span class="text-sm font-bold uppercase tracking-[0.4em] text-gold">Premium Factory Direct</span>
+						<span class="text-sm font-bold uppercase tracking-[0.4em] text-gold">Manufacturing Since 2006</span>
 					</div>
 					<h1 class="text-7xl md:text-9xl font-display font-extrabold leading-[0.85] mb-10 uppercase tracking-tighter text-white">
-						Global<br/>Supply<br/><span class="text-gold">Excellence.</span>
+						Factory<br/>Direct<br/><span class="text-gold">Excellence.</span>
 					</h1>
 					<p class="text-xl md:text-2xl text-gray-300 mb-14 max-w-2xl leading-relaxed font-light uppercase tracking-wide">
-						Professional OEM/ODM manufacturing for the world's leading toy distributors.
+						Professional OEM/ODM manufacturing excellence for global distribution standards.
 					</p>
 					<div class="flex flex-wrap gap-8">
 						<a href="#products-start" class="bg-white text-dark px-12 py-6 font-bold uppercase text-xs tracking-[0.3em] hover:bg-gold hover:scale-105 transition-all duration-500">
-							View Collections
+							Explore Catalog
 						</a>
 						<div class="flex items-center gap-12">
 							<div class="text-left">
-								<div class="text-3xl font-bold font-display text-white italic">7-Day</div>
-								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mt-1">Fast Sampling</div>
+								<div class="text-3xl font-bold font-display text-white italic">5000m²</div>
+								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mt-1">Factory Area</div>
 							</div>
 							<div class="text-left">
-								<div class="text-3xl font-bold font-display text-white italic">30+</div>
-								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mt-1">Years Expert</div>
+								<div class="text-3xl font-bold font-display text-white italic">ISO/BSCI</div>
+								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mt-1">Audit Passed</div>
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Factory Profile Section -->
+		<section class="py-40 bg-[#0D0D12]">
+			<div class="max-w-[1600px] mx-auto px-8">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+					<div>
+						<h2 class="text-5xl md:text-7xl font-display font-extrabold uppercase tracking-tighter text-white mb-10 italic">Our<br/><span class="text-gold">Heritage.</span></h2>
+						<div class="flex gap-4 mb-10">
+							<span class="px-4 py-2 bg-gold/10 border border-gold/20 text-gold text-[10px] font-bold uppercase tracking-widest">Est. 2006</span>
+							<span class="px-4 py-2 bg-gold/10 border border-gold/20 text-gold text-[10px] font-bold uppercase tracking-widest">Chenghai Base</span>
+							<span class="px-4 py-2 bg-gold/10 border border-gold/20 text-gold text-[10px] font-bold uppercase tracking-widest">OEM/ODM Expert</span>
+						</div>
+					</div>
+					<div class="space-y-8">
+						<p class="text-gray-300 text-lg leading-[1.8] font-light">
+							Established in 2006 and located in Chenghai, Guangdong Province, which is famous as the Toys & Gifts Production Base in China. We are a professional China toys manufacturer and exporter offering excellent OEM/ODM service to global famous brands.
+						</p>
+						<p class="text-gray-400 text-sm leading-[2] uppercase tracking-wide">
+							The factory covers more than 5000m², passing audits such as GMPC, ISO 22716, GSV, BSCI, and SEDEX. We specialize in high-quality toy production across multiple categories including beauty sets, STEM learning, water guns, and bubble toys. Providing the best quality goods and wonderful services for clients is our principle. No matter how your order quantity is, our professional staff will provide sincere and enthusiastic service.
+						</p>
+						<div class="grid grid-cols-2 md:grid-cols-3 gap-8 pt-8">
+							{['EN-71', 'ASTM', 'BSCI', 'ISO 22716', 'GSV', 'SEDEX'].map(cert => (
+								<div class="border border-white/5 p-6 text-center hover:border-gold/30 transition-colors group">
+									<div class="text-white font-bold text-xs uppercase tracking-widest group-hover:text-gold transition-colors">{cert}</div>
+								</div>
+							))}
 						</div>
 					</div>
 				</div>
