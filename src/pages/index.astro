@@ -142,7 +142,9 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 					<img src={cat.banner} class="w-full h-full object-cover" alt={cat.title} />
 					<div class="relative z-20 max-w-[1600px] mx-auto px-8 w-full text-center">
 						<span class="text-gold font-bold text-xs uppercase tracking-[0.5em] mb-6 block drop-shadow-md">Collection {index + 1}</span>
-						<h2 class="text-5xl md:text-7xl font-display font-extrabold uppercase tracking-tighter text-white mb-6 italic drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">{cat.title}</h2>
+						<h2 class="text-5xl md:text-7xl font-display font-extrabold uppercase tracking-tighter text-white mb-6 italic drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
+							{cat.title === "Water Guns" ? "Power Water GUN" : cat.title}
+						</h2>
 						<p class="max-w-2xl mx-auto text-gray-100 uppercase text-[10px] tracking-[0.3em] font-bold drop-shadow-md">{cat.desc}</p>
 					</div>
 				</div>
