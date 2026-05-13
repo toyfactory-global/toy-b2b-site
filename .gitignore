@@ -11,3 +11,4 @@ yarn-error.log*
 pnpm-debug.log*
 *.bak
 large_videos/
+public/videos/
