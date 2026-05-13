@@ -149,7 +149,6 @@
     "moq": 240,
     "price": 6.18,
     "category": "Bubble Toys",
-    "video": "/videos/TF213249.mp4",
     "specs": {
       "packing_size": "9.8 x 9.8 x 37 cm",
       "carton_size": "83 x 40.5 x 66 cm",
@@ -174,7 +173,6 @@
     "moq": 80,
     "price": 6.67,
     "category": "Bubble Toys",
-    "video": "/videos/TF213293.mp4",
     "specs": {
       "packing_size": "22 x 14.5 x 20.5 cm",
       "carton_size": "60 x 42.5 x 46.5 cm",
@@ -221,7 +219,6 @@
     "moq": 180,
     "price": 5.65,
     "category": "Bubble Toys",
-    "video": "/videos/TF213303.mp4",
     "specs": {
       "packing_size": "19 x 13 x 28.5 cm",
       "carton_size": "81 x 39.5 x 87.5 cm",
@@ -247,7 +244,6 @@
     "moq": 600,
     "price": 1.58,
     "category": "Bubble Toys",
-    "video": "/videos/TF213393.mp4",
     "specs": {
       "packing_size": "15 x 7 x 15 cm",
       "carton_size": "84 x 31 x 76 cm",
@@ -547,7 +543,6 @@
     "moq": 120,
     "price": 10.15,
     "category": "Water Guns",
-    "video": "/videos/TF210965.mp4",
     "specs": {
       "packing_size": "41 x 18.5 x 7 cm",
       "carton_size": "57 x 42 x 56.5 cm",
