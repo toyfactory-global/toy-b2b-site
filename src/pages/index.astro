@@ -60,7 +60,8 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 		<!-- Large Hero Poster -->
 		<section class="relative h-[90vh] flex items-center overflow-hidden">
 			<div class="absolute inset-0 z-0">
-				<div class="absolute inset-0 bg-gradient-to-r from-[#0A0A0F] via-[#0A0A0F]/60 to-transparent z-10"></div>
+				<!-- Minimal overlay for text readability -->
+				<div class="absolute inset-0 bg-black/10 z-10"></div>
 				<img 
 					src="/images/hero-factory.png" 
 					class="w-full h-full object-cover" 
@@ -71,26 +72,26 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 			<div class="relative z-20 max-w-[1600px] mx-auto px-8 w-full">
 				<div class="max-w-4xl">
 					<div class="inline-flex items-center gap-4 border-l-2 border-gold pl-6 mb-10">
-						<span class="text-sm font-bold uppercase tracking-[0.4em] text-gold">Manufacturing Since 2006</span>
+						<span class="text-sm font-bold uppercase tracking-[0.4em] text-gold drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Manufacturing Since 2006</span>
 					</div>
-					<h1 class="text-7xl md:text-9xl font-display font-extrabold leading-[0.85] mb-10 uppercase tracking-tighter text-white">
+					<h1 class="text-7xl md:text-9xl font-display font-extrabold leading-[0.85] mb-10 uppercase tracking-tighter text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
 						Factory<br/>Direct<br/><span class="text-gold">Excellence.</span>
 					</h1>
-					<p class="text-xl md:text-2xl text-gray-300 mb-14 max-w-2xl leading-relaxed font-light uppercase tracking-wide">
+					<p class="text-xl md:text-2xl text-gray-100 mb-14 max-w-2xl leading-relaxed font-bold uppercase tracking-wide drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
 						Professional OEM/ODM manufacturing excellence for global distribution standards.
 					</p>
 					<div class="flex flex-wrap gap-8">
-						<a href="#products-start" class="bg-white text-dark px-12 py-6 font-bold uppercase text-xs tracking-[0.3em] hover:bg-gold hover:scale-105 transition-all duration-500">
+						<a href="#products-start" class="bg-white text-dark px-12 py-6 font-bold uppercase text-xs tracking-[0.3em] hover:bg-gold hover:scale-105 transition-all duration-500 shadow-2xl">
 							Explore Catalog
 						</a>
 						<div class="flex items-center gap-12">
 							<div class="text-left">
-								<div class="text-3xl font-bold font-display text-white italic">5000m²</div>
-								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mt-1">Factory Area</div>
+								<div class="text-3xl font-bold font-display text-white italic drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">5000m²</div>
+								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-200 mt-1 font-bold drop-shadow-md">Factory Area</div>
 							</div>
 							<div class="text-left">
-								<div class="text-3xl font-bold font-display text-white italic">ISO/BSCI</div>
-								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mt-1">Audit Passed</div>
+								<div class="text-3xl font-bold font-display text-white italic drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">ISO/BSCI</div>
+								<div class="text-[9px] uppercase tracking-[0.3em] text-gray-200 mt-1 font-bold drop-shadow-md">Audit Passed</div>
 							</div>
 						</div>
 					</div>
@@ -136,12 +137,13 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 			<section id={cat.id.replace(/\s+/g, '-').toLowerCase()} class="pb-32">
 				<!-- Category Poster -->
 				<div class="relative h-[50vh] flex items-center overflow-hidden mb-20 border-y border-white/5">
-					<div class="absolute inset-0 bg-dark/70 z-10"></div>
+					<!-- Minimal overlay for text readability -->
+					<div class="absolute inset-0 bg-black/20 z-10"></div>
 					<img src={cat.banner} class="w-full h-full object-cover" alt={cat.title} />
 					<div class="relative z-20 max-w-[1600px] mx-auto px-8 w-full text-center">
-						<span class="text-gold font-bold text-xs uppercase tracking-[0.5em] mb-6 block">Collection {index + 1}</span>
-						<h2 class="text-5xl md:text-7xl font-display font-extrabold uppercase tracking-tighter text-white mb-6 italic">{cat.title}</h2>
-						<p class="max-w-2xl mx-auto text-gray-400 uppercase text-[10px] tracking-[0.3em] font-bold">{cat.desc}</p>
+						<span class="text-gold font-bold text-xs uppercase tracking-[0.5em] mb-6 block drop-shadow-md">Collection {index + 1}</span>
+						<h2 class="text-5xl md:text-7xl font-display font-extrabold uppercase tracking-tighter text-white mb-6 italic drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">{cat.title}</h2>
+						<p class="max-w-2xl mx-auto text-gray-100 uppercase text-[10px] tracking-[0.3em] font-bold drop-shadow-md">{cat.desc}</p>
 					</div>
 				</div>
 
