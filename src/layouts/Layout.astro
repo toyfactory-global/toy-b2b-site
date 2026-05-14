@@ -10,11 +10,31 @@ const { title } = Astro.props;
 <html lang="en" class="bg-dark text-white">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Premium B2B Toy Manufacturer | Global OEM/ODM Solutions" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+
+		<!-- Primary Meta Tags -->
+		<meta name="title" content={title} />
+		<meta name="description" content="Toy Factory Global - Premium B2B Toy Manufacturer specializing in high-demand toy export. Global OEM/ODM Solutions for Bubble Machines, Track Toys, and STEM." />
+		<meta name="keywords" content="Toy Manufacturer, B2B Toy Export, OEM Toy Factory, ODM Toy Solutions, Bubble Machines Wholesale, Track Toys Manufacturer, STEM Toys Factory" />
+		<meta name="author" content="Toy Factory Global" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://toyfactoryglobal.com/" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content="Elite manufacturing infrastructure specializing in high-demand toy export. Precision engineering and global distribution standards." />
+		<meta property="og:image" content="https://toyfactoryglobal.com/images/hero-factory.png" />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content="https://toyfactoryglobal.com/" />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content="Elite manufacturing infrastructure specializing in high-demand toy export." />
+		<meta property="twitter:image" content="https://toyfactoryglobal.com/images/hero-factory.png" />
+
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
