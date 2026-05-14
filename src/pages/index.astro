@@ -245,14 +245,18 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 				</div>
 				<div>
 					<h5 class="text-white text-[10px] font-bold uppercase tracking-[0.4em] mb-10">Resources</h5>
-					<div class="flex flex-col gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">
-						<div class="flex flex-col gap-2">
-							<span class="text-white">Direct Factory Contact</span>
-							<p class="text-gray-500 normal-case tracking-normal">WhatsApp / WeChat / Tel: +86 15976917707</p>
-							<p class="text-gray-500 normal-case tracking-normal">Email: hntoys7@sinuotoys.com</p>
+					<div class="flex flex-col gap-6 text-[10px] font-bold uppercase tracking-[0.2em]">
+						<div class="flex flex-col gap-3">
+							<span class="text-gold text-xs">Direct Factory Contact</span>
+							<div class="flex flex-col gap-1">
+								<p class="text-white text-sm normal-case tracking-tight font-medium">WhatsApp / WeChat / Tel: <span class="text-gold">+86 15976917707</span></p>
+								<p class="text-white text-sm normal-case tracking-tight font-medium">Email: <span class="text-gold">hntoys7@sinuotoys.com</span></p>
+							</div>
 						</div>
-						<a href="#" class="hover:text-gold transition">Compliance</a>
-						<a href="#" class="hover:text-gold transition">Case Studies</a>
+						<div class="flex flex-col gap-4 text-gray-500">
+							<a href="#" class="hover:text-gold transition">Compliance</a>
+							<a href="#" class="hover:text-gold transition">Case Studies</a>
+						</div>
 					</div>
 				</div>
 			</div>
