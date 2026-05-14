@@ -772,5 +772,83 @@
       "/images/products/TF212709-2.jpg",
       "/images/products/TF212709-3.jpg"
     ]
+  },
+  {
+    "id": "TF200892",
+    "name": "Industrial Garden Lamp Bubble Machine - High-Volume Outdoor Edition",
+    "moq": 72,
+    "price": 4.34,
+    "category": "Bubble Toys",
+    "video": "/videos/TF200892.mp4",
+    "specs": {
+      "packing_size": "19 x 13 x 28.5 cm",
+      "carton_size": "87 x 41 x 78.5 cm",
+      "inner_qty": "0 PCS",
+      "qty_per_carton": "36 PCS",
+      "gw_nw": "26.6 / 24.5 KG",
+      "cbm": "0.28"
+    },
+    "images": [
+      "/images/products/TF200892.jpg",
+      "/images/products/TF200892-1.jpg",
+      "/images/products/TF200892-2.jpg",
+      "/images/products/TF200892-3.jpg",
+      "/images/products/TF200892-4.jpg",
+      "/images/products/TF200892-5.jpg",
+      "/images/products/TF200892-6.jpg",
+      "/images/products/TF200892-9.jpg",
+      "/images/products/TF200892-10.jpg",
+      "/images/products/TF200893.jpg"
+    ]
+  },
+  {
+    "id": "TF200888",
+    "name": "Sunflower Multi-Hole Electric Bubble Gun - Professional Event Edition",
+    "moq": 96,
+    "price": 3.65,
+    "category": "Bubble Toys",
+    "video": "/videos/TF200888.mp4",
+    "specs": {
+      "packing_size": "12.4 x 12.4 x 28.3 cm",
+      "carton_size": "86.5 x 51.5 x 52 cm",
+      "inner_qty": "0 PCS",
+      "qty_per_carton": "48 PCS",
+      "gw_nw": "20.9 / 18.9 KG",
+      "cbm": "0.232"
+    },
+    "images": [
+      "/images/products/TF200888.jpg",
+      "/images/products/TF200888-1.jpg",
+      "/images/products/TF200888-2.jpg",
+      "/images/products/TF200888-3.jpg",
+      "/images/products/TF200888-4.jpg",
+      "/images/products/TF200888-5.jpg",
+      "/images/products/TF200888-6.jpg",
+      "/images/products/TF200888-7.jpg",
+      "/images/products/TF200889.jpg"
+    ]
+  },
+  {
+    "id": "TF169193",
+    "name": "12-in-1 Solar Powered Robot STEM DIY Assembly Kit",
+    "moq": 96,
+    "price": 4.5,
+    "category": "Educational Toys",
+    "specs": {
+      "packing_size": "28 x 6.5 x 18 cm",
+      "carton_size": "80.5 x 37.5 x 58 cm",
+      "inner_qty": "0 PCS",
+      "qty_per_carton": "48 PCS",
+      "gw_nw": "24 / 22 KG",
+      "cbm": "0.175"
+    },
+    "images": [
+      "/images/products/TF169193.jpg",
+      "/images/products/TF169193-1.jpg",
+      "/images/products/TF169193-2.jpg",
+      "/images/products/TF169193-3.jpg",
+      "/images/products/TF169193-4.jpg",
+      "/images/products/TF169193-5.jpg"
+    ]
   }
 ]
