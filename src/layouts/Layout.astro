@@ -46,6 +46,24 @@ const defaultKeywords = "Toy Manufacturer, B2B Toy Export, OEM Toy Factory, ODM 
 	</head>
 	<body class="font-sans antialiased min-h-screen">
 		<slot />
+
+		<script>
+			// Smooth scrolling for anchor links without changing URL hash
+			document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+				anchor.addEventListener('click', function (e) {
+					const href = this.getAttribute('href');
+					if (href && href.startsWith('#') && href !== '#') {
+						e.preventDefault();
+						const targetElement = document.querySelector(href);
+						if (targetElement) {
+							targetElement.scrollIntoView({
+								behavior: 'smooth'
+							});
+						}
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
 <style is:global>
