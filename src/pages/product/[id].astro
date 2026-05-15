@@ -12,7 +12,11 @@ export function getStaticPaths() {
 const { product } = Astro.props;
 ---
 
-<Layout title={`${product.name} | TOYFACTORY Specifications`}>
+<Layout 
+	title={product.seo_title || `${product.name} | TOYFACTORY Specifications`}
+	description={product.seo_description}
+	keywords={product.seo_keywords}
+>
 	<!-- Navbar -->
 	<nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
 		<div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
