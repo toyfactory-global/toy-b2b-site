@@ -48,7 +48,20 @@ const defaultKeywords = "Toy Manufacturer, B2B Toy Export, OEM Toy Factory, ODM 
 		<slot />
 
 		<script>
-			// Smooth scrolling for anchor links without changing URL hash
+			// 1. Disable browser's automatic scroll restoration to ensure it starts at the top
+			if ('scrollRestoration' in history) {
+				history.scrollRestoration = 'manual';
+			}
+
+			// 2. Clear hash on initial load to prevent the browser from jumping to sections
+			if (window.location.hash) {
+				history.replaceState("", document.title, window.location.pathname + window.location.search);
+			}
+
+			// 3. Force scroll to top on every load
+			window.scrollTo(0, 0);
+
+			// 4. Smooth scrolling for anchor links without changing URL hash
 			document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 				anchor.addEventListener('click', function (e) {
 					const href = this.getAttribute('href');
