@@ -37,6 +37,64 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 	description="Leading toy manufacturer specializing in high-demand bubble machines, STEM robots, and precision track toys. Certified B2B export facility with OEM/ODM global solutions."
 	keywords="B2B Toy Manufacturer, Wholesale Bubble Machine, STEM Robot Kit Factory, Track Toy Exporter, China Toy Factory OEM"
 >
+	<!-- JSON-LD: WebSite Schema -->
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"@id": "https://toyfactoryglobal.com/#website",
+			"url": "https://toyfactoryglobal.com",
+			"name": "TOYFACTORY | Premium B2B Toy Manufacturer",
+			"description": "Leading toy manufacturer specializing in high-demand bubble machines, STEM robots, and precision track toys.",
+			"publisher": { "@id": "https://toyfactoryglobal.com/#organization" },
+			"inLanguage": "en",
+			"potentialAction": {
+				"@type": "SearchAction",
+				"target": "https://toyfactoryglobal.com/product/{search_term_string}",
+				"query-input": "required name=search_term_string"
+			}
+		}
+	</script>
+
+	<!-- JSON-LD: FAQPage Schema (AEO: Answer Engine Optimization) -->
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			"mainEntity": [
+				{
+					"@type": "Question",
+					"name": "Where can I wholesale industrial bubble machines from China?",
+					"acceptedAnswer": { "@type": "Answer", "text": "TOYFACTORY is an ISO 9001:2015 certified manufacturer in Shantou, China, specializing in high-volume bubble machines, electric bubble guns, and garden lamp bubble machines. We offer direct factory pricing with MOQ starting from 72 units and global shipping from Yantian port." }
+				},
+				{
+					"@type": "Question",
+					"name": "Does TOYFACTORY support OEM and private label manufacturing?",
+					"acceptedAnswer": { "@type": "Answer", "text": "Yes. TOYFACTORY provides full OEM/ODM services including custom color formulation, private labeling, custom packaging design, and mold development. Our engineering team supports fast prototyping for qualified buyers." }
+				},
+				{
+					"@type": "Question",
+					"name": "What certifications does this toy factory hold?",
+					"acceptedAnswer": { "@type": "Answer", "text": "TOYFACTORY products meet international safety standards including CE (Europe), ASTM F963 (USA), EN-71, RoHS, and ISO 9001:2015 quality management. Our facility also holds BSCI, SEDEX, and GSV factory audit certifications." }
+				},
+				{
+					"@type": "Question",
+					"name": "How does the wholesale pricing and MOQ work at TOYFACTORY?",
+					"acceptedAnswer": { "@type": "Answer", "text": "TOYFACTORY operates tiered wholesale pricing: base MOQ ranges from 35 to 108 units depending on the product. Unit prices decrease at higher volumes (158+ units and 526+ units). Contact our sales team via WhatsApp at +86 15976917707 for a tailored quotation." }
+				},
+				{
+					"@type": "Question",
+					"name": "What is the shipping and logistics process for international toy orders?",
+					"acceptedAnswer": { "@type": "Answer", "text": "Orders are shipped FOB from Yantian or Shantou port. Standard production lead time is 25-35 days after deposit confirmation. Each product page lists complete carton dimensions, CBM, and gross/net weight for accurate freight calculation." }
+				},
+				{
+					"@type": "Question",
+					"name": "Can I get samples before placing a bulk order?",
+					"acceptedAnswer": { "@type": "Answer", "text": "Yes, sample orders are available for quality evaluation. Sample fees are refundable against your first bulk order. Contact our sales representative Annie via email at hntoys7@sinuotoys.com to arrange sample shipment." }
+				}
+			]
+		}
+	</script>
 	<!-- Navbar -->
 	<nav class="fixed w-full z-50 bg-[#0A0A0F]/90 backdrop-blur-xl border-b border-white/5">
 		<div class="max-w-[1600px] mx-auto px-8 h-24 flex items-center justify-between">
@@ -228,6 +286,45 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 								Submit Project Inquiry
 							</button>
 						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- AEO FAQ Section — Answer Engine Optimization for AI Search -->
+		<section class="py-32 bg-[#0A0A0F] border-t border-white/5">
+			<div class="max-w-[1200px] mx-auto px-8">
+				<div class="flex items-center gap-6 mb-20">
+					<span class="w-12 h-[2px] bg-gold self-center"></span>
+					<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em]">Frequently Asked Questions</span>
+				</div>
+				<h2 class="text-4xl md:text-5xl font-display font-extrabold text-white mb-20 uppercase tracking-tighter italic">
+					B2B Buyers <span class="text-gold">Ask.</span>
+				</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
+					<div class="space-y-5">
+						<h3 class="text-white text-base font-bold tracking-wide">Where can I wholesale industrial bubble machines from China?</h3>
+						<p class="text-gray-400 text-sm leading-[1.8]">TOYFACTORY is an ISO 9001:2015 certified manufacturer in Shantou, China, specializing in high-volume bubble machines, electric bubble guns, and garden lamp bubble machines. We offer direct factory pricing with MOQ starting from 72 units and global shipping from Yantian port.</p>
+					</div>
+					<div class="space-y-5">
+						<h3 class="text-white text-base font-bold tracking-wide">Does TOYFACTORY support OEM and private label manufacturing?</h3>
+						<p class="text-gray-400 text-sm leading-[1.8]">Yes. We provide full OEM/ODM services including custom color formulation, private labeling, custom packaging design, and mold development. Our engineering team supports fast prototyping for qualified buyers.</p>
+					</div>
+					<div class="space-y-5">
+						<h3 class="text-white text-base font-bold tracking-wide">What certifications does this toy factory hold?</h3>
+						<p class="text-gray-400 text-sm leading-[1.8]">TOYFACTORY products meet CE, ASTM F963, EN-71, and RoHS international safety standards. Our facility also holds BSCI, SEDEX, and GSV factory audit certifications.</p>
+					</div>
+					<div class="space-y-5">
+						<h3 class="text-white text-base font-bold tracking-wide">How does the wholesale pricing and MOQ work?</h3>
+						<p class="text-gray-400 text-sm leading-[1.8]">We operate tiered wholesale pricing: base MOQ ranges from 35 to 108 units. Prices decrease at higher volumes (158+ and 526+ units). Contact our team via WhatsApp at +86 15976917707 for a tailored quotation.</p>
+					</div>
+					<div class="space-y-5">
+						<h3 class="text-white text-base font-bold tracking-wide">What is the shipping process for international toy orders?</h3>
+						<p class="text-gray-400 text-sm leading-[1.8]">Orders ship FOB from Yantian or Shantou port with 25-35 days lead time. Each product page lists complete carton dimensions, CBM, and weight for accurate freight calculation.</p>
+					</div>
+					<div class="space-y-5">
+						<h3 class="text-white text-base font-bold tracking-wide">Can I get samples before placing a bulk order?</h3>
+						<p class="text-gray-400 text-sm leading-[1.8]">Yes. Sample orders for quality evaluation are available. Sample fees are refundable against your first bulk order. Contact Annie at hntoys7@sinuotoys.com to arrange shipment.</p>
 					</div>
 				</div>
 			</div>

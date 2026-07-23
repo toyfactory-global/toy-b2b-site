@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://toyfactoryglobal.com/sitemap.xml
+
+# Crawl-delay: 2
