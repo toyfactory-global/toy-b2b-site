@@ -10,6 +10,9 @@ const pages = [
   { loc: '/privacy', priority: 0.3, changefreq: 'monthly' },
   { loc: '/terms', priority: 0.3, changefreq: 'monthly' },
   { loc: '/return', priority: 0.3, changefreq: 'monthly' },
+  { loc: '/blog', priority: 0.7, changefreq: 'weekly' },
+  { loc: '/blog/bubble-machine-buyer-guide', priority: 0.6, changefreq: 'monthly' },
+  { loc: '/blog/stem-toys-import-guide', priority: 0.6, changefreq: 'monthly' },
 ];
 
 // Load products and generate product detail URLs
