@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const posts = [
+  {
+    slug: 'bubble-machine-buyer-guide',
+    title: 'How to Choose the Right Bubble Machine: A Wholesale Buyer\'s Guide',
+    date: '2026-07-24',
+    excerpt: 'Not all bubble machines are created equal. From industrial garden lamps to multi-hole bubble guns, learn the 5 key factors wholesale buyers must evaluate before placing a bulk order.',
+    category: 'Product Guide',
+    image: '/images/products/TF200892-3.jpg'
+  },
+  {
+    slug: 'stem-toys-import-guide',
+    title: 'STEM Toys Import Guide 2026: What Distributors Need to Know',
+    date: '2026-07-24',
+    excerpt: 'The global STEM toy market is projected to exceed $15 billion by 2028. Discover which educational toys are driving demand, which certifications matter, and how to source from ISO-certified factories.',
+    category: 'Industry Insights',
+    image: '/images/products/TF169193.jpg'
+  }
+];
+---
+
+<Layout 
+  title="Blog | TOYFACTORY — B2B Toy Industry Insights & Guides"
+  description="Expert guides for wholesale toy buyers: bubble machine selection, STEM toy import tips, certification requirements, and factory sourcing strategies."
+  keywords="Toy Industry Blog, Wholesale Toy Guide, Bubble Machine Buyer Guide, STEM Toy Import, Toy Factory Insights"
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO CATALOG
+      </a>
+    </div>
+  </nav>
+
+  <main class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="flex items-center gap-6 mb-6">
+        <span class="w-12 h-[2px] bg-gold self-center"></span>
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em]">Industry Insights</span>
+      </div>
+      <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-6 uppercase tracking-tighter italic">
+        Toy Industry <span class="text-gold">Blog.</span>
+      </h1>
+      <p class="text-gray-400 text-sm uppercase tracking-[0.2em] mb-20 max-w-2xl leading-relaxed">
+        Expert sourcing guides, market trends, and factory insights for wholesale toy buyers and global distributors.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {posts.map(post => (
+          <a href={`/blog/${post.slug}`} class="group bg-[#15151A] border border-white/5 hover:border-gold/30 transition-all duration-500 flex flex-col">
+            <div class="aspect-[16/9] overflow-hidden bg-white/5">
+              <img src={post.image} alt={post.title} class="w-full h-full object-cover group-hover:scale-105 transition duration-700" loading="lazy" />
+            </div>
+            <div class="p-8 flex-grow flex flex-col">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">{post.category}</span>
+                <span class="text-[9px] text-gray-500 uppercase tracking-widest">{post.date}</span>
+              </div>
+              <h2 class="text-xl font-bold text-white mb-3 uppercase tracking-tight leading-tight group-hover:text-gold transition line-clamp-2">
+                {post.title}
+              </h2>
+              <p class="text-gray-500 text-xs leading-relaxed mb-6 line-clamp-3">{post.excerpt}</p>
+              <div class="mt-auto text-gold text-[10px] font-bold uppercase tracking-[0.3em] group-hover:tracking-[0.5em] transition-all">
+                Read Article &rarr;
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-32 pt-20 border-t border-white/5 text-center">
+        <h3 class="text-2xl font-display font-bold text-white mb-6 uppercase italic">Ready to Source?</h3>
+        <p class="text-gray-500 text-xs uppercase tracking-[0.2em] mb-10">Skip the research — talk directly to our factory team.</p>
+        <a href="/#rfq" class="inline-block bg-gold text-dark px-14 py-6 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-white transition-all">
+          Start Your RFQ
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-24 border-t border-white/5 bg-[#050508] text-center">
+    <div class="flex flex-col items-center gap-6">
+      <div class="flex gap-10 text-[9px] text-gray-400 uppercase tracking-[0.4em] font-bold">
+        <a href="/privacy" class="hover:text-gold transition">Privacy</a>
+        <a href="/terms" class="hover:text-gold transition">Terms</a>
+        <a href="/return" class="hover:text-gold transition">Returns</a>
+      </div>
+      <div class="text-[9px] text-gray-500 uppercase tracking-[0.4em] font-bold italic">
+        &copy; 2026 TOYFACTORY Manufacturing. Global B2B Standards.
+      </div>
+    </div>
+  </footer>
+</Layout>
