@@ -14,6 +14,7 @@ const pages = [
   { loc: '/blog/bubble-machine-buyer-guide', priority: 0.6, changefreq: 'monthly' },
   { loc: '/blog/stem-toys-import-guide', priority: 0.6, changefreq: 'monthly' },
   { loc: '/blog/water-gun-wholesale-guide', priority: 0.6, changefreq: 'monthly' },
+  { loc: '/blog/track-car-wholesale-guide', priority: 0.6, changefreq: 'monthly' },
 ];
 
 // Load products and generate product detail URLs
