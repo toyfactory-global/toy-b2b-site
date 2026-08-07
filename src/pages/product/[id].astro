@@ -42,6 +42,32 @@ const productSchema = {
   }
 };
 
+// Build JSON-LD VideoObject schema (only when product has a video)
+const videoUrl = product.video
+  ? product.video.startsWith('http')
+    ? product.video
+    : `https://toyfactoryglobal.com${product.video}`
+  : null;
+
+const videoSchema = videoUrl ? {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "@id": `${videoUrl}#video`,
+  "name": `${product.name} — Factory Wholesale Video`,
+  "description": product.seo_description || `${product.name} product demo video. Factory-direct wholesale from TOYFACTORY, ISO 9001:2015 certified.`,
+  "thumbnailUrl": product.images[0] ? `https://toyfactoryglobal.com${product.images[0]}` : "https://toyfactoryglobal.com/favicon.svg",
+  "uploadDate": "2026-01-01",
+  "contentUrl": videoUrl,
+  "embedUrl": videoUrl,
+  "publisher": { "@id": "https://toyfactoryglobal.com/#organization" },
+  "offers": {
+    "@type": "Offer",
+    "price": String(product.price),
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  }
+} : null;
+
 // Build JSON-LD BreadcrumbList schema
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -73,6 +99,11 @@ const faqSchema = {
 >
 	<!-- JSON-LD: Product Schema (Google Merchant, AI Assistants) -->
 	<script type="application/ld+json">{JSON.stringify(productSchema)}</script>
+
+	<!-- JSON-LD: VideoObject Schema (Google Video Rich Results) -->
+	{videoSchema && (
+		<script type="application/ld+json">{JSON.stringify(videoSchema)}</script>
+	)}
 
 	<!-- JSON-LD: BreadcrumbList Schema -->
 	<script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
