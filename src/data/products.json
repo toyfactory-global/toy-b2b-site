@@ -866,5 +866,84 @@
       "/images/products/TF212709-2.webp",
       "/images/products/TF212709-3.webp"
     ]
+  },
+  {
+    "id": "TF199679",
+    "name": "2-In-1 Electric Space Water Gun Bubble Gun Combo",
+    "moq": 80,
+    "price": 7.27,
+    "category": "Water Guns",
+    "seo_title": "2-in-1 Electric Space Water Gun Bubble Gun Wholesale Factory",
+    "seo_description": "Dual-function electric space water gun and bubble gun 2-in-1 combo, factory-direct from TOYFACTORY. LED light effects, high-volume bubble output, wholesale MOQ 80 PCS.",
+    "seo_keywords": "2-in-1 Water Gun Bubble Gun, Electric Bubble Gun Wholesale, Space Water Gun Factory, Water Gun Bubble Combo, Toy Factory China",
+    "specs": {
+      "packing_size": "37 x 8.5 x 24.5 cm",
+      "carton_size": "78 x 67.5 x 57 cm",
+      "inner_qty": "Display Box",
+      "qty_per_carton": "36 PCS",
+      "gw_nw": "26.5 / 24.4 KG",
+      "cbm": "0.3"
+    },
+    "images": [
+      "/images/products/TF199679.webp",
+      "/images/products/TF199679-1.webp",
+      "/images/products/TF199679-2.webp",
+      "/images/products/TF199679-3.webp"
+    ]
+  },
+  {
+    "id": "TF211492",
+    "name": "Dual Function Electric Light Water Gun Bubble All-in-One Machine",
+    "moq": 80,
+    "price": 7.27,
+    "category": "Water Guns",
+    "video": "/videos/TF211492.mp4",
+    "seo_title": "Dual Function Electric Water Gun Bubble All-in-One Machine Wholesale",
+    "seo_description": "Dual-function electric light water gun and bubble blower all-in-one machine. LED lights, water + bubble modes, factory-direct wholesale from TOYFACTORY.",
+    "seo_keywords": "Dual Function Water Gun, Bubble All-in-One Machine, Electric Light Water Gun, Water Bubble Gun Wholesale, Toy Factory China",
+    "specs": {
+      "packing_size": "36.5 x 21.5 x 6.6 cm",
+      "carton_size": "54.5 x 37.5 x 44.5 cm",
+      "inner_qty": "Display Box",
+      "qty_per_carton": "16 PCS",
+      "gw_nw": "10.5 / 9.5 KG",
+      "cbm": "0.091"
+    },
+    "images": [
+      "/images/products/TF211492.webp",
+      "/images/products/TF211492-1.webp",
+      "/images/products/TF211492-2.webp",
+      "/images/products/TF211492-3.webp",
+      "/images/products/TF211492-4.webp",
+      "/images/products/TF211492-5.webp"
+    ]
+  },
+  {
+    "id": "TF214001",
+    "name": "Electric 2-in-1 Bubble Water Gun with LED Light",
+    "moq": 80,
+    "price": 7.27,
+    "category": "Water Guns",
+    "video": "/videos/TF214001.mp4",
+    "seo_title": "Electric 2-in-1 Bubble Water Gun Wholesale Factory Direct",
+    "seo_description": "Electric 2-in-1 bubble water gun with LED lighting effects. Switch between bubble and water modes. Factory-direct wholesale from TOYFACTORY, MOQ 80 PCS.",
+    "seo_keywords": "2-in-1 Bubble Water Gun, Electric Bubble Gun Wholesale, Water Gun with LED, Bubble Blaster Water Gun, Toy Factory China",
+    "specs": {
+      "packing_size": "41 x 19.5 x 5.7 cm",
+      "carton_size": "70 x 42.5 x 80.5 cm",
+      "inner_qty": "Colour Box",
+      "qty_per_carton": "48 PCS",
+      "gw_nw": "30 / 28.5 KG",
+      "cbm": "0.239"
+    },
+    "images": [
+      "/images/products/TF214001.webp",
+      "/images/products/TF214001-1.webp",
+      "/images/products/TF214001-2.webp",
+      "/images/products/TF214001-3.webp",
+      "/images/products/TF214001-4.webp",
+      "/images/products/TF214001-5.webp",
+      "/images/products/TF214001-6.webp"
+    ]
   }
 ]
