@@ -312,6 +312,12 @@ const getProductsByCategory = (catId) => products.filter(p => p.category === cat
 							</a>
 						))}
 					</div>
+					<!-- View All Link -->
+					<div class="mt-16 text-center">
+						<a href={`/category/${cat.id.replace(/\s+/g, '-').toLowerCase()}`} target="_blank" class="inline-block border border-white/15 text-white px-12 py-5 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-gold hover:text-dark hover:border-gold transition-all duration-500">
+							View All {cat.title} &rarr;
+						</a>
+					</div>
 				</div>
 			</section>
 		))}

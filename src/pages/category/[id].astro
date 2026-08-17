@@ -1,0 +1,114 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
+
+export function getStaticPaths() {
+  const categories = [...new Set(products.map(p => p.category))];
+  return categories.map(category => ({
+    params: { id: category.replace(/\s+/g, '-').toLowerCase() },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const catProducts = products.filter(p => p.category === category);
+
+const catMeta = {
+  'Track Toys': { title: 'Track Toys', desc: '3D building track sets, magnetic levitation cars, and dinosaur storage tracks for wholesale buyers.' },
+  'Bubble Toys': { title: 'Bubble Toys', desc: 'Industrial bubble machines, electric bubble guns, and garden lamp bubble machines at factory-direct pricing.' },
+  'Educational Toys': { title: 'Educational Toys', desc: 'STEM robots, pottery machines, phonics readers, and DIY learning kits for global distributors.' },
+  'Water Guns': { title: 'Water Guns', desc: 'Electric water guns, bubble-water 2-in-1 combos, Gatling blasters, and ice burst series.' },
+};
+const meta = catMeta[category] || { title: category, desc: `${category} products at factory-direct wholesale pricing.` };
+---
+
+<Layout 
+  title={`${meta.title} Wholesale | TOYFACTORY Factory Direct`}
+  description={meta.desc}
+  keywords={`${meta.title} Wholesale, ${meta.title} Factory, Toy Factory China, B2B Toy Supplier, OEM Toy Manufacturer`}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO HOME
+      </a>
+    </div>
+  </nav>
+
+  <main class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="flex items-center gap-6 mb-6">
+        <span class="w-12 h-[2px] bg-gold self-center"></span>
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em]">Collection</span>
+      </div>
+      <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-6 uppercase tracking-tighter italic">
+        {meta.title === "Water Guns" ? "Power Water GUN" : meta.title} <span class="text-gold">({catProducts.length})</span>
+      </h1>
+      <p class="text-gray-400 text-sm uppercase tracking-[0.2em] mb-16 max-w-2xl leading-relaxed">{meta.desc}</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+        {catProducts.map(product => (
+          <a href={`/product/${product.id}`} target="_blank" class="group bg-[#15151A] border border-white/5 hover:border-gold/30 transition-all duration-700 flex flex-col">
+            <div class="aspect-square overflow-hidden bg-white/5 flex items-center justify-center p-12">
+              <img 
+                src={product.images[0]} 
+                alt={product.name} 
+                class="w-full h-full object-contain group-hover:scale-110 transition duration-1000"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-6 flex-grow flex flex-col">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20 italic">Bestseller</span>
+                <span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest">{product.id}</span>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-4 uppercase tracking-tight leading-tight group-hover:text-gold transition line-clamp-2">{product.name}</h4>
+              
+              <div class="mt-auto">
+                <div class="grid grid-cols-2 gap-4 border-y border-white/5 py-4 mb-4">
+                  <div>
+                    <div class="text-[8px] uppercase text-gray-600 tracking-widest mb-0.5">Min Order</div>
+                    <div class="text-[10px] font-bold text-gray-300">{product.moq} PCS</div>
+                  </div>
+                  <div>
+                    <div class="text-[8px] uppercase text-gray-600 tracking-widest mb-0.5">Lead Time</div>
+                    <div class="text-[10px] font-bold text-gray-300">10-15 Days</div>
+                  </div>
+                </div>
+                <div class="flex justify-between items-end">
+                  <div class="text-[8px] font-bold uppercase tracking-widest text-white">Wholesale Price</div>
+                  <div class="text-2xl font-display font-extrabold text-gold">${product.price}+</div>
+                </div>
+                <div class="mt-6 w-full py-4 border border-white/10 text-center text-[9px] font-bold uppercase tracking-[0.3em] group-hover:bg-gold group-hover:text-dark transition-all duration-500 group-hover:border-gold italic">
+                  &rarr; Quote This Product
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-20 text-center">
+        <a href="/#rfq" class="inline-block bg-gold text-dark px-14 py-6 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-white transition-all">
+          Request Quotation for {meta.title} &rarr;
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-24 border-t border-white/5 bg-[#050508] text-center">
+    <div class="flex flex-col items-center gap-6">
+      <div class="flex gap-10 text-[9px] text-gray-400 uppercase tracking-[0.4em] font-bold">
+        <a href="/privacy" class="hover:text-gold transition">Privacy</a>
+        <a href="/terms" class="hover:text-gold transition">Terms</a>
+        <a href="/return" class="hover:text-gold transition">Returns</a>
+      </div>
+      <div class="text-[9px] text-gray-500 uppercase tracking-[0.4em] font-bold italic">
+        &copy; 2026 TOYFACTORY Manufacturing. Global B2B Standards.
+      </div>
+    </div>
+  </footer>
+</Layout>
