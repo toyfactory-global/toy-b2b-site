@@ -178,10 +178,13 @@ const faqSchema = {
 								class="hidden w-full h-full object-contain"
 								controls
 								playsinline
-								preload="none"
+								preload="metadata"
+								poster={product.images[0]}
 							>
 								<source src={product.video} type="video/mp4" />
 							</video>
+							<!-- YouTube iframe container (lazy-loaded on click) -->
+							<div id="youtube-container" class="hidden w-full h-full"></div>
 						</div>
 					</div>
 
@@ -344,9 +347,17 @@ const faqSchema = {
 <script define:vars={{ images: product.images, video: product.video }}>
 	const mainImage = document.getElementById('active-image');
 	const mainVideo = document.getElementById('active-video');
+	const youtubeContainer = document.getElementById('youtube-container');
 	const thumbBtns = document.querySelectorAll('.thumb-btn');
 	const prevBtn = document.getElementById('prev-btn');
 	const nextBtn = document.getElementById('next-btn');
+
+	// Extract YouTube video ID from various URL formats
+	const getYouTubeId = (url) => {
+		if (!url) return null;
+		const m = url.match(/(?:youtu\.be\/|shorts\/|watch\?v=|embed\/)([a-zA-Z0-9_-]{11})/);
+		return m ? m[1] : null;
+	};
 	
 	let currentIndex = 0;
 	let currentType = video ? 'video' : 'image';
@@ -357,12 +368,34 @@ const faqSchema = {
 		// Reset current media
 		mainImage.classList.add('hidden');
 		mainVideo.classList.add('hidden');
+		youtubeContainer.classList.add('hidden');
+		youtubeContainer.innerHTML = '';
+
 		mainVideo.pause();
+		mainVideo.removeAttribute('src');
+		mainVideo.load();
 
 		if (type === 'video') {
 			currentType = 'video';
-			mainVideo.classList.remove('hidden');
-			mainVideo.play().catch(() => {}); // Auto-play if possible
+			const ytId = getYouTubeId(video);
+
+			if (ytId) {
+				// YouTube embed — lazy load iframe only on click
+				const iframe = document.createElement('iframe');
+				iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+				iframe.title = 'Product Video';
+				iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+				iframe.allowFullscreen = true;
+				iframe.setAttribute('loading', 'lazy');
+				iframe.className = 'w-full h-full';
+				youtubeContainer.appendChild(iframe);
+				youtubeContainer.classList.remove('hidden');
+			} else {
+				// Local mp4
+				mainVideo.setAttribute('src', video);
+				mainVideo.classList.remove('hidden');
+				mainVideo.play().catch(() => {}); // Auto-play if possible
+			}
 			prevBtn.style.display = 'none';
 			nextBtn.style.display = 'none';
 		} else {
