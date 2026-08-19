@@ -15,6 +15,11 @@ const pages = [
   { loc: '/blog/stem-toys-import-guide', priority: 0.6, changefreq: 'monthly' },
   { loc: '/blog/water-gun-wholesale-guide', priority: 0.6, changefreq: 'monthly' },
   { loc: '/blog/track-car-wholesale-guide', priority: 0.6, changefreq: 'monthly' },
+  { loc: '/blog/china-toy-sourcing-guide', priority: 0.6, changefreq: 'monthly' },
+  { loc: '/category/bubble-toys', priority: 0.7, changefreq: 'weekly' },
+  { loc: '/category/water-guns', priority: 0.7, changefreq: 'weekly' },
+  { loc: '/category/track-toys', priority: 0.7, changefreq: 'weekly' },
+  { loc: '/category/educational-toys', priority: 0.7, changefreq: 'weekly' },
 ];
 
 // Load products and generate product detail URLs
