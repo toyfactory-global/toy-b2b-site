@@ -29,7 +29,15 @@ const categories = [
   }
 ];
 
-const getProductsByCategory = (catId) => products.filter(p => p.category === catId);
+const getProductsByCategory = (catId) => {
+  const list = products.filter(p => p.category === catId);
+  // New products (sort field) appear first, older products keep original order
+  return [...list].sort((a, b) => {
+    const sa = a.sort !== undefined ? a.sort : 999;
+    const sb = b.sort !== undefined ? b.sort : 999;
+    return sa - sb;
+  });
+};
 ---
 
 <Layout 

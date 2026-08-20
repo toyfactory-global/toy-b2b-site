@@ -889,7 +889,8 @@
       "/images/products/TF199679-1.webp",
       "/images/products/TF199679-2.webp",
       "/images/products/TF199679-3.webp"
-    ]
+    ],
+    "sort": 0
   },
   {
     "id": "TF211492",
@@ -916,7 +917,8 @@
       "/images/products/TF211492-3.webp",
       "/images/products/TF211492-4.webp",
       "/images/products/TF211492-5.webp"
-    ]
+    ],
+    "sort": 0
   },
   {
     "id": "TF214001",
@@ -944,7 +946,8 @@
       "/images/products/TF214001-4.webp",
       "/images/products/TF214001-5.webp",
       "/images/products/TF214001-6.webp"
-    ]
+    ],
+    "sort": 0
   },
   {
     "id": "TF216414",
@@ -971,6 +974,7 @@
       "/images/products/TF216414-5.webp",
       "/images/products/TF216414-6.webp"
     ],
-    "video": "https://youtu.be/CpYG8JBfwWg"
+    "video": "https://youtu.be/CpYG8JBfwWg",
+    "sort": 0
   }
 ]

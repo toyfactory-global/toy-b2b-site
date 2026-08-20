@@ -11,7 +11,13 @@ export function getStaticPaths() {
 }
 
 const { category } = Astro.props;
-const catProducts = products.filter(p => p.category === category);
+const catProducts = products
+  .filter(p => p.category === category)
+  .sort((a, b) => {
+    const sa = a.sort !== undefined ? a.sort : 999;
+    const sb = b.sort !== undefined ? b.sort : 999;
+    return sa - sb;
+  });
 
 const catMeta = {
   'Track Toys': { title: 'Track Toys', desc: '3D building track sets, magnetic levitation cars, and dinosaur storage tracks for wholesale buyers.' },
