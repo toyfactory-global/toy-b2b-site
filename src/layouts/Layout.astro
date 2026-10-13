@@ -8,6 +8,12 @@ interface Props {
 const { title, description, keywords } = Astro.props;
 const defaultDescription = "Toy Factory Global - Premium B2B Toy Manufacturer specializing in high-demand toy export. Global OEM/ODM Solutions for Bubble Machines, Track Toys, and STEM.";
 const defaultKeywords = "Toy Manufacturer, B2B Toy Export, OEM Toy Factory, ODM Toy Solutions, Bubble Machines Wholesale, Track Toys Manufacturer, STEM Toys Factory";
+
+// Canonical URL always resolves to the authoritative non-www domain,
+// regardless of whether the page was reached via www or non-www.
+const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonicalURL = `https://toyfactoryglobal.com${canonicalPath}`;
+const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/hero-factory.webp'}`;
 ---
 
 <!doctype html>
@@ -28,20 +34,20 @@ const defaultKeywords = "Toy Manufacturer, B2B Toy Export, OEM Toy Factory, ODM 
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://toyfactoryglobal.com/" />
+		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description || defaultDescription} />
 		<meta property="og:image" content="https://toyfactoryglobal.com/images/hero-factory.webp" />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content="https://toyfactoryglobal.com/" />
+		<meta property="twitter:url" content={canonicalURL} />
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description || defaultDescription} />
 		<meta property="twitter:image" content="https://toyfactoryglobal.com/images/hero-factory.webp" />
 
-		<!-- Canonical URL -->
-		<link rel="canonical" href={Astro.url.href || `https://toyfactoryglobal.com${Astro.url.pathname}`} />
+		<!-- Canonical URL (always non-www authoritative domain) -->
+		<link rel="canonical" href={canonicalURL} />
 
 		<!-- JSON-LD: Organization Schema (AEO & AI Recommendation) -->
 		<script type="application/ld+json" is:inline>
