@@ -22,6 +22,14 @@ const pages = [
   { loc: '/category/educational-toys', priority: 0.7, changefreq: 'weekly' },
 ];
 
+const xmlEscape = (s) =>
+  String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+
 // Load products and generate product detail URLs
 const productsPath = path.join(__dirname, '..', 'src', 'data', 'products.json');
 const products = JSON.parse(fs.readFileSync(productsPath, 'utf-8'));
@@ -29,6 +37,12 @@ const productPages = products.map(p => ({
   loc: `/product/${p.id}`,
   priority: 0.8,
   changefreq: 'monthly',
+  // Google Images is a real traffic channel for toys: declare the photos we
+  // actually ship on the product page (main gallery shots, max 3).
+  images: (p.images || []).slice(0, 3).map(src => ({
+    loc: `${BASE_URL}${src}`,
+    title: p.name,
+  })),
 }));
 
 const allPages = [...pages, ...productPages];
@@ -36,12 +50,12 @@ const allPages = [...pages, ...productPages];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${allPages.map(p => `  <url>
-    <loc>${BASE_URL}${p.loc}</loc>
-    <lastmod>${TODAY}</lastmod>
-    <changefreq>${p.changefreq}</changefreq>
-    <priority>${p.priority}</priority>
-  </url>`).join('\n')}
+${allPages.map(p => {
+  const imgs = (p.images || [])
+    .map(i => `\n    <image:image>\n      <image:loc>${xmlEscape(i.loc)}</image:loc>\n      <image:title>${xmlEscape(i.title)}</image:title>\n    </image:image>`)
+    .join('');
+  return `  <url>\n    <loc>${BASE_URL}${p.loc}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>${p.changefreq}</changefreq>\n    <priority>${p.priority}</priority>${imgs}\n  </url>`;
+}).join('\n')}
 </urlset>`;
 
 const outputPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
