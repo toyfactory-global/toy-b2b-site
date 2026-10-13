@@ -11,7 +11,16 @@ const defaultKeywords = "Toy Manufacturer, B2B Toy Export, OEM Toy Factory, ODM 
 
 // Canonical URL always resolves to the authoritative non-www domain,
 // regardless of whether the page was reached via www or non-www.
-const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+// With build.format='file' Astro reports pathname as '/foo.html', but Cloudflare
+// Pages serves that file at '/foo' — strip the extension, otherwise the canonical
+// tag points at a URL that 308-redirects (which is what blocked indexing).
+let canonicalPath = Astro.url.pathname.replace(/\/+$/, '');
+if (canonicalPath.endsWith('/index.html')) {
+	canonicalPath = canonicalPath.slice(0, -'/index.html'.length);
+} else if (canonicalPath.endsWith('.html')) {
+	canonicalPath = canonicalPath.slice(0, -'.html'.length);
+}
+if (!canonicalPath) canonicalPath = '/';
 const canonicalURL = `https://toyfactoryglobal.com${canonicalPath}`;
 const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/hero-factory.webp'}`;
 ---

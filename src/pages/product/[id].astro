@@ -97,19 +97,22 @@ const faqSchema = {
 	description={product.seo_description}
 	keywords={product.seo_keywords}
 >
-	<!-- JSON-LD: Product Schema (Google Merchant, AI Assistants) -->
-	<script type="application/ld+json">{JSON.stringify(productSchema)}</script>
+	<!-- JSON-LD: Product Schema (Google Merchant, AI Assistants)
+	     set:html + is:inline are required. A bare {JSON.stringify(...)} inside a
+	     <script> tag is NOT interpolated by Astro — it shipped as literal text, so
+	     all 41 product pages had zero working structured data. -->
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(productSchema)} />
 
 	<!-- JSON-LD: VideoObject Schema (Google Video Rich Results) -->
 	{videoSchema && (
-		<script type="application/ld+json">{JSON.stringify(videoSchema)}</script>
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(videoSchema)} />
 	)}
 
 	<!-- JSON-LD: BreadcrumbList Schema -->
-	<script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbSchema)} />
 
 	<!-- JSON-LD: FAQPage Schema (AEO for product inquiries) -->
-	<script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
 	<!-- Navbar -->
 	<nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
 		<div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
