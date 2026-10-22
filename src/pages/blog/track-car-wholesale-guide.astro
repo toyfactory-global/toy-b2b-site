@@ -1,11 +1,22 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'track-car-wholesale-guide',
+  title: 'Track Car Toys Wholesale Guide 2026: 3D, Magnetic & Dinosaur Sets',
+  description: 'B2B guide for wholesale track car toys. Compare 3D track sets, magnetic levitation cars, and dinosaur storage tracks with factory pricing from $4.38.',
+  date: '2026-08-06',
+  category: 'Product Guide',
+  image: '/images/products/TF211082.webp',
+});
 ---
 
 <Layout 
   title="Track Car Toys Wholesale Guide 2026: 3D, Magnetic & Dinosaur Sets | TOYFACTORY"
-  description="B2B guide for wholesale track car toys. Compare 3D track sets, magnetic levitation cars, and dinosaur storage tracks with factory pricing from $4.38."
+  description={post.description}
   keywords="Track Car Wholesale, 3D Track Car Factory, Magnetic Track Toy, Dinosaur Track Car, Toy Car Importer Guide"
+  jsonLd={[post, blogBreadcrumb(post.title, 'track-car-wholesale-guide')]}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">

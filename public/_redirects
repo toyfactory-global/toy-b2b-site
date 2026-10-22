@@ -1,1 +1,9 @@
-https://www.toyfactoryglobal.com/* https://toyfactoryglobal.com/:splat 301
+# Cloudflare Pages _redirects only supports PATH rules on the same host.
+# A rule such as "https://www.example.com/* https://example.com/:splat 301"
+# is invalid here and makes Cloudflare silently ignore the whole file.
+#
+# The www -> non-www redirect for this site is handled by a Cloudflare
+# Page Rule (Rules -> Page Rules), which runs at the edge before Pages.
+#
+# Add only same-domain path rules below, e.g.:
+# /old-page  /new-page  301

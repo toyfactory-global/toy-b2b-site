@@ -1,11 +1,22 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'bubble-machine-buyer-guide',
+  title: "How to Choose the Right Bubble Machine: A Wholesale Buyer's Guide",
+  description: 'Expert guide for wholesale bubble machine buyers. Compare industrial garden lamp, multi-hole guns, and automatic machines. MOQ, certifications, and factory pricing explained.',
+  date: '2026-07-24',
+  category: 'Product Guide',
+  image: '/images/products/TF200892-3.webp',
+});
 ---
 
 <Layout 
   title="How to Choose the Right Bubble Machine: A Wholesale Buyer's Guide | TOYFACTORY"
-  description="Expert guide for wholesale bubble machine buyers. Compare industrial garden lamp, multi-hole guns, and automatic machines. MOQ, certifications, and factory pricing explained."
+  description={post.description}
   keywords="Bubble Machine Buying Guide, Wholesale Bubble Machine, Industrial Bubble Machine, Garden Lamp Bubble Machine, Electric Bubble Gun Wholesale"
+  jsonLd={[post, blogBreadcrumb(post.title, 'bubble-machine-buyer-guide')]}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">

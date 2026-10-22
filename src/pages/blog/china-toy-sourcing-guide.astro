@@ -1,11 +1,22 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'china-toy-sourcing-guide',
+  title: 'How to Source Toys from China: Factory Direct Buying Guide 2026',
+  description: 'Complete guide to sourcing toys directly from China factories. Learn factory verification, certifications, MOQ negotiation, shipping terms, and how to avoid common pitfalls.',
+  date: '2026-08-19',
+  category: 'Sourcing Guide',
+  image: '/images/products/TF169001.webp',
+});
 ---
 
 <Layout 
   title="How to Source Toys from China: Factory Direct Buying Guide 2026 | TOYFACTORY"
-  description="Complete guide to sourcing toys directly from China factories. Learn factory verification, certifications, MOQ negotiation, shipping terms, and how to avoid common pitfalls."
+  description={post.description}
   keywords="Source Toys from China, China Toy Factory Direct, Import Toys China, Toy Wholesale China, OEM Toy Manufacturing Guide, Factory Direct Toys"
+  jsonLd={[post, blogBreadcrumb(post.title, 'china-toy-sourcing-guide')]}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">

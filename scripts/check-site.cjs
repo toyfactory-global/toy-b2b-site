@@ -20,6 +20,9 @@ const DIST = path.join(ROOT, 'dist');
 const PUBLIC = path.join(ROOT, 'public');
 const ALLOWED_LINK_EXT = /\.(html|xml|txt|webp|png|jpg|jpeg|gif|svg|ico|mp4|webm|css|js|json|pdf)$/i;
 const CF_MAX_FILE = 25 * 1024 * 1024; // Cloudflare Pages per-file limit
+// Pages that must exist but must never be advertised: they answer errors, they
+// are not content. Excluded from the sitemap check and the orphan check.
+const NOINDEX_PAGES = new Set(['/404']);
 
 const errors = [];
 const warnings = [];
@@ -169,8 +172,10 @@ function checkSitemap(pages) {
   const built = new Set(pages.map(expectedPathFromFile));
   for (const p of inSitemap) {
     if (!built.has(p)) fail(`SITEMAP lists ${p} but no such built page exists`);
+    if (NOINDEX_PAGES.has(p)) fail(`SITEMAP lists ${p} but that page is noindex — remove it from the sitemap`);
   }
   for (const p of built) {
+    if (NOINDEX_PAGES.has(p)) continue;
     if (!inSitemap.has(p)) warn(`Page ${p} is built but missing from sitemap.xml`);
   }
 }
@@ -369,13 +374,54 @@ function checkOrphans(pages) {
     const np = norm(p);
     const sources = inbound.get(np) || new Set();
     const fromOtherPages = [...sources].filter((s) => s !== np);
-    if (fromOtherPages.length === 0 && !ORPHAN_ALLOW.has(p)) orphans.push(p);
+    if (fromOtherPages.length === 0 && !ORPHAN_ALLOW.has(p) && !NOINDEX_PAGES.has(p)) orphans.push(p);
   }
 
   for (const p of orphans) {
     warn(`ORPHAN ${p} has no inbound internal link — nothing on the site points to it`);
   }
   console.log(`  orphan pages: ${orphans.length}`);
+}
+
+/* ----------------------------------- 8. deploy-critical files (soft 404) */
+
+// Verified live 2026-10-22: with no dist/404.html, Cloudflare Pages answered a
+// random non-existent URL with HTTP 200 + index.html, with canonical pointing
+// at "/". Every dead link and legacy URL therefore became a duplicate of the
+// homepage and consumed crawl budget. Shipping a real 404 page is the only fix,
+// so its absence blocks the deploy.
+function checkDeployEssentials() {
+  if (!fs.existsSync(path.join(DIST, '404.html'))) {
+    fail('404 dist/404.html missing - Cloudflare Pages will answer every unknown URL with 200 + homepage (soft 404)');
+  }
+  for (const f of ['llms.txt', 'robots.txt']) {
+    if (!fs.existsSync(path.join(DIST, f))) {
+      fail(`FILE dist/${f} missing - expected public/${f} to be copied into the build`);
+    }
+  }
+
+  const rp = path.join(PUBLIC, '_redirects');
+  if (fs.existsSync(rp)) {
+    fs.readFileSync(rp, 'utf8').split(/\r?\n/).forEach((raw, i) => {
+      const line = raw.trim();
+      if (!line || line.startsWith('#')) return;
+      if (line.includes('://')) {
+        fail(
+          `REDIRECTS public/_redirects:${i + 1} uses an absolute URL - Cloudflare Pages supports same-domain paths only and silently ignores the whole file: "${line}"`
+        );
+        return;
+      }
+      const parts = line.split(/\s+/);
+      if (parts.length < 2 || parts.length > 3) {
+        fail(`REDIRECTS public/_redirects:${i + 1} is not "from to [status]": "${line}"`);
+        return;
+      }
+      if (parts[2] && !/^(301|302|303|307|308)$/.test(parts[2])) {
+        fail(`REDIRECTS public/_redirects:${i + 1} has an unsupported status "${parts[2]}"`);
+      }
+    });
+  }
+  console.log('  deploy essentials: 404.html / llms.txt / robots.txt / _redirects');
 }
 
 const pages = checkCanonical();
@@ -387,6 +433,7 @@ checkJsonLd(pages);
 checkProducts();
 checkAssets();
 checkOrphans(pages);
+checkDeployEssentials();
 
 console.log('');
 if (warnings.length) {

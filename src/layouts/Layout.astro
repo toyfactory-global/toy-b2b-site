@@ -3,9 +3,14 @@ interface Props {
 	title: string;
 	description?: string;
 	keywords?: string;
+	/** Page-specific structured data (BlogPosting, CollectionPage, BreadcrumbList...). */
+	jsonLd?: Record<string, any> | Record<string, any>[];
+	/** Set on the 404 page so it never enters the index. */
+	noindex?: boolean;
 }
 
-const { title, description, keywords } = Astro.props;
+const { title, description, keywords, jsonLd, noindex = false } = Astro.props;
+const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const defaultDescription = "Toy Factory Global - Premium B2B Toy Manufacturer specializing in high-demand toy export. Global OEM/ODM Solutions for Bubble Machines, Track Toys, and STEM.";
 const defaultKeywords = "Toy Manufacturer, B2B Toy Export, OEM Toy Factory, ODM Toy Solutions, Bubble Machines Wholesale, Track Toys Manufacturer, STEM Toys Factory";
 
@@ -57,6 +62,12 @@ const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/h
 
 		<!-- Canonical URL (always non-www authoritative domain) -->
 		<link rel="canonical" href={canonicalURL} />
+		{noindex && <meta name="robots" content="noindex, follow" />}
+
+		<!-- Page-level structured data (BlogPosting / CollectionPage / BreadcrumbList) -->
+		{jsonLdBlocks.map((block) => (
+			<script type="application/ld+json" is:inline set:html={JSON.stringify(block)} />
+		))}
 
 		<!-- JSON-LD: Organization Schema (AEO & AI Recommendation) -->
 		<script type="application/ld+json" is:inline>

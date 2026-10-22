@@ -1,11 +1,22 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'water-gun-wholesale-guide',
+  title: 'Electric Water Gun Wholesale Guide 2026: Choosing the Right Blaster',
+  description: 'Complete B2B guide for wholesale electric water guns. Compare fire-breathing, gatling, AK47, and ice burst models. Factory-direct pricing from ISO-certified manufacturer.',
+  date: '2026-08-03',
+  category: 'Product Guide',
+  image: '/images/products/TF210951.webp',
+});
 ---
 
 <Layout 
   title="Electric Water Gun Wholesale Guide 2026: Choosing the Right Blaster | TOYFACTORY"
-  description="Complete B2B guide for wholesale electric water guns. Compare fire-breathing, gatling, AK47, and ice burst models. Factory-direct pricing from ISO-certified manufacturer."
+  description={post.description}
   keywords="Water Gun Wholesale, Electric Water Gun Factory, Fire-Breathing Water Gun, Gatling Water Gun Wholesale, Summer Toy Importer Guide"
+  jsonLd={[post, blogBreadcrumb(post.title, 'water-gun-wholesale-guide')]}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">

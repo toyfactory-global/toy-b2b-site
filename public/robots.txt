@@ -2,6 +2,47 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://toyfactoryglobal.com/sitemap.xml
+# ---------------------------------------------------------------------------
+# Answer engines / AI crawlers are explicitly allowed.
+# This site lists wholesale specs (MOQ, carton data, pricing tiers) that we
+# WANT quoted verbatim by AI assistants when buyers ask for factory sources.
+# A bare "User-agent: *" technically already allows them, but several crawlers
+# only respect a named group when one exists, so each is named explicitly.
+# ---------------------------------------------------------------------------
+User-agent: GPTBot
+Allow: /
 
-# Crawl-delay: 2
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://toyfactoryglobal.com/sitemap.xml

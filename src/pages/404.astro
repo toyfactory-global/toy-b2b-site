@@ -1,0 +1,93 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+/**
+ * WHY THIS FILE EXISTS
+ * Cloudflare Pages has no 404.html to serve, so every unmatched path was
+ * answered with index.html and an HTTP 200 (verified live: a random URL
+ * returned the homepage byte-for-byte with canonical=https://toyfactoryglobal.com/).
+ * That turned every dead link and legacy URL into a duplicate of the homepage
+ * and burned crawl budget. Shipping this page restores a real 404 signal.
+ */
+const categories = [
+  { name: 'Bubble Toys', slug: 'bubble-toys', count: 10 },
+  { name: 'Water Guns', slug: 'water-guns', count: 15 },
+  { name: 'Track Toys', slug: 'track-toys', count: 9 },
+  { name: 'Educational Toys', slug: 'educational-toys', count: 7 },
+];
+---
+
+<Layout
+  title="Page Not Found | TOYFACTORY Wholesale Catalog"
+  description="This page does not exist. Browse the TOYFACTORY wholesale catalog by category instead."
+  noindex
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO CATALOG
+      </a>
+    </div>
+  </nav>
+
+  <main class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="flex items-center gap-6 mb-6">
+        <span class="w-12 h-[2px] bg-gold self-center"></span>
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em]">Error 404</span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-6 uppercase tracking-tighter italic">
+        Page Not <span class="text-gold">Found.</span>
+      </h1>
+
+      <p class="text-gray-400 text-base leading-[1.9] max-w-2xl mb-16">
+        The address you followed no longer exists — our catalog was restructured, so product and
+        collection URLs changed. Everything below is current. If you arrived from a bookmark or an
+        old quotation sheet, tell us the item number (for example TF200892) and we will point you
+        to the right page.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-20">
+        {categories.map((c) => (
+          <a
+            href={`/category/${c.slug}`}
+            class="group bg-[#15151A] border border-white/5 hover:border-gold/30 transition-all duration-500 p-8 flex flex-col"
+          >
+            <span class="text-[8px] font-bold uppercase tracking-[0.3em] text-gray-600 mb-3">
+              {c.count} Models
+            </span>
+            <span class="text-lg font-bold text-white uppercase tracking-tight group-hover:text-gold transition">
+              {c.name}
+            </span>
+            <span class="mt-6 text-[9px] font-bold uppercase tracking-[0.3em] text-gray-500 group-hover:text-gold transition">
+              View Collection &rarr;
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <div class="flex flex-wrap items-center gap-x-10 gap-y-4 text-[10px] font-bold uppercase tracking-[0.3em]">
+        <a href="/" class="text-white hover:text-gold transition">Full Catalog</a>
+        <a href="/blog" class="text-gray-500 hover:text-gold transition">Sourcing Guides</a>
+        <a href="/#rfq" class="text-gold hover:text-white transition">Request a Quotation &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-24 border-t border-white/5 bg-[#050508] text-center">
+    <div class="flex flex-col items-center gap-6">
+      <div class="flex gap-10 text-[9px] text-gray-400 uppercase tracking-[0.4em] font-bold">
+        <a href="/privacy" class="hover:text-gold transition">Privacy</a>
+        <a href="/terms" class="hover:text-gold transition">Terms</a>
+        <a href="/return" class="hover:text-gold transition">Returns</a>
+      </div>
+      <div class="text-[9px] text-gray-500 uppercase tracking-[0.4em] font-bold italic">
+        &copy; 2026 TOYFACTORY Manufacturing. Global B2B Standards.
+      </div>
+    </div>
+  </footer>
+</Layout>

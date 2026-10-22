@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import products from '../../data/products.json';
+import { collectionPage, categoryBreadcrumb } from '../../lib/schema';
 
 export function getStaticPaths() {
   const categories = [...new Set(products.map(p => p.category))];
@@ -26,12 +27,58 @@ const catMeta = {
   'Water Guns': { title: 'Water Guns', desc: 'Electric water guns, bubble-water 2-in-1 combos, Gatling blasters, and ice burst series.' },
 };
 const meta = catMeta[category] || { title: category, desc: `${category} products at factory-direct wholesale pricing.` };
+
+const slug = category.replace(/\s+/g, '-').toLowerCase();
+
+/* Editorial intro — one entry per category, written from what is actually in
+   products.json. A hub page that only shows a product grid gives Google no
+   reason to treat it as a category page rather than a duplicate listing. */
+const catIntro = {
+  'Track Toys': [
+    'Track toys are sold by piece count and by track type, not as one SKU. This collection covers four distinct constructions: 3D stereo tracks (121-piece and luxury variants), magnetic levitation and 126-piece magnetic track cars, dinosaur storage tracks that bundle alloy or pull-back cars, and electric train track sets at 150 and 231 pieces.',
+    'Buyers usually pick two or three constructions rather than one, because the same retail shelf can carry a low entry price point and a premium gift box without cannibalising sales. Carton volume matters more than unit price here — the 231-piece electric train set and the 35-piece orbital levitation car sit in very different freight brackets.',
+    'All models in this category are quoted FOB Yantian or Shantou, with OEM box artwork and instruction translation available on standard MOQ. Ask for the carton CBM before you size a mixed container.',
+  ],
+  'Bubble Toys': [
+    'This is the widest price spread on the site — from a 1.58 USD 8-hole automatic machine to a 6.67 USD standing seven-colour unit — because the category splits into two buying intents: high-volume giveaway stock and event-grade machines that run continuously.',
+    'The ten models fall into four groups: industrial garden-lamp machines built for outdoor continuous use, multi-hole electric bubble guns for event and rental operators, tank-fed automatic machines that ship with bubble water, and novelty shapes (dinosaur egg, rocket thruster, magic wand, sunflower) that sell on shelf appeal rather than output volume.',
+    'Consumable compatibility is the detail buyers ask about most: tank-fed units are built around standard bubble fluid, so refill supply has to be arranged alongside the toy order. Confirm fluid volume per unit before you price a retail bundle.',
+  ],
+  'Educational Toys': [
+    'Educational toys are specified by age band and by what the child physically does with them, and this collection spans both build-and-assemble kits and screen-free interactive devices.',
+    'Seven models: a 12-in-1 solar robot assembly kit, an 800-word interactive phonics reader, a drawing/dance mat, a DIY bouquet pressing set, a balloon machine, a simulation pottery machine and a ceramic clay machine. The pottery and clay machines carry the highest unit cost in the category because they include the motorised turntable rather than a moulded plastic body.',
+    'Age grading and small-part warnings drive the packaging decisions here. Tell us the destination market and the age band you intend to print, and the artwork can be prepared to match instead of being reworked after the order.',
+  ],
+  'Water Guns': [
+    'Fifteen models, and the differences that actually matter to a buyer are tank capacity, firing mechanism and whether the unit also blows bubbles.',
+    'The range covers fire-breathing and mist-nozzle automatics, drum-magazine versions for longer continuous fire, Gatling-style multi-barrel units, an AK47-profile electric blaster, the Ice Burst series, and 2-in-1 water-and-bubble combos that let one SKU cover two retail categories.',
+    'Summer orders are placed early and shipped in a narrow window, so lead time is the constraint rather than price. Battery format and charging method differ between models — confirm both before committing to a mixed pallet, because they are not interchangeable across the range.',
+  ],
+};
+
+const intros = catIntro[category] || [];
+
+const prices = catProducts.map((p) => p.price);
+const moqs = catProducts.map((p) => p.moq);
+const priceFrom = Math.min(...prices);
+const moqFrom = Math.min(...moqs);
+
+const jsonLd = [
+  collectionPage({
+    name: meta.title,
+    slug,
+    description: meta.desc,
+    products: catProducts.map((p) => ({ id: p.id, name: p.name, image: p.images[0] })),
+  }),
+  categoryBreadcrumb(meta.title, slug),
+];
 ---
 
 <Layout 
   title={`${meta.title} Wholesale | TOYFACTORY Factory Direct`}
   description={meta.desc}
   keywords={`${meta.title} Wholesale, ${meta.title} Factory, Toy Factory China, B2B Toy Supplier, OEM Toy Manufacturer`}
+  jsonLd={jsonLd}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
@@ -46,14 +93,45 @@ const meta = catMeta[category] || { title: category, desc: `${category} products
 
   <main class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
     <div class="max-w-[1600px] mx-auto">
-      <div class="flex items-center gap-6 mb-6">
-        <span class="w-12 h-[2px] bg-gold self-center"></span>
-        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em]">Collection</span>
-      </div>
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex items-center gap-4 text-[9px] font-bold uppercase tracking-[0.4em]">
+          <li><span class="block w-8 h-[2px] bg-gold"></span></li>
+          <li><a href="/" class="text-gray-500 hover:text-gold transition">Home</a></li>
+          <li class="text-gray-700">/</li>
+          <li class="text-gold">Collection</li>
+        </ol>
+      </nav>
       <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-6 uppercase tracking-tighter italic">
         {meta.title === "Water Guns" ? "Power Water GUN" : meta.title} <span class="text-gold">({catProducts.length})</span>
       </h1>
-      <p class="text-gray-400 text-sm uppercase tracking-[0.2em] mb-16 max-w-2xl leading-relaxed">{meta.desc}</p>
+      <p class="text-gray-400 text-sm uppercase tracking-[0.2em] mb-10 max-w-2xl leading-relaxed">{meta.desc}</p>
+
+      <dl class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 border border-white/5 max-w-4xl mb-14">
+        <div class="bg-[#0A0A0F] px-6 py-5">
+          <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">Models in Collection</dt>
+          <dd class="text-xl font-display font-extrabold text-gold">{catProducts.length}</dd>
+        </div>
+        <div class="bg-[#0A0A0F] px-6 py-5">
+          <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">MOQ From</dt>
+          <dd class="text-xl font-display font-extrabold text-white">{moqFrom} PCS</dd>
+        </div>
+        <div class="bg-[#0A0A0F] px-6 py-5">
+          <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">Unit Price From</dt>
+          <dd class="text-xl font-display font-extrabold text-white">${priceFrom}</dd>
+        </div>
+        <div class="bg-[#0A0A0F] px-6 py-5">
+          <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">Port of Loading</dt>
+          <dd class="text-xl font-display font-extrabold text-white">Yantian</dd>
+        </div>
+      </dl>
+
+      {intros.length > 0 && (
+        <div class="max-w-3xl mb-16 space-y-5">
+          {intros.map((para) => (
+            <p class="text-gray-400 text-base leading-[1.9]">{para}</p>
+          ))}
+        </div>
+      )}
 
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
         {catProducts.map(product => (

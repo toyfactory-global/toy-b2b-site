@@ -1,11 +1,22 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'stem-toys-import-guide',
+  title: 'STEM Toys Import Guide 2026: What Distributors Need to Know',
+  description: 'Complete guide for STEM toy importers and distributors. Learn about certifications, top-selling educational toys, solar robot kits, and ISO-certified factory sourcing for 2026.',
+  date: '2026-07-24',
+  category: 'Industry Insights',
+  image: '/images/products/TF169193.webp',
+});
 ---
 
 <Layout 
   title="STEM Toys Import Guide 2026: What Distributors Need to Know | TOYFACTORY"
-  description="Complete guide for STEM toy importers and distributors. Learn about certifications, top-selling educational toys, solar robot kits, and ISO-certified factory sourcing for 2026."
+  description={post.description}
   keywords="STEM Toys Import Guide, Educational Toys Wholesale, Solar Robot Kit Factory, STEM Toy Distributor, Import Toys from China 2026"
+  jsonLd={[post, blogBreadcrumb(post.title, 'stem-toys-import-guide')]}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
