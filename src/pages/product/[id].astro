@@ -11,6 +11,28 @@ export function getStaticPaths() {
 
 const { product } = Astro.props;
 
+/* Internal linking.
+   Before this block every product page linked to only ~6 internal URLs, all of
+   them chrome (nav, footer, category back-link). Crawl equity had no path from
+   one product to another, and the blog guides were reachable only from /blog.
+   Related models are chosen by price proximity, so the four shown are the ones
+   a buyer would realistically compare. */
+const catSlug = product.category.replace(/\s+/g, '-').toLowerCase();
+
+const GUIDES = {
+  'Bubble Toys': { slug: 'bubble-machine-buyer-guide', title: 'How to Choose the Right Bubble Machine' },
+  'Water Guns': { slug: 'water-gun-wholesale-guide', title: 'Electric Water Gun Wholesale Guide 2026' },
+  'Track Toys': { slug: 'track-car-wholesale-guide', title: 'Track Car Toys Wholesale Guide 2026' },
+  'Educational Toys': { slug: 'stem-toys-import-guide', title: 'STEM Toys Import Guide 2026' },
+};
+
+const related = products
+  .filter((p) => p.category === product.category && p.id !== product.id)
+  .sort((a, b) => Math.abs(a.price - product.price) - Math.abs(b.price - product.price))
+  .slice(0, 4);
+
+const guide = GUIDES[product.category];
+
 // Build pre-filled WhatsApp message URL (product-specific)
 const waMessage = `Hello TOYFACTORY, I'm interested in Item ${product.id} - ${product.name}. Please send wholesale price and MOQ details. Thanks!`;
 const waUrl = `https://api.whatsapp.com/send/?phone=8615976917707&text=${encodeURIComponent(waMessage)}&type=phone_number&app_absent=0`;
@@ -300,6 +322,42 @@ const faqSchema = {
 					</div>
 				</div>
 			</div>
+
+			<!-- Related models + guide cross-link -->
+			<section class="mt-32 pt-20 border-t border-white/5">
+				<div class="flex items-end justify-between gap-8 mb-12">
+					<div>
+						<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em] mb-4 block italic">Same Collection</span>
+						<h2 class="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-tighter italic">
+							More {product.category}
+						</h2>
+					</div>
+					<a href={`/category/${catSlug}`} class="shrink-0 text-[9px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-gold transition">
+						View all &rarr;
+					</a>
+				</div>
+
+				<div class="grid grid-cols-2 xl:grid-cols-4 gap-6">
+					{related.map((p) => (
+						<a href={`/product/${p.id}`} class="group bg-[#0F0F14] border border-white/5 hover:border-gold/30 transition-all duration-500 p-5 flex flex-col">
+							<div class="aspect-square bg-white/5 flex items-center justify-center p-6 mb-5 overflow-hidden">
+								<img src={p.images[0]} alt={p.name} loading="lazy" class="w-full h-full object-contain group-hover:scale-105 transition duration-700" />
+							</div>
+							<span class="text-[8px] font-bold text-gray-600 uppercase tracking-widest mb-2">{p.id}</span>
+							<span class="text-[11px] font-bold text-white uppercase tracking-tight leading-snug group-hover:text-gold transition line-clamp-2">{p.name}</span>
+							<span class="mt-3 text-gold font-display font-extrabold text-sm">${p.price}</span>
+						</a>
+					))}
+				</div>
+
+				{guide && (
+					<p class="mt-12 text-gray-400 text-sm leading-[1.9] max-w-3xl">
+						Buying guide:
+						<a href={`/blog/${guide.slug}`} class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">{guide.title}</a>
+						&mdash; how this category is specified, priced and shipped.
+					</p>
+				)}
+			</section>
 
 			<!-- RFQ Section -->
 			<section id="rfq" class="mt-40 pt-32 border-t border-white/5">
