@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// All contact details on this page come from the Organization schema in
+// src/layouts/Layout.astro and the footer of src/pages/index.astro.
+// Nothing here asserts a fact the site did not already publish.
+const EMAIL = 'hntoys7@sinuotoys.com';
+const PHONE_DISPLAY = '+86 15976917707';
+const WHATSAPP = 'https://api.whatsapp.com/send/?phone=8615976917707&text=Hello%20TOYFACTORY%2C%20I%27m%20interested%20in%20your%20toy%20products.%20Please%20send%20me%20your%20latest%20catalogue%20and%20quotation.&type=phone_number&app_absent=0';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  '@id': 'https://toyfactoryglobal.com/contact#webpage',
+  url: 'https://toyfactoryglobal.com/contact',
+  name: 'Contact TOYFACTORY - B2B Toy Manufacturer',
+  description: 'Direct factory contact for wholesale, OEM and ODM toy enquiries. Email or WhatsApp the Chenghai factory team for a quotation.',
+  isPartOf: { '@id': 'https://toyfactoryglobal.com/#organization' },
+  about: { '@id': 'https://toyfactoryglobal.com/#organization' },
+};
+---
+
+<Layout
+  title="Contact TOYFACTORY | B2B Toy Manufacturer, Chenghai China"
+  description="Contact the TOYFACTORY team in Chenghai, Shantou for wholesale, OEM and ODM toy enquiries. Email hntoys7@sinuotoys.com or WhatsApp +86 15976917707."
+  keywords="contact toy factory, B2B toy manufacturer contact, Chenghai toy factory, toy OEM enquiry, wholesale toy quotation"
+  jsonLd={jsonLd}
+>
+  <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-5xl mx-auto px-8">
+      <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">Direct Factory Contact</p>
+      <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
+        Talk to the <span class="text-gold">factory.</span>
+      </h1>
+      <p class="text-gray-400 text-sm leading-[2] uppercase tracking-[0.15em] max-w-2xl mb-20">
+        TOYFACTORY is a B2B toy manufacturer in Chenghai, Shantou, China — founded in 2001 and supplying
+        bubble machines, track toys and STEM ranges for OEM and ODM programmes. Every enquiry below reaches
+        the factory team directly; there is no agency in between.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+        <a
+          href={`mailto:${EMAIL}?subject=Toy%20enquiry%20from%20toyfactoryglobal.com`}
+          class="group border border-white/10 hover:border-gold/60 transition-colors p-10 block"
+        >
+          <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-6">Email</p>
+          <p class="text-white text-xl font-display font-bold tracking-tight break-all group-hover:text-gold transition-colors">{EMAIL}</p>
+          <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mt-6">Best for RFQs, specifications and documents</p>
+        </a>
+
+        <a
+          href={WHATSAPP}
+          target="_blank"
+          rel="noopener"
+          class="group border border-white/10 hover:border-gold/60 transition-colors p-10 block"
+        >
+          <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-6">WhatsApp / WeChat / Tel</p>
+          <p class="text-white text-xl font-display font-bold tracking-tight group-hover:text-gold transition-colors">{PHONE_DISPLAY}</p>
+          <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mt-6">Best for quick questions, samples and stock</p>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <section>
+          <h2 class="text-white text-lg font-bold mb-8 italic uppercase tracking-tight">What to send us</h2>
+          <ul class="space-y-5 text-gray-400 text-sm leading-[1.9]">
+            <li><span class="text-gold font-bold">1.</span> The item you want — an item number, a link or a reference photo.</li>
+            <li><span class="text-gold font-bold">2.</span> Your target market, so the applicable safety standards can be agreed in writing.</li>
+            <li><span class="text-gold font-bold">3.</span> Your quantity per item, so we can quote at the right volume tier.</li>
+            <li><span class="text-gold font-bold">4.</span> Packaging and labelling needs — retail box, barcode, age marking, private label.</li>
+            <li><span class="text-gold font-bold">5.</span> The delivery window you are working towards.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-white text-lg font-bold mb-8 italic uppercase tracking-tight">Good to know</h2>
+          <div class="space-y-6 text-gray-400 text-sm leading-[1.9]">
+            <p>
+              Base MOQ runs from 35 to 108 units depending on the product; prices step down at higher volumes.
+              Current tiers are confirmed on the quotation, not on this page.
+            </p>
+            <p>
+              Sample orders are available for quality evaluation, and the sample fee is refundable against your
+              first bulk order.
+            </p>
+            <p>
+              Certification is model-specific and market-specific. The standards applying to your order are agreed
+              during quotation and recorded in the order — see <a href="/terms" class="text-gold hover:text-white transition-colors">Terms of Service</a>.
+            </p>
+            <p>
+              Returns and claims are handled under the <a href="/return" class="text-gold hover:text-white transition-colors">return policy</a>.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <div class="pt-16 mt-20 border-t border-white/10">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-6">Factory</p>
+        <p class="text-white text-sm tracking-tight">Chenghai, Shantou, China</p>
+        <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mt-3">Visits by appointment — arrange through the contacts above.</p>
+      </div>
+
+      <div class="pt-12">
+        <a href="/" class="text-gold hover:text-white transition-colors font-bold text-[11px] uppercase tracking-[0.3em]">&larr; Back to home</a>
+      </div>
+    </div>
+  </main>
+</Layout>
