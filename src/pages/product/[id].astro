@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import products from '../../data/products.json';
+import productContent from '../../data/product-content.json';
 
 export function getStaticPaths() {
   return products.map((product) => ({
@@ -32,6 +33,37 @@ const related = products
   .slice(0, 4);
 
 const guide = GUIDES[product.category];
+
+/* Long-form copy lives in src/data/product-content.json, separate from the
+   verified logistics data. A SKU without an entry simply skips this block.
+   Container figures are arithmetic from the carton data, never typed in by
+   hand, so they cannot drift when a spec is corrected. */
+const content = productContent[product.id] || null;
+
+function firstNumber(v) {
+  const m = String(v ?? '').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+}
+const cbmPerCarton = firstNumber(product.specs?.cbm);
+const qtyPerCarton = firstNumber(product.specs?.qty_per_carton);
+const grossPerCarton = firstNumber(product.specs?.gw_nw);
+
+const loading = cbmPerCarton && qtyPerCarton
+  ? [
+      { name: '20GP', usable: 28 },
+      { name: '40GP', usable: 56 },
+      { name: '40HQ', usable: 68 },
+    ].map((c) => {
+      // epsilon guards binary-float error: 28 / 0.28 evaluates to 99.99999...
+      const cartons = Math.floor(c.usable / cbmPerCarton + 1e-9);
+      return {
+        name: c.name,
+        cartons,
+        pieces: cartons * qtyPerCarton,
+        gross: grossPerCarton ? Math.round(cartons * grossPerCarton) : null,
+      };
+    })
+  : [];
 
 // Build pre-filled WhatsApp message URL (product-specific)
 const waMessage = `Hello TOYFACTORY, I'm interested in Item ${product.id} - ${product.name}. Please send wholesale price and MOQ details. Thanks!`;
@@ -322,6 +354,68 @@ const faqSchema = {
 					</div>
 				</div>
 			</div>
+
+			{content && (
+				<section class="mt-32 pt-20 border-t border-white/5">
+					<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+						<div class="lg:col-span-7">
+							<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em] mb-4 block italic">Product Overview</span>
+							<h2 class="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-tighter italic mb-8">{content.headline}</h2>
+							<div class="space-y-6">
+								{content.overview.map((para) => (
+									<p class="text-gray-400 text-base leading-[1.9]">{para}</p>
+								))}
+							</div>
+							{content.open_specs && (
+								<p class="mt-8 text-gray-500 text-sm leading-[1.8] border-l-2 border-gold/30 pl-5">{content.open_specs}</p>
+							)}
+						</div>
+						<div class="lg:col-span-5">
+							<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em] mb-4 block italic">Visible in the Photos</span>
+							<ul class="space-y-3 mb-10">
+								{content.visible_features.map((f) => (
+									<li class="text-gray-400 text-sm leading-[1.7] flex gap-3">
+										<span class="text-gold mt-0.5">&#9656;</span>
+										<span>{f}</span>
+									</li>
+								))}
+							</ul>
+							{loading.length > 0 && (
+								<div class="bg-white/[0.02] border border-white/5 p-6">
+									<span class="text-[9px] font-bold text-gold uppercase tracking-[0.4em] block mb-4">Container Loading (Calculated)</span>
+									<table class="w-full text-left">
+										<thead>
+											<tr class="text-[9px] uppercase tracking-widest text-gray-600">
+												<th class="pb-3 font-bold">Container</th>
+												<th class="pb-3 font-bold text-right">Cartons</th>
+												<th class="pb-3 font-bold text-right">Pieces</th>
+												<th class="pb-3 font-bold text-right">Gross</th>
+											</tr>
+										</thead>
+										<tbody>
+											{loading.map((row) => (
+												<tr class="border-t border-white/5">
+													<td class="py-3 text-sm font-display font-black text-white">{row.name}</td>
+													<td class="py-3 text-sm text-gray-300 text-right">{row.cartons}</td>
+													<td class="py-3 text-sm text-gray-300 text-right">{row.pieces.toLocaleString('en-US')}</td>
+													<td class="py-3 text-sm text-gray-300 text-right">{row.gross ? row.gross.toLocaleString('en-US') + ' kg' : '-'}</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+									{content.container_note && <p class="mt-5 text-gray-500 text-xs leading-[1.7]">{content.container_note}</p>}
+								</div>
+							)}
+							{content.oem && (
+								<div class="mt-8">
+									<span class="text-[9px] font-bold text-gray-500 uppercase tracking-[0.4em] block mb-3">OEM / ODM</span>
+									<p class="text-gray-400 text-sm leading-[1.8]">{content.oem}</p>
+								</div>
+							)}
+						</div>
+					</div>
+				</section>
+			)}
 
 			<!-- Related models + guide cross-link -->
 			<section class="mt-32 pt-20 border-t border-white/5">

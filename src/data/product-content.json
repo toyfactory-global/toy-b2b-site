@@ -1,0 +1,22 @@
+{
+  "_readme": "Long-form copy per SKU. Kept OUT of products.json on purpose: products.json holds verified logistics/spec data that must never be edited by hand-waving, while this file holds prose that explains it. Only write statements that are either (a) derived arithmetically from products.json, or (b) visible in the product photographs. Anything else must be supplied by the factory — never guessed. A SKU with no entry still renders (the template skips the overview block).",
+  "TF200892": {
+    "headline": "A garden lamp that makes bubbles",
+    "overview": [
+      "The TF200892 is a bubble machine built into a garden-lamp silhouette. A lamp-shaped head sits on a white pole with a round base, and a clear funnel under the head is where the bubbles leave the unit. The front of the head is gridded and printed BUBBLE / GARDEN LAMP, and a switch sits on the side of the head. It is supplied in several colorways, and the photographs on this page show a group of units standing together beside a pool, which is how the product is actually merchandised.",
+      "Because the unit stands on its own base instead of being held, it is bought for places where bubbles have to keep coming without a person standing there: poolside and deck areas, garden centers and nurseries, hotel and resort terraces, party and wedding venues, and retail window displays. A carton holds 36 pieces, so a mixed-color order is practical at the 72-piece minimum, and a buyer testing a new market can take one carton rather than a pallet.",
+      "Within this collection the TF200892 sits in the middle of the price band, and that position is what most buyers are actually deciding about. The TF213393 at $1.58 is the 8-hole automatic machine that ships with 70 ml of bubble water and carries a 600-piece minimum; the TF213293 at $6.67 is the standing seven-color flower unit. The difference between the three is mainly what the display should look like on the floor, so ask for a mixed carton if you want to test all three in one market instead of committing to one silhouette."
+    ],
+    "visible_features": [
+      "Lamp-shaped head mounted on a pole with a round base, so it stands without being held",
+      "Clear funnel-shaped outlet under the head marks where the bubbles leave the unit",
+      "Gridded front panel printed BUBBLE / GARDEN LAMP",
+      "Side-mounted switch on the head",
+      "Several colorways, distinguished by the color of the pole bands and the base",
+      "Photographed in groups beside a pool, so it reads as garden lighting when idle"
+    ],
+    "container_note": "Container figures below are arithmetic from the carton data on this page, not a loading plan: they assume the usable volume of a 20GP at about 28 CBM, a 40GP at about 56 CBM and a 40HQ at about 68 CBM. Palletization, carton orientation and mixed-SKU orders all reduce the real count, so treat these as the ceiling for a single-SKU shipment.",
+    "oem": "OEM and ODM briefs are quoted per project. Send the artwork, the destination market and the packaging requirement, and the reply covers tooling, sample and carton costs before anything is committed.",
+    "open_specs": "Power source, runtime and bubble output are not published on this page because they change with the order configuration. Ask with your target market and they are confirmed in writing on the quotation."
+  }
+}
