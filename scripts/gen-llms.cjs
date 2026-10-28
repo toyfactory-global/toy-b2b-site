@@ -68,6 +68,7 @@ out.push('');
 
 out.push('## Collections');
 out.push('');
+out.push(`- [All products](${SITE}/products): the complete catalog hub, ${products.length} models across ${CAT_ORDER.length} collections with unit price and MOQ for every item.`);
 for (const c of CAT_ORDER) {
   if (!byCat[c]) continue;
   const a = byCat[c];

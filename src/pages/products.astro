@@ -1,0 +1,252 @@
+---
+import Layout from '../layouts/Layout.astro';
+import products from '../data/products.json';
+import { SITE, ORG_ID } from '../lib/schema';
+
+/**
+ * Catalog hub.
+ *
+ * Before this page existed, /products returned 404 and the nav dropdown on the
+ * homepage pointed at in-page anchors (#water-guns) rather than at anything
+ * linkable. The 41 product pages were reachable only from the four category
+ * pages, so no single URL represented the catalog as a whole, and a buyer
+ * arriving from "toy factory products" had nowhere to land.
+ *
+ * Every figure on this page is computed from products.json: no hand-typed
+ * counts, prices or MOQs, so the page cannot drift out of sync with the catalog.
+ */
+const ORDER = ['Bubble Toys', 'Water Guns', 'Track Toys', 'Educational Toys'];
+
+const groups = ORDER.map((name) => {
+  const items = products.filter((p) => p.category === name);
+  const prices = items.map((p) => p.price);
+  const moqs = items.map((p) => p.moq);
+  return {
+    name,
+    slug: name.replace(/\s+/g, '-').toLowerCase(),
+    items,
+    minPrice: Math.min(...prices),
+    maxPrice: Math.max(...prices),
+    minMoq: Math.min(...moqs),
+  };
+});
+
+const total = products.length;
+const allPrices = products.map((p) => p.price);
+const allMoqs = products.map((p) => p.moq);
+const catalogMinPrice = Math.min(...allPrices).toFixed(2);
+const catalogMaxPrice = Math.max(...allPrices).toFixed(2);
+const catalogMinMoq = Math.min(...allMoqs);
+const catalogMaxMoq = Math.max(...allMoqs);
+
+const description = `The full TOYFACTORY wholesale catalog: ${total} toy models across ${ORDER.length} collections, factory-direct from Chenghai, Guangdong. Item numbers, unit prices and minimum order quantities for every model, with FOB loading data on each product page.`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${SITE}/products#collection`,
+    url: `${SITE}/products`,
+    name: 'Wholesale Toy Catalog',
+    description,
+    isPartOf: { '@type': 'WebSite', '@id': `${SITE}/#website` },
+    about: { '@id': ORG_ID },
+    inLanguage: 'en',
+    mainEntity: {
+      '@type': 'ItemList',
+      '@id': `${SITE}/products#itemlist`,
+      name: 'TOYFACTORY wholesale catalog',
+      numberOfItems: total,
+      itemListOrder: 'https://schema.org/ItemListOrderAscending',
+      itemListElement: products.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: p.name,
+        url: `${SITE}/product/${p.id}`,
+        image: `${SITE}${p.images[0]}`,
+      })),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+      { '@type': 'ListItem', position: 2, name: 'Products', item: `${SITE}/products` },
+    ],
+  },
+];
+---
+
+<Layout title={`Wholesale Toy Catalog: ${total} Models, Factory Direct | TOYFACTORY`} description={description} jsonLd={jsonLd}>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <div class="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.25em]">
+        <a href="/" class="text-gray-500 hover:text-gold transition">Home</a>
+        <span class="text-gold">Catalog</span>
+        <a href="/blog" class="text-gray-500 hover:text-gold transition">Guides</a>
+        <a href="/contact" class="text-gray-500 hover:text-gold transition">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="bg-[#0A0A0F]">
+    <section class="pt-20 pb-14 px-8 border-b border-white/5">
+      <div class="max-w-[1400px] mx-auto">
+        <nav aria-label="Breadcrumb" class="mb-6">
+          <ol class="flex items-center gap-4 text-[9px] font-bold uppercase tracking-[0.4em]">
+            <li><span class="block w-8 h-[2px] bg-gold"></span></li>
+            <li><a href="/" class="text-gray-500 hover:text-gold transition">Home</a></li>
+            <li class="text-gray-700">/</li>
+            <li class="text-gold">Catalog</li>
+          </ol>
+        </nav>
+
+        <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white uppercase tracking-tighter italic mb-8">
+          Wholesale Toy <span class="text-gold">Catalog</span>
+        </h1>
+
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-7 space-y-6">
+            <p class="text-gray-400 text-base leading-[1.9]">
+              This is the complete TOYFACTORY range: {total} models in {ORDER.length} collections, all made
+              in our own plant in Chenghai, Guangdong. Every entry below carries its item number, unit
+              price and minimum order quantity, and each product page adds carton dimensions, CBM,
+              gross and net weight, and the container count that follows from them.
+            </p>
+            <p class="text-gray-400 text-base leading-[1.9]">
+              The range is organised the way buyers actually buy: bubble toys ship in the largest
+              volumes and cover the widest price spread, water guns carry the seasonal summer peak,
+              track toys are bought on piece count, and educational toys are bought as gifts and as
+              classroom stock. Unit prices run from ${catalogMinPrice} to ${catalogMaxPrice}, and
+              minimums from {catalogMinMoq} to {catalogMaxMoq} pieces depending on the model, so a
+              first order can be sized to a test rather than to a container.
+            </p>
+            <p class="text-gray-400 text-base leading-[1.9]">
+              If you already know the item number, search it directly. If you are choosing, the
+              quickest path is to open one collection, compare the three price tiers on the cards, and
+              ask for a quotation on a mixed carton rather than on a single SKU.
+            </p>
+          </div>
+
+          <div class="lg:col-span-5 w-full">
+            <dl class="grid grid-cols-2 gap-px bg-white/5 border border-white/5">
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">Models</dt>
+                <dd class="text-xl font-display font-extrabold text-gold">{total}</dd>
+              </div>
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">Collections</dt>
+                <dd class="text-xl font-display font-extrabold text-white">{ORDER.length}</dd>
+              </div>
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">Unit Price</dt>
+                <dd class="text-xl font-display font-extrabold text-white">${catalogMinPrice}&ndash;{catalogMaxPrice}</dd>
+              </div>
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">MOQ</dt>
+                <dd class="text-xl font-display font-extrabold text-white">{catalogMinMoq}&ndash;{catalogMaxMoq}</dd>
+              </div>
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">Port of Loading</dt>
+                <dd class="text-base font-display font-extrabold text-white">Yantian / Shantou</dd>
+              </div>
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <dt class="text-[8px] uppercase tracking-[0.3em] text-gray-600 mb-1">Quality System</dt>
+                <dd class="text-base font-display font-extrabold text-white">ISO 9001:2015</dd>
+              </div>
+            </dl>
+            <div class="mt-4 bg-white/[0.02] border border-white/5 px-6 py-5">
+              <span class="text-[9px] font-bold text-gold uppercase tracking-[0.4em] block mb-2">Battery Shipping Policy</span>
+              <p class="text-gray-400 text-sm leading-[1.7]">Dry-cell batteries are never included with shipments. Lithium batteries are installed in the unit and included.</p>
+            </div>
+            <a href="/#rfq" class="mt-4 block text-center bg-gold text-dark px-8 py-5 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">
+              Request a Quotation
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {groups.map((g) => (
+      <section id={g.slug} class="py-20 px-8 border-b border-white/5">
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex flex-wrap items-end justify-between gap-6 mb-4">
+            <div>
+              <span class="text-[9px] font-bold uppercase tracking-[0.5em] text-gold block mb-3">
+                {g.items.length} Models &middot; ${g.minPrice} to ${g.maxPrice} &middot; MOQ from {g.minMoq}
+              </span>
+              <h2 class="text-3xl md:text-4xl font-display font-extrabold text-white uppercase tracking-tighter italic">
+                {g.name}
+              </h2>
+            </div>
+            <a href={`/category/${g.slug}`} class="text-[9px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-gold transition">
+              Collection Page &rarr;
+            </a>
+          </div>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10">
+            {g.items.map((p) => (
+              <a
+                href={`/product/${p.id}`}
+                class="group bg-[#0F0F14] border border-white/5 hover:border-gold/30 transition-all duration-500 p-4 flex flex-col"
+              >
+                <div class="aspect-square bg-white/5 flex items-center justify-center p-4 mb-4 overflow-hidden">
+                  <img
+                    src={p.images[0]}
+                    alt={`${p.name} - wholesale toy ${p.id}`}
+                    loading="lazy"
+                    width="300"
+                    height="300"
+                    class="w-full h-full object-contain group-hover:scale-105 transition duration-700"
+                  />
+                </div>
+                <span class="text-[8px] font-bold text-gray-600 uppercase tracking-widest mb-1.5">{p.id}</span>
+                <span class="text-[11px] font-bold text-white uppercase tracking-tight leading-snug group-hover:text-gold transition line-clamp-2 mb-3">
+                  {p.name}
+                </span>
+                <div class="mt-auto flex items-end justify-between">
+                  <span class="text-gold font-display font-extrabold text-sm">${p.price}</span>
+                  <span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest">MOQ {p.moq}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="py-20 px-8">
+      <div class="max-w-[900px] mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase tracking-tighter italic mb-6">
+          Not sure which model fits your market?
+        </h2>
+        <p class="text-gray-400 text-base leading-[1.9] mb-10">
+          Send the item numbers you are comparing with your destination market, and the reply covers
+          the test reports that exist for those exact models, the carton data, and a landed-cost
+          estimate for the port you ship into.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-8 text-[10px] font-bold uppercase tracking-[0.3em]">
+          <a href="/#rfq" class="bg-gold text-dark px-8 py-4 hover:bg-white transition">Request a Quotation</a>
+          <a href="/blog" class="text-gray-400 hover:text-gold transition">Read the sourcing guides</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-16 border-t border-white/5 bg-[#050508] text-center">
+    <div class="flex flex-col items-center gap-6">
+      <div class="flex gap-10 text-[9px] text-gray-400 uppercase tracking-[0.4em] font-bold">
+        <a href="/privacy" class="hover:text-gold transition">Privacy</a>
+        <a href="/terms" class="hover:text-gold transition">Terms</a>
+        <a href="/return" class="hover:text-gold transition">Returns</a>
+      </div>
+      <div class="text-[9px] text-gray-500 uppercase tracking-[0.4em] font-bold italic">
+        &copy; 2026 TOYFACTORY Manufacturing. Global B2B Standards.
+      </div>
+    </div>
+  </footer>
+</Layout>

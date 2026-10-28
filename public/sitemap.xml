@@ -8,6 +8,12 @@
     <priority>1</priority>
   </url>
   <url>
+    <loc>https://toyfactoryglobal.com/products</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://toyfactoryglobal.com/privacy</loc>
     <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>

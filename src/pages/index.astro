@@ -120,6 +120,7 @@ const getProductsByCategory = (catId) => {
 						{categories.map(cat => (
 							<a href={`#${cat.id.replace(/\s+/g, '-').toLowerCase()}`} class="hover:text-gold transition-colors text-xs whitespace-nowrap">{cat.id}</a>
 						))}
+						<a href="/products" class="hover:text-gold transition-colors text-xs whitespace-nowrap border-t border-white/10 pt-3 mt-1 text-gold">All Products &rarr;</a>
 					</div>
 				</div>
 				<a href="/blog" target="_blank" class="hover:text-gold transition-colors">Blog</a>
