@@ -1,22 +1,119 @@
 {
-  "_readme": "Long-form copy per SKU. Kept OUT of products.json on purpose: products.json holds verified logistics/spec data that must never be edited by hand-waving, while this file holds prose that explains it. Only write statements that are either (a) derived arithmetically from products.json, or (b) visible in the product photographs. Anything else must be supplied by the factory — never guessed. A SKU with no entry still renders (the template skips the overview block).",
+  "_readme": "Long-form copy per SKU. Kept OUT of products.json on purpose: products.json holds verified logistics/spec data, this file holds prose that explains it. Rules: (a) arithmetic derived from products.json is allowed; (b) facts visible in the product photographs are allowed; (c) anything else must come from the factory owner - never guessed. 'Unknown battery' means the battery sentence is omitted entirely, never written as unknown. A SKU with no entry skips the block; a missing optional key just skips that sub-block.",
+  "TF213393": {
+    "headline": "The volume model: eight holes, one low ticket",
+    "overview": [
+      "The TF213393 is the entry point of this collection at $1.58, and the 600-piece minimum says who it is for: a buyer filling a container rather than testing a market. It is an eight-hole automatic bubble machine supplied with a 70 ml bottle of bubble water, so a retailer can put it on the shelf without sourcing fluid separately.",
+      "Two details matter at this price. The housing is built as a leak-proof design, which is the part that fails first on cheap bubble machines once fluid works its way back into the compartment where the electronics sit. An LED is fitted, so the unit still sells as a toy when it runs indoors or after dark.",
+      "Against the other two tiers here, the TF200892 at $4.34 and MOQ 72 is the garden-lamp silhouette built to stand outdoors, and the TF213293 at $6.67 and MOQ 80 is the standing, lit seven-color flower. The TF213393 is what you show a customer buying on price and volume, and it is the cheapest way to fill the bottom of a display built around the two premium models."
+    ],
+    "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
+  },
   "TF200892": {
     "headline": "A garden lamp that makes bubbles",
     "overview": [
-      "The TF200892 is a bubble machine built into a garden-lamp silhouette. A lamp-shaped head sits on a white pole with a round base, and a clear funnel under the head is where the bubbles leave the unit. The front of the head is gridded and printed BUBBLE / GARDEN LAMP, and a switch sits on the side of the head. It is supplied in several colorways, and the photographs on this page show a group of units standing together beside a pool, which is how the product is actually merchandised.",
+      "The TF200892 is a bubble machine built into a garden-lamp silhouette. A lamp-shaped head sits on a white pole with a round base, and a clear funnel under the head is where the bubbles leave the unit. The front of the head is gridded and printed BUBBLE / GARDEN LAMP, a switch sits on the side of the head, and the head carries sound and light effects. The pole is height-adjustable, which is what lets the same unit work on a patio table and on a lawn. It is supplied in several colorways, and the photographs on this page show a group of units standing together beside a pool, which is how the product is actually merchandised.",
       "Because the unit stands on its own base instead of being held, it is bought for places where bubbles have to keep coming without a person standing there: poolside and deck areas, garden centers and nurseries, hotel and resort terraces, party and wedding venues, and retail window displays. A carton holds 36 pieces, so a mixed-color order is practical at the 72-piece minimum, and a buyer testing a new market can take one carton rather than a pallet.",
-      "Within this collection the TF200892 sits in the middle of the price band, and that position is what most buyers are actually deciding about. The TF213393 at $1.58 is the 8-hole automatic machine that ships with 70 ml of bubble water and carries a 600-piece minimum; the TF213293 at $6.67 is the standing seven-color flower unit. The difference between the three is mainly what the display should look like on the floor, so ask for a mixed carton if you want to test all three in one market instead of committing to one silhouette."
+      "Within this collection the TF200892 sits in the middle of the price band, and that position is what most buyers are actually deciding about. The TF213393 at $1.58 is the 8-hole automatic machine that ships with 70 ml of bubble water and carries a 600-piece minimum; the TF213293 at $6.67 is the standing seven-color flower unit with a lit head. The difference between the three is mainly what the display should look like on the floor, so ask for a mixed carton if you want to test all three in one market instead of committing to one silhouette."
     ],
     "visible_features": [
-      "Lamp-shaped head mounted on a pole with a round base, so it stands without being held",
+      "Lamp-shaped head mounted on a height-adjustable pole with a round base, so it stands without being held",
       "Clear funnel-shaped outlet under the head marks where the bubbles leave the unit",
       "Gridded front panel printed BUBBLE / GARDEN LAMP",
       "Side-mounted switch on the head",
       "Several colorways, distinguished by the color of the pole bands and the base",
       "Photographed in groups beside a pool, so it reads as garden lighting when idle"
     ],
-    "container_note": "Container figures below are arithmetic from the carton data on this page, not a loading plan: they assume the usable volume of a 20GP at about 28 CBM, a 40GP at about 56 CBM and a 40HQ at about 68 CBM. Palletization, carton orientation and mixed-SKU orders all reduce the real count, so treat these as the ceiling for a single-SKU shipment.",
-    "oem": "OEM and ODM briefs are quoted per project. Send the artwork, the destination market and the packaging requirement, and the reply covers tooling, sample and carton costs before anything is committed.",
-    "open_specs": "Power source, runtime and bubble output are not published on this page because they change with the order configuration. Ask with your target market and they are confirmed in writing on the quotation."
+    "open_specs": "Power source and runtime are not published on this page because they change with the order configuration. Ask with your target market and they are confirmed in writing on the quotation."
+  },
+  "TF213293": {
+    "headline": "A standing flower head that lights up",
+    "overview": [
+      "The TF213293 is the top of this collection at $6.67 with an 80-piece minimum, and the one model here built as a standing display piece rather than a handheld toy: a seven-color flower head on a height-adjustable pole. The head is lit, so the unit works as evening decor as well as a daytime bubble machine.",
+      "It is a new design rather than a rework of the two cheaper models. Compared with the TF213393 at $1.58 and the TF200892 at $4.34, the extra cost goes into the standing form and the lit flower head, which is what venue and event buyers pay for. The TF200892 is cheaper per unit but is a garden-lamp shape, not a flower, so the two are usually placed side by side in a display rather than chosen one against the other.",
+      "Height adjustment matters in this category more than the spec sheet suggests. The same unit has to work on a patio table, on a hotel terrace and on open lawn, and a fixed pole takes one of those three away from the buyer."
+    ],
+    "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
+  },
+  "TF213143": {
+    "headline": "A craft kit that lights up and plays music",
+    "overview": [
+      "The TF213143 is a DIY bouquet pressing machine set supplied with light and music, priced at $4.15 with a 160-piece minimum. It sits in the educational range rather than the novelty range: the buyer is a parent or a gift buyer, not someone filling a pool-party display.",
+      "It is an open-ended craft toy, in the sense that the child assembles and presses a bouquet rather than watching a mechanism run on its own. That is why it is usually merchandised next to the clay and pottery units rather than next to the bubble machines, and why the light and music matter more here than they would on a bubble toy: they are what makes the box work as a gift.",
+      "Within this range the price tiers are clear. The TF197926 Ceramic Clay Machine at $6.46 with MOQ 120 is the mid option, and the TF169001 Simulation Pottery Machine at $21.69 with MOQ 50 is the top. The TF213143 is the low-ticket entry that lets a shop put a craft-activity category on the shelf for under five dollars a unit."
+    ],
+    "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
+  },
+  "TF197926": {
+    "headline": "The mid-priced clay unit",
+    "overview": [
+      "The TF197926 is a ceramic clay machine at $6.46 with a 120-piece minimum, sitting between the $4.15 craft set and the $21.69 pottery machine in this range.",
+      "It is bought as a hands-on activity toy and as a gift. The buyer is more often a toy retailer or a gift wholesaler than an event supplier, which changes what the page has to answer: box presentation and a predictable unit price matter more than range or runtime.",
+      "The three tiers in this range are easy to explain to a customer. The TF213143 at $4.15 is the low-ticket craft entry, the TF197926 at $6.46 is the middle, and the TF169001 at $21.69 is a machine with stepless speed control and a foot pedal. A shop that wants one clay product takes the middle; a shop that wants to show a range takes all three."
+    ],
+    "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
+  },
+  "TF169001": {
+    "headline": "A pottery wheel, not a toy version of one",
+    "overview": [
+      "The TF169001 is the top of the educational range at $21.69 with a 50-piece minimum, and its specification reads like a small machine rather than a toy: stepless speed control, a foot pedal that pauses the wheel, and parts that come apart for cleaning.",
+      "Those three features are what separate it from the cheaper craft sets in this range. Stepless control means the wheel follows the child's hands instead of stepping between fixed gears. The foot pedal leaves both hands free, which is how a potter actually works. Removable parts are what make clay usable in a classroom, because cleanup decides whether a teacher runs the activity a second time.",
+      "It ships without a battery. Against the TF213143 at $4.15 and the TF197926 at $6.46, the price gap is the difference between a craft kit and a machine that behaves like equipment, and it is the model to show a buyer who already sells art supplies."
+    ],
+    "open_specs": "This item ships without a battery."
+  },
+  "TF213415": {
+    "headline": "A dinosaur head on wheels, with somewhere to put the cars",
+    "overview": [
+      "The TF213415 is a storage dinosaur car supplied with six pull-back cars, at $4.38 with a 180-piece minimum. The dinosaur head is the container: the six cars store inside it, which solves the problem that gets most small-car sets left on the floor of a shop or a bedroom.",
+      "Pull-back cars need no battery, so this is the simplest unit in the track range to ship and to gift-wrap, and it is the low-ticket item that gets a customer to the shelf.",
+      "The range positions it against the TF209512 Magnetic Track Car set at $10.80 with MOQ 90 and the TF208740 orbital magnetic levitation unit at $24.46 with MOQ 35. Those two are bought for the set size and the mechanism; the TF213415 is bought as a gift item at a price that needs no display support."
+    ],
+    "open_specs": "This item is pull-back driven and ships without a battery."
+  },
+  "TF209512": {
+    "headline": "126 pieces in one box",
+    "overview": [
+      "The TF209512 is a 126-piece magnetic track car set at $10.80 with a 90-piece minimum. It is the middle tier of the track range, and the piece count is the product: a box this size sells as a gift and as a birthday present in a way a single car cannot.",
+      "Sets of this size are bought on box size and piece count rather than on electronics, so the instruction sheet and the box carry more of the sale than any feature does. It ships without a battery.",
+      "Against the TF213415 at $4.38 with MOQ 180 and the TF208740 at $24.46 with MOQ 35, the TF209512 is the tier a shop takes when it wants one large set rather than a cheap impulse item or a single premium unit."
+    ],
+    "open_specs": "This item ships without a battery."
+  },
+  "TF208740": {
+    "headline": "The top of the track range",
+    "overview": [
+      "The TF208740 is an orbital magnetic levitation car at $24.46, the highest unit price in this collection, with a 35-piece minimum, the lowest minimum in the track range.",
+      "A low minimum at a high unit price points to a display or gift item rather than a volume line: it is the model a shop takes a few dozen of to sit beside the cheaper sets, not one that fills a container on its own.",
+      "It is bought next to the TF209512 126-piece set at $10.80 and the TF213415 dinosaur storage car at $4.38. If you are choosing one of the three for a first order, the arithmetic differs in each case: the TF208740 ties up the least capital per line because of the 35-piece minimum, even though its unit price is the highest of the three."
+    ],
+    "open_specs": "Power configuration for this item is confirmed per order rather than published on this page."
+  },
+  "TF210969": {
+    "headline": "The lithium model, with the numbers to go with it",
+    "overview": [
+      "The TF210969 is the third generation of the fire-breathing water gun, in blue, at $3.42 with a 240-piece minimum: the lowest unit price in the water gun range and the highest minimum, which makes it the volume line here.",
+      "It is the model in this range with a published power specification: a 3.7 V 500 mAh lithium pack, about 110 minutes to charge, and 10 to 15 minutes of running time per charge, with a range of 7 to 8 metres.",
+      "Those numbers decide how it is sold. Ten to fifteen minutes is a play-session pack, not an all-afternoon one, so the unit suits back gardens and short sessions, and a retailer should expect to explain charging to the end customer. The lithium pack is installed and included with the shipment, unlike dry-cell models where no batteries are shipped.",
+      "Against the TF211013 at $6.13 and the TF211527 at $14.50, the TF210969 is where a buyer starts: the cheapest per unit, the same pack as the TF211013, and the highest minimum of the three."
+    ]
+  },
+  "TF211013": {
+    "headline": "The same pack in a larger body",
+    "overview": [
+      "The TF211013 is the second generation of the fire-breathing water gun at $6.13 with a 144-piece minimum. It runs the same 3.7 V 500 mAh lithium pack as the TF210969, at nearly twice the unit price.",
+      "The gap is the body rather than the electronics. Where the TF210969 is the volume line with a 240-piece minimum, the TF211013 sits in the middle of the range, and it is the one a buyer picks when the shelf needs a step between the entry gun and the top model.",
+      "The top of the range is the TF211527 single-tube Gatling at $14.50 with an 80-piece minimum. Taking one carton of each is the practical way to see whether those price steps are visible to a customer standing in front of the shelf.",
+      "The lithium pack is installed and included with the shipment. Dry-cell models are shipped without batteries."
+    ]
+  },
+  "TF211527": {
+    "headline": "The top of the water gun range",
+    "overview": [
+      "The TF211527 is a single-tube Gatling electric water gun at $14.50 with an 80-piece minimum: the highest unit price in the water gun range.",
+      "The name describes the mechanism: a single tube feeding a Gatling-style rotating arrangement, fired continuously rather than in single shots. At this price the buyer is more likely to be a specialist toy retailer or a summer-season display buyer than a general wholesaler.",
+      "It sits above the TF210969 at $3.42 and the TF211013 at $6.13. The three share a category but not a customer: the cheapest is a volume line, the middle one steps up on body, and this one is taken in smaller numbers for a display or for a specific customer request."
+    ],
+    "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
   }
 }

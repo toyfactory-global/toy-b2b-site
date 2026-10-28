@@ -40,6 +40,14 @@ const guide = GUIDES[product.category];
    hand, so they cannot drift when a spec is corrected. */
 const content = productContent[product.id] || null;
 
+/* Facts that apply to every product page. Sourced from the factory owner
+   (2026-10-28), not inferred from the catalogue. The battery rule answers a
+   question every importer asks before ordering, so it belongs on the page
+   rather than in an email thread. */
+const BATTERY_POLICY = 'Dry-cell batteries are never included with shipments. Lithium batteries are installed in the unit and included.';
+const DEFAULT_CONTAINER_NOTE = 'Container figures are arithmetic from the carton data on this page, not a loading plan: they assume about 28 CBM usable in a 20GP, 56 in a 40GP and 68 in a 40HQ. Palletization, carton orientation and mixed-SKU orders all reduce the real count, so treat these as the ceiling for a single-SKU shipment.';
+const DEFAULT_OEM = 'OEM and ODM briefs are quoted per project. Send the artwork, the destination market and the packaging requirement, and the reply covers tooling, sample and carton costs before anything is committed.';
+
 function firstNumber(v) {
   const m = String(v ?? '').match(/\d+(\.\d+)?/);
   return m ? parseFloat(m[0]) : null;
@@ -280,6 +288,11 @@ const faqSchema = {
 							</div>
 						</div>
 					)}
+					<!-- Battery shipping policy: applies to every SKU -->
+					<div class="mt-6 bg-white/[0.02] border border-white/5 px-8 py-6">
+						<span class="text-[9px] font-bold text-gold uppercase tracking-[0.4em] block mb-2">Battery Shipping Policy</span>
+						<p class="text-gray-400 text-sm leading-[1.7]">{BATTERY_POLICY}</p>
+					</div>
 				</div>
 
 				<!-- RIGHT: PRODUCT INFO -->
@@ -371,15 +384,19 @@ const faqSchema = {
 							)}
 						</div>
 						<div class="lg:col-span-5">
-							<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em] mb-4 block italic">Visible in the Photos</span>
-							<ul class="space-y-3 mb-10">
-								{content.visible_features.map((f) => (
-									<li class="text-gray-400 text-sm leading-[1.7] flex gap-3">
-										<span class="text-gold mt-0.5">&#9656;</span>
-										<span>{f}</span>
-									</li>
-								))}
-							</ul>
+							{content.visible_features && content.visible_features.length > 0 && (
+								<>
+									<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em] mb-4 block italic">Visible in the Photos</span>
+									<ul class="space-y-3 mb-10">
+										{content.visible_features.map((f) => (
+											<li class="text-gray-400 text-sm leading-[1.7] flex gap-3">
+												<span class="text-gold mt-0.5">&#9656;</span>
+												<span>{f}</span>
+											</li>
+										))}
+									</ul>
+								</>
+							)}
 							{loading.length > 0 && (
 								<div class="bg-white/[0.02] border border-white/5 p-6">
 									<span class="text-[9px] font-bold text-gold uppercase tracking-[0.4em] block mb-4">Container Loading (Calculated)</span>
@@ -403,15 +420,13 @@ const faqSchema = {
 											))}
 										</tbody>
 									</table>
-									{content.container_note && <p class="mt-5 text-gray-500 text-xs leading-[1.7]">{content.container_note}</p>}
+									<p class="mt-5 text-gray-500 text-xs leading-[1.7]">{content.container_note || DEFAULT_CONTAINER_NOTE}</p>
 								</div>
 							)}
-							{content.oem && (
-								<div class="mt-8">
-									<span class="text-[9px] font-bold text-gray-500 uppercase tracking-[0.4em] block mb-3">OEM / ODM</span>
-									<p class="text-gray-400 text-sm leading-[1.8]">{content.oem}</p>
-								</div>
-							)}
+							<div class="mt-8">
+								<span class="text-[9px] font-bold text-gray-500 uppercase tracking-[0.4em] block mb-3">OEM / ODM</span>
+								<p class="text-gray-400 text-sm leading-[1.8]">{content.oem || DEFAULT_OEM}</p>
+							</div>
 						</div>
 					</div>
 				</section>

@@ -60,6 +60,7 @@ out.push(`Unit price range: USD ${Math.min(...prices).toFixed(2)} to USD ${Math.
 out.push(`MOQ range: ${Math.min(...moqs)} to ${Math.max(...moqs)} pieces, set per model.`);
 out.push('Port of loading: Yantian (Shenzhen) or Shantou.');
 out.push('Lead time: 10-15 days for stock models in small quantities; 25-35 days for bulk orders and orders with custom packaging or OEM branding, counted after deposit confirmation.');
+out.push('Batteries: dry-cell batteries are never included with shipments; lithium batteries are installed in the unit and included.');
 out.push('Customization: OEM and ODM - custom color, private label, packaging design, mold development. Custom OEM briefs from 500 units.');
 out.push('Product test reports are available on request for individual models.');
 out.push('Contact: hntoys7@sinuotoys.com | WhatsApp +86 159 7691 7707');
