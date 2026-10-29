@@ -141,17 +141,68 @@ const breadcrumbSchema = {
   ]
 };
 
-// Build JSON-LD FAQPage schema
+/* FAQ: one array feeds both the visible section and the FAQPage markup.
+   Structured data that is not visible on the page breaks Google's guidelines,
+   and this page used to carry four questions nobody could see. Answers reuse
+   the carton arithmetic already on the page, so nothing here is a new claim. */
+const moqCartons = qtyPerCarton ? Math.ceil(product.moq / qtyPerCarton) : null;
+const moqCbm = moqCartons && cbmPerCarton ? Math.round(moqCartons * cbmPerCarton * 1000) / 1000 : null;
+const g20 = loading.find((l) => l.name === '20GP') || null;
+const hq = loading.find((l) => l.name === '40HQ') || null;
+
+const faqs = [
+  {
+    q: `What is the minimum order for ${product.id}?`,
+    a: moqCartons
+      ? `${product.moq} units, which is ${moqCartons} carton${moqCartons === 1 ? '' : 's'} at ${qtyPerCarton} pieces each${moqCbm ? `, about ${moqCbm} CBM` : ''}. Prices are quoted per unit at that quantity. If you want to see two or three colourways before committing to a full run, ask for a mixed-colour carton on the quotation.`
+      : `${product.moq} units. Prices are quoted per unit at that quantity, and colour split is agreed on the quotation.`,
+  },
+  {
+    q: `How many ${product.id} fit in a container?`,
+    a: g20 && hq
+      ? `A 20GP takes ${g20.cartons} cartons, ${g20.pieces.toLocaleString('en-US')} pieces${g20.gross ? `, about ${g20.gross.toLocaleString('en-US')} kg gross` : ''}. A 40HQ takes ${hq.cartons} cartons, ${hq.pieces.toLocaleString('en-US')} pieces. Both figures assume roughly 28 CBM usable in a 20GP and 68 in a 40HQ, before palletization or a mixed-SKU load reduces them.`
+      : `Container quantity depends on the carton specification agreed for the order, and is confirmed on the quotation.`,
+  },
+  {
+    q: `What certifications does ${product.id} hold?`,
+    a: `Certification is issued per model, not for the catalogue as a whole. Tell us the destination market (EU: CE and EN-71; US: ASTM F963 and CPSIA; UK: UKCA) and we confirm which test reports exist for ${product.id} and send them with the quotation. No certificate is implied for a market that is not named in the quotation.`,
+  },
+  {
+    q: `What is the lead time for wholesale orders of ${product.id}?`,
+    a: `Lead time depends on the model and on order quantity. Stock models in small quantities ship in 10-15 days. Bulk orders, and any order with custom packaging or OEM branding, usually take 25-35 days after deposit confirmation. The schedule for ${product.id} is confirmed in writing with the quotation. FOB from Yantian or Shantou.`,
+  },];
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": `What is the MOQ for ${product.name}?`, "acceptedAnswer": { "@type": "Answer", "text": `The standard MOQ is ${product.moq} units. For large-volume orders, contact our sales team for customized pricing.` } },
-    { "@type": "Question", "name": `Does TOYFACTORY offer OEM customization for ${product.name}?`, "acceptedAnswer": { "@type": "Answer", "text": "Yes, TOYFACTORY is an ISO 9001:2015 certified manufacturer offering full OEM/ODM services including custom colors, private labeling, and packaging design." } },
-    { "@type": "Question", "name": `What certifications does ${product.id} hold?`, "acceptedAnswer": { "@type": "Answer", "text": `Certification is issued per model, not for the catalog as a whole. Tell us the destination market (EU: CE and EN-71; US: ASTM F963 and CPSIA; UK: UKCA) and we confirm which test reports exist for ${product.id} and send them with the quotation.` } },
-    { "@type": "Question", "name": `What is the lead time for wholesale orders of ${product.name}?`, "acceptedAnswer": { "@type": "Answer", "text": `Lead time depends on the model and on order quantity. Stock models in small quantities ship in 10-15 days. Bulk orders, and any order with custom packaging or OEM branding, usually take 25-35 days after deposit confirmation. The schedule for ${product.id} is confirmed in writing with the quotation. FOB from Yantian or Shantou.` } }
-  ]
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
 };
+
+/* Comparison set: this model plus the three nearest-priced models in the same
+   category, ordered by price. Every figure is derived from the same carton data
+   as the tables above, so the table cannot drift from the spec sheet. This is
+   the comparison a buyer actually runs by hand in a spreadsheet. */
+const compareSet = [product, ...related.slice(0, 3)]
+  .sort((a, b) => a.price - b.price)
+  .map((p) => {
+    const q = firstNumber(p.specs?.qty_per_carton);
+    const cbm = firstNumber(p.specs?.cbm);
+    const gw = firstNumber(p.specs?.gw_nw);
+    return {
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      moq: p.moq,
+      cartonsAtMoq: q ? Math.ceil(p.moq / q) : null,
+      pcs20: q && cbm ? Math.floor(28 / cbm + 1e-9) * q : null,
+      kgUnit: q && gw ? Math.round((gw / q) * 100) / 100 : null,
+      current: p.id === product.id,
+    };
+  });
 ---
 
 <Layout 
@@ -431,6 +482,72 @@ const faqSchema = {
 					</div>
 				</section>
 			)}
+
+			<!-- Same shelf, different commitment: the comparison a buyer runs by hand -->
+			{compareSet.length > 1 && (
+				<section class="mt-32 pt-20 border-t border-white/5">
+					<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em] mb-4 block italic">Price Against Commitment</span>
+					<h2 class="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-tighter italic mb-6">
+						Same Shelf, Different Commitment
+					</h2>
+					<p class="text-gray-400 text-base leading-[1.9] max-w-3xl mb-10">
+						The three models closest in price sit in this table next to the one above. A lower unit price is not a lower order: the column that decides how much cash a line ties up is cartons at MOQ, and the column that decides freight per piece is how many fit a 20GP. Prices and packing figures are read from the same catalogue data as the tables on this page.
+					</p>
+					<div class="overflow-x-auto">
+						<table class="w-full text-left min-w-[760px]">
+							<thead>
+								<tr class="text-[9px] uppercase tracking-widest text-gray-600">
+									<th class="pb-3 font-bold">Model</th>
+									<th class="pb-3 font-bold text-right">Price</th>
+									<th class="pb-3 font-bold text-right">MOQ</th>
+									<th class="pb-3 font-bold text-right">Cartons at MOQ</th>
+									<th class="pb-3 font-bold text-right">Pcs / 20GP</th>
+									<th class="pb-3 font-bold text-right">KG / Unit</th>
+								</tr>
+							</thead>
+							<tbody>
+								{compareSet.map((row) => (
+									<tr class={`border-t border-white/5 ${row.current ? 'bg-gold/[0.06]' : ''}`}>
+										<td class="py-4 pr-6">
+											<a href={`/product/${row.id}`} class={`text-[11px] font-bold uppercase tracking-tight leading-snug ${row.current ? 'text-gold' : 'text-white hover:text-gold'} transition`}>
+												{row.id}
+											</a>
+											<span class="block text-[9px] text-gray-600 uppercase tracking-widest leading-snug mt-1 line-clamp-1">{row.name}</span>
+										</td>
+										<td class="py-4 text-sm text-gray-300 text-right">${row.price}</td>
+										<td class="py-4 text-sm text-gray-300 text-right">{row.moq}</td>
+										<td class="py-4 text-sm text-gray-300 text-right">{row.cartonsAtMoq ?? '-'}</td>
+										<td class="py-4 text-sm text-gray-300 text-right">{row.pcs20 ? row.pcs20.toLocaleString('en-US') : '-'}</td>
+										<td class="py-4 text-sm text-gray-300 text-right">{row.kgUnit ?? '-'}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+					<p class="mt-6 text-gray-500 text-xs leading-[1.7]">
+						Cartons at MOQ is the minimum order divided by the units per carton, rounded up. Pcs / 20GP is a single-SKU load at about 28 CBM usable and is the ceiling, not a loading plan.
+					</p>
+				</section>
+			)}
+
+			<!-- Visible FAQ: same questions as the FAQPage markup in the head -->
+			<section class="mt-32 pt-20 border-t border-white/5">
+				<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em] mb-4 block italic">Answered On The Page</span>
+				<h2 class="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-tighter italic mb-10">
+					Ordering {product.id}
+				</h2>
+				<div class="max-w-4xl divide-y divide-white/5 border-y border-white/5">
+					{faqs.map((f, i) => (
+						<details class="group py-6" open={i === 0}>
+							<summary class="flex items-start justify-between gap-8 cursor-pointer list-none">
+								<h3 class="text-sm md:text-base font-bold text-white uppercase tracking-tight leading-snug group-hover:text-gold transition">{f.q}</h3>
+								<span class="text-gold shrink-0 text-lg leading-none mt-0.5 group-open:rotate-45 transition-transform">+</span>
+							</summary>
+							<p class="mt-4 text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+						</details>
+					))}
+				</div>
+			</section>
 
 			<!-- Related models + guide cross-link -->
 			<section class="mt-32 pt-20 border-t border-white/5">
