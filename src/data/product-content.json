@@ -1,11 +1,19 @@
 {
   "_readme": "Long-form copy per SKU. Kept OUT of products.json on purpose: products.json holds verified logistics/spec data, this file holds prose that explains it. Rules: (a) arithmetic derived from products.json is allowed; (b) facts visible in the product photographs are allowed; (c) anything else must come from the factory owner - never guessed. 'Unknown battery' means the battery sentence is omitted entirely, never written as unknown. A SKU with no entry skips the block; a missing optional key just skips that sub-block.",
   "TF213393": {
-    "headline": "The volume model: eight holes, one low ticket",
+    "headline": "The volume model: eight holes, a bottle on the front",
     "overview": [
-      "The TF213393 is the entry point of this collection at $1.58, and the 600-piece minimum says who it is for: a buyer filling a container rather than testing a market. It is an eight-hole automatic bubble machine supplied with a 70 ml bottle of bubble water, so a retailer can put it on the shelf without sourcing fluid separately.",
-      "Two details matter at this price. The housing is built as a leak-proof design, which is the part that fails first on cheap bubble machines once fluid works its way back into the compartment where the electronics sit. An LED is fitted, so the unit still sells as a toy when it runs indoors or after dark.",
-      "Against the other two tiers here, the TF200892 at $4.34 and MOQ 72 is the garden-lamp silhouette built to stand outdoors, and the TF213293 at $6.67 and MOQ 80 is the standing, lit seven-color flower. The TF213393 is what you show a customer buying on price and volume, and it is the cheapest way to fill the bottom of a display built around the two premium models."
+      "The TF213393 is the entry point of this collection at $1.58, and the 600-piece minimum says who it is for: a buyer filling a container rather than testing a market. It is an eight-hole automatic bubble gun with a screw-on bottle of bubble water slung under the barrel, printed BUBBLE, and an Astronaut panel on the flank in rainbow lettering. Three colourways are produced, white with pink, white with purple and blue with yellow, and the box carries spare bottles plus sachets of concentrate so the retailer is not sending the customer to a separate fluid purchase.",
+      "Two details matter at this price. The housing is built as a leak-proof design, which is the part that fails first on cheap bubble machines once fluid works its way back into the compartment where the electronics sit. An LED is fitted, so the unit still sells as a toy when it runs indoors or after dark. The packing is the other half of the case: 120 pieces go into a carton at 0.198 CBM and only 0.25 kg per unit, the lightest unit in the bubble range, so a 20GP holds 141 cartons and 16,920 pieces. The 600-piece minimum is five cartons.",
+      "Against the other two tiers here, the TF200892 at $4.34 and MOQ 72 is the garden-lamp silhouette built to stand outdoors, and the TF213293 at $6.67 and MOQ 80 is the standing, lit seven-colour flower. The TF213393 is what you show a customer buying on price and volume, and it is the cheapest way to fill the bottom of a display built around the two premium models. Because the retail pack is an e-commerce box measuring 15 x 7 x 15 cm, it is also the only model here that parcels without oversize handling."
+    ],
+    "visible_features": [
+      "Bubble gun form with a screw-on bottle of bubble water mounted under the barrel",
+      "Eight outlet holes clustered at the front of the barrel",
+      "Astronaut panel on the flank in rainbow lettering",
+      "Three colourways: white with pink, white with purple, blue with yellow",
+      "Spare bottles and sachets of bubble concentrate in the box",
+      "E-commerce box 15 x 7 x 15 cm, 120 pieces per carton at 0.198 CBM"
     ],
     "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
   },
@@ -29,90 +37,169 @@
   "TF213293": {
     "headline": "A standing flower head that lights up",
     "overview": [
-      "The TF213293 is the top of this collection at $6.67 with an 80-piece minimum, and the one model here built as a standing display piece rather than a handheld toy: a seven-color flower head on a height-adjustable pole. The head carries sound and light effects, so the unit works as evening decor as well as a daytime bubble machine.",
-      "It is a new design rather than a rework of the two cheaper models. Compared with the TF213393 at $1.58 and the TF200892 at $4.34, the extra cost goes into the standing form and the sound and light effects, which is what venue and event buyers pay for. The TF200892 is cheaper per unit but is a garden-lamp shape, not a flower, so the two are usually placed side by side in a display rather than chosen one against the other.",
-      "Height adjustment matters in this category more than the spec sheet suggests. The same unit has to work on a patio table, on a hotel terrace and on open lawn, and a fixed pole takes one of those three away from the buyer."
+      "The TF213293 is the top of this collection at $6.67 with an 80-piece minimum, and the one model here built as a standing display piece rather than a handheld toy: a seven-colour flower head on a height-adjustable pole. The head carries sound and light effects, so the unit works as evening decor as well as a daytime bubble machine. The photographs show the build clearly: a yellow flower head with a multi-hole centre, a green cone-shaped reservoir directly beneath it, and a green pole standing in a round green base with four moulded feet.",
+      "That reservoir is the design decision that separates it from the cheaper units. A cone under the head holds the fluid at the top of the pole, so the unit can run for a long stretch without being topped up from ground level, which matters on a hotel terrace or in a garden where nobody is watching it. The bubbles the unit produces are large rather than dense, and the lifestyle photographs show two units set apart on a lawn with the stream carrying across the grass between them.",
+      "Height adjustment matters in this category more than the spec sheet suggests. The same unit has to work on a patio table, on a hotel terrace and on open lawn, and a fixed pole takes one of those three away from the buyer. The packing trades piece count for it: 16 units per carton at 0.119 CBM, the lowest pieces-per-carton figure among the standing bubble models, so a 20GP carries 235 cartons and 3,760 pieces. The 80-piece minimum is five cartons, 0.595 CBM."
+    ],
+    "visible_features": [
+      "Yellow flower head with a perforated multi-hole centre, where the bubbles are released",
+      "Green cone-shaped reservoir mounted directly under the head, at the top of the pole",
+      "Height-adjustable green pole standing in a round green base with four moulded feet",
+      "Sound and light effects in the head",
+      "Large-diameter bubbles rather than a dense foam",
+      "16 units per carton at 0.119 CBM, the lowest piece count per carton in the bubble range"
     ],
     "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
   },
   "TF213143": {
-    "headline": "A craft kit that lights up and plays music",
+    "headline": "A press with a bee on the handle",
     "overview": [
-      "The TF213143 is a DIY bouquet pressing machine set supplied with light and music, priced at $4.15 with a 160-piece minimum. It sits in the educational range rather than the novelty range: the buyer is a parent or a gift buyer, not someone filling a pool-party display.",
-      "It is an open-ended craft toy, in the sense that the child assembles and presses a bouquet rather than watching a mechanism run on its own. That is why it is usually merchandised next to the clay and pottery units rather than next to the bubble machines, and why the light and music matter more here than they would on a bubble toy: they are what makes the box work as a gift.",
-      "Within this range the price tiers are clear. The TF197926 Ceramic Clay Machine at $6.46 with MOQ 120 is the mid option, and the TF169001 Simulation Pottery Machine at $21.69 with MOQ 50 is the top. The TF213143 is the low-ticket entry that lets a shop put a craft-activity category on the shelf for under five dollars a unit."
+      "The TF213143 is a DIY bouquet pressing machine set supplied with light and music, priced at $4.15 with a 160-piece minimum. The machine is a purple scalloped base with a green arched arm, and the handle at the top of the arm is moulded as a bee with a striped body and printed eyes. The child places a die-cut flower blank on the base and presses the arm down to form it into a three-dimensional flower, then builds the result up into a bouquet on the stems supplied.",
+      "What is in the box decides whether the activity runs once or repeatedly, and the photographs show a full set: die-cut petal sheets, green stems and leaves, ribbons and bows, moulded ladybirds and bees, a lilac bouquet wrap, a vase and a set of printed cards. That completeness is why it sits in the educational range rather than the novelty range: the buyer is a parent or a gift buyer, not someone filling a pool-party display. The light and music are what make the box work as a gift rather than as a craft refill.",
+      "The packing supports a shop testing the category. A carton holds 18 sets at 0.072 CBM and 0.67 kg per set, so a 20GP takes 388 cartons and 6,984 sets. The 160-piece minimum is nine cartons at 0.648 CBM, which is more cartons than most models here but a small cube in absolute terms. Within this range the price tiers are clear: the TF197926 Ceramic Clay Machine at $6.46 is the mid option and the TF169001 Simulation Pottery Machine at $21.69 is the top, so this is the low-ticket entry that lets a shop put a craft-activity category on the shelf for under five dollars a unit."
+    ],
+    "visible_features": [
+      "Purple scalloped base and green arched arm, with the handle moulded as a bee",
+      "Press action forms a flat die-cut blank into a three-dimensional flower",
+      "Die-cut petal sheets, green stems and leaves, ribbons and bows in the set",
+      "Moulded ladybirds and bees, a lilac bouquet wrap and a vase included",
+      "Light and music effects",
+      "Colour box 29 x 7 x 18 cm, 18 sets per carton at 0.072 CBM"
     ],
     "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
   },
   "TF197926": {
     "headline": "The mid-priced clay unit",
     "overview": [
-      "The TF197926 is a ceramic clay machine at $6.46 with a 120-piece minimum, sitting between the $4.15 craft set and the $21.69 pottery machine in this range.",
-      "It is bought as a hands-on activity toy and as a gift. The buyer is more often a toy retailer or a gift wholesaler than an event supplier, which changes what the page has to answer: box presentation and a predictable unit price matter more than range or runtime.",
-      "The three tiers in this range are easy to explain to a customer. The TF213143 at $4.15 is the low-ticket craft entry, the TF197926 at $6.46 is the middle, and the TF169001 at $21.69 is a machine with stepless speed control and a foot pedal. A shop that wants one clay product takes the middle; a shop that wants to show a range takes all three."
+      "The TF197926 is a ceramic clay machine at $6.46 with a 120-piece minimum, sitting between the $4.15 craft set and the $21.69 pottery machine in this range. It is a small wheel in a white and blue housing on four legs, with a turntable on top and a clear dome over it as a splash guard, and a rabbit figure mounted on the arm above the wheel. A shaping rib is used against the spinning clay, which is how the vase forms in the photographs are made.",
+      "The contents are what justify the shelf position. Three blocks of clay and a set of coloured clay packs are included, along with six paint pots, brushes and sculpting tools, so the set runs from forming a shape to finishing it without a second purchase. The moulded vase shapes shown in the listing, cat, fox, rabbit, owl, apple, are the finished examples rather than parts, which is the right thing for a buyer to understand before ordering: this is a making toy, not a decorating kit with blanks supplied.",
+      "The buyer is more often a toy retailer or a gift wholesaler than an event supplier, which changes what the page has to answer: box presentation and a predictable unit price matter more than range or runtime. A carton holds 24 sets at 0.11 CBM and 0.77 kg per set, a 20GP takes 254 cartons and 6,096 sets, and the 120-piece minimum is five cartons. The three tiers in this range are easy to explain to a customer: TF213143 at $4.15 is the low-ticket craft entry, this is the middle, and the TF169001 at $21.69 is a machine with stepless speed control and a foot pedal."
+    ],
+    "visible_features": [
+      "White and blue housing on four legs, with a turntable and a clear splash-guard dome",
+      "Rabbit figure mounted on the arm above the wheel",
+      "Shaping rib supplied for working the clay against the spinning wheel",
+      "Three blocks of clay, coloured clay packs, six paint pots, brushes and sculpting tools included",
+      "Moulded vase shapes shown as finished examples: cat, fox, rabbit, owl and apple",
+      "Sealed box 17 x 13.5 x 17.8 cm, 24 sets per carton"
     ],
     "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
   },
   "TF169001": {
     "headline": "A pottery wheel, not a toy version of one",
     "overview": [
-      "The TF169001 is the top of the educational range at $21.69 with a 50-piece minimum, and its specification reads like a small machine rather than a toy: stepless speed control, a foot pedal that pauses the wheel, and parts that come apart for cleaning.",
-      "Those three features are what separate it from the cheaper craft sets in this range. Stepless control means the wheel follows the child's hands instead of stepping between fixed gears. The foot pedal leaves both hands free, which is how a potter actually works. Removable parts are what make clay usable in a classroom, because cleanup decides whether a teacher runs the activity a second time.",
-      "It ships without a battery. Against the TF213143 at $4.15 and the TF197926 at $6.46, the price gap is the difference between a craft kit and a machine that behaves like equipment, and it is the model to show a buyer who already sells art supplies."
+      "The TF169001 is the top of the educational range at $21.69 with a 50-piece minimum, and its specification reads like a small machine rather than a toy: stepless speed control, a foot pedal that pauses the wheel, and parts that come apart for cleaning. The hardware in the photographs matches that description: a mint-green housing with a stainless steel wheel head set inside a clear splash pan, a control panel with a rotation, pause and reverse switch beside a speed control knob, a separate foot pedal on a lead, and a mains adapter rather than a battery compartment.",
+      "Those three features are what separate it from the cheaper craft sets in this range. Stepless control means the wheel follows the child's hands instead of stepping between fixed gears. The foot pedal leaves both hands free, which is how a potter actually works. Removable parts are what make clay usable in a classroom, because cleanup decides whether a teacher runs the activity a second time. The reverse setting is the one teachers ask for, since it lets a student correct a wall rather than starting again.",
+      "It ships without a battery, because it runs from the mains. The starter contents are complete: eight sculpting and carving tools, two brushes, twelve paint pots, three blocks of clay and an instruction booklet. A carton holds 10 sets at 0.076 CBM and 1.65 kg per set, so a 20GP takes 368 cartons and 3,680 sets, and the 50-piece minimum is five cartons, 0.38 CBM. Against the TF213143 at $4.15 and the TF197926 at $6.46, the price gap is the difference between a craft kit and a machine that behaves like equipment, and it is the model to show a buyer who already sells art supplies."
     ],
-    "open_specs": "This item ships without a battery."
+    "visible_features": [
+      "Mint-green housing with a stainless steel wheel head inside a clear splash pan",
+      "Control panel with rotation, pause and reverse switch beside a speed control knob",
+      "Foot pedal on a lead, so both hands stay free while the wheel turns",
+      "Mains adapter supplied instead of a battery compartment",
+      "Eight sculpting tools, two brushes, twelve paint pots and three clay blocks included",
+      "Colour box 27.5 x 11 x 21.2 cm, 10 sets per carton at 1.65 kg per set"
+    ],
+    "open_specs": "This item ships without a battery and runs from the mains adapter supplied."
   },
   "TF213415": {
     "headline": "A dinosaur head on wheels, with somewhere to put the cars",
     "overview": [
-      "The TF213415 is a storage dinosaur car supplied with six pull-back cars, at $4.38 with a 180-piece minimum. The dinosaur head is the container: the six cars store inside it, which solves the problem that gets most small-car sets left on the floor of a shop or a bedroom.",
-      "Pull-back cars need no battery, so this is the simplest unit in the track range to ship and to gift-wrap, and it is the low-ticket item that gets a customer to the shelf.",
-      "The range positions it against the TF209512 Magnetic Track Car set at $10.80 with MOQ 90 and the TF208740 orbital magnetic levitation unit at $24.46 with MOQ 35. Those two are bought for the set size and the mechanism; the TF213415 is bought as a gift item at a price that needs no display support."
+      "The TF213415 is a storage dinosaur car supplied with six pull-back cars, at $4.38 with a 180-piece minimum. The dinosaur head is the container: the six cars store inside it, which solves the problem that gets most small-car sets left on the floor of a shop or a bedroom. The truck body is green with an orange roof, a grey carry handle moulded over the top, orange knobbly wheels and a transparent side panel, so a customer can see how many cars are inside without opening it.",
+      "The six cars are the detail that drives the sale. Each one is a dinosaur head on a chassis, in a different colour and species, teal, lime, orange, brown and two blues, so the set reads as a collection rather than as six copies of one car. Pull-back cars need no battery, which makes this the simplest unit in the track range to ship and to gift-wrap, and it is the low-ticket item that gets a customer to the shelf.",
+      "The carton is dense for the size of the product: 36 pieces at 0.256 CBM and 0.61 kg per unit, so a 20GP takes 109 cartons and 3,924 pieces, and the 180-piece minimum is five cartons. The range positions it against the TF209512 Magnetic Track Car set at $10.80 with MOQ 90 and the TF208740 orbital magnetic levitation unit at $24.46 with MOQ 35. Those two are bought for the set size and the mechanism; the TF213415 is bought as a gift item at a price that needs no display support."
+    ],
+    "visible_features": [
+      "Green dinosaur head forming the front of the truck body, with an orange roof",
+      "Grey carry handle moulded over the top of the body",
+      "Transparent side panel showing the cars stored inside",
+      "Orange knobbly wheels on the truck and on each car",
+      "Six dinosaur-head pull-back cars in different colours and species",
+      "36 pieces per carton at 0.256 CBM, 0.61 kg per unit gross"
     ],
     "open_specs": "This item is pull-back driven and ships without a battery."
   },
   "TF209512": {
     "headline": "126 pieces in one box",
     "overview": [
-      "The TF209512 is a 126-piece magnetic track car set at $10.80 with a 90-piece minimum. It is the middle tier of the track range, and the piece count is the product: a box this size sells as a gift and as a birthday present in a way a single car cannot.",
-      "Sets of this size are bought on box size and piece count rather than on electronics, so the instruction sheet and the box carry more of the sale than any feature does. It ships without a battery.",
-      "Against the TF213415 at $4.38 with MOQ 180 and the TF208740 at $24.46 with MOQ 35, the TF209512 is the tier a shop takes when it wants one large set rather than a cheap impulse item or a single premium unit."
+      "The TF209512 is a 126-piece magnetic track car set at $10.80 with a 90-piece minimum. It is the middle tier of the track range, and the piece count is the product: a box this size sells as a gift and as a birthday present in a way a single car cannot. The set is built from colour-blocked track sections in blue, yellow and orange, held up on white posts, and the pieces are moulded in different lengths so a child can raise a spiral or lay a flat loop from the same box.",
+      "What the photographs show is that the track goes up rather than only along. A three-level spiral is the arrangement on the box, with the vehicles running down through the levels, and the set includes several: a yellow steam locomotive, a white van, a white truck and a yellow and black rail car. Traffic furniture is included as well, a warning triangle and a traffic light, which is the detail that turns a track set into a small world for the child rather than a single loop.",
+      "Sets of this size are bought on box size and piece count rather than on electronics, so the instruction sheet and the box carry more of the sale than any feature does. It ships without a battery. A carton holds 18 sets at 0.23 CBM and 1.83 kg per set, a 20GP takes 121 cartons and 2,178 sets, and the 90-piece minimum is five cartons. Against the TF213415 at $4.38 with MOQ 180 and the TF208740 at $24.46 with MOQ 35, this is the tier a shop takes when it wants one large set rather than a cheap impulse item or a single premium unit."
+    ],
+    "visible_features": [
+      "Colour-blocked track sections in blue, yellow and orange, with white support posts",
+      "Sections moulded in different lengths, so the same box builds a spiral or a flat loop",
+      "Three-level spiral layout shown on the box",
+      "Yellow steam locomotive, white van, white truck and a yellow and black rail car included",
+      "Warning triangle and traffic light included as traffic furniture",
+      "18 sets per carton at 0.23 CBM, 1.83 kg per set gross"
     ],
     "open_specs": "This item ships without a battery."
   },
   "TF208740": {
     "headline": "The top of the track range",
     "overview": [
-      "The TF208740 is an orbital magnetic levitation car at $24.46, the highest unit price in this collection, with a 35-piece minimum, the lowest minimum in the track range.",
-      "A low minimum at a high unit price points to a display or gift item rather than a volume line: it is the model a shop takes a few dozen of to sit beside the cheaper sets, not one that fills a container on its own.",
-      "It is bought next to the TF209512 126-piece set at $10.80 and the TF213415 dinosaur storage car at $4.38. If you are choosing one of the three for a first order, the arithmetic differs in each case: the TF208740 ties up the least capital per line because of the 35-piece minimum, even though its unit price is the highest of the three."
+      "The TF208740 is an orbital magnetic levitation car at $24.46, the highest unit price in this collection, with a 35-piece minimum, the lowest minimum in the track range. The box is printed MAGLEV with MAGNETIC LEVITATION BLOCK beneath it, and it shows three alternative layouts on the front, which is the honest way to present a construction set: the buyer can see that the contents build more than one thing.",
+      "The system is a set of colour-blocked track sections in red, orange, green and blue, raised on white posts, with the vehicle running in a channel down the centre of the track rather than on top of it. The photographs show a blue and red locomotive and a white and blue rail car, and a two-level layout with the lower loop and an upper run feeding back into it. The construction blocks are uniform, so the layouts in the box shots are arrangements of the same parts rather than different products.",
+      "A low minimum at a high unit price points to a display or gift item rather than a volume line: it is the model a shop takes a few dozen of to sit beside the cheaper sets, not one that fills a container on its own. The cube is remarkably small for the price: only 7 units per carton at 0.065 CBM and 1.79 kg per unit, so a 20GP holds 430 cartons and 3,010 pieces, and the 35-piece minimum is five cartons, 0.325 CBM. It is bought next to the TF209512 126-piece set at $10.80 and the TF213415 dinosaur storage car at $4.38, and of the three it ties up the least capital per line because of that 35-piece minimum."
+    ],
+    "visible_features": [
+      "Box printed MAGLEV with MAGNETIC LEVITATION BLOCK, showing three alternative layouts",
+      "Colour-blocked track sections in red, orange, green and blue, raised on white posts",
+      "Vehicle runs in a channel down the centre of the track rather than on top of it",
+      "Blue and red locomotive and a white and blue rail car included",
+      "Two-level layout with the lower loop feeding into an upper run",
+      "7 units per carton at 0.065 CBM, 1.79 kg per unit gross"
     ],
     "open_specs": "Power configuration for this item is confirmed per order rather than published on this page."
   },
   "TF210969": {
     "headline": "The lithium model, with the numbers to go with it",
     "overview": [
-      "The TF210969 is the third generation of the fire-breathing water gun, in blue, at $3.42 with a 240-piece minimum: the lowest unit price in the water gun range and the highest minimum, which makes it the volume line here.",
-      "It is the model in this range with a published power specification: a 3.7 V 500 mAh lithium pack, about 110 minutes to charge, and 10 to 15 minutes of running time per charge, with a range of 7 to 8 metres.",
-      "Those numbers decide how it is sold. Ten to fifteen minutes is a play-session pack, not an all-afternoon one, so the unit suits back gardens and short sessions, and a retailer should expect to explain charging to the end customer. The lithium pack is installed and included with the shipment, unlike dry-cell models where no batteries are shipped.",
-      "Against the TF211013 at $6.13 and the TF211527 at $14.50, the TF210969 is where a buyer starts: the cheapest per unit, the same pack as the TF211013, and the highest minimum of the three."
+      "The TF210969 is the third generation of the fire-breathing water gun, in blue, at $3.42 with a 240-piece minimum: the lowest unit price in the water gun range and the highest minimum, which makes it the volume line here. The form is a pistol with a drum reservoir under the grip, a cylindrical module on the top rail printed ICE MOUSE, 3rd GEN moulded into the flank, and the LED flame at the muzzle that the fire-breathing family is named for. Two colourways are produced, transparent blue and transparent smoke, and the box carries two spare cells and two USB charging leads.",
+      "It is the model in this range with a published power specification: a 3.7 V 500 mAh lithium pack, about 110 minutes to charge, and 10 to 15 minutes of running time per charge, with a range of 7 to 8 metres. Those numbers decide how it is sold. Ten to fifteen minutes is a play-session pack, not an all-afternoon one, so the unit suits back gardens and short sessions, and a retailer should expect to explain charging to the end customer. The spare cell in the box is what makes that acceptable: a second pack can be charging while the first is in use.",
+      "The lithium pack is installed and included with the shipment, unlike dry-cell models where no batteries are shipped. Volume is where this model wins: 80 pieces per carton at only 0.155 CBM and 0.26 kg per unit, so a 20GP carries 180 cartons and 14,400 pieces, and the 240-piece minimum is just three cartons. Against the TF211013 at $6.13 and the TF211527 at $14.50, the TF210969 is where a buyer starts: the cheapest per unit, the same pack as the TF211013, and the lowest carton commitment of the three."
+    ],
+    "visible_features": [
+      "Pistol form with a drum reservoir under the grip",
+      "Cylindrical module on the top rail printed ICE MOUSE",
+      "3rd GEN moulded into the receiver flank",
+      "Two colourways: transparent blue and transparent smoke",
+      "Two spare cells and two USB charging leads in the box",
+      "80 pieces per carton at 0.155 CBM, 0.26 kg per unit gross"
     ]
   },
   "TF211013": {
     "headline": "The same pack in a larger body",
     "overview": [
-      "The TF211013 is the second generation of the fire-breathing water gun at $6.13 with a 144-piece minimum. It runs the same 3.7 V 500 mAh lithium pack as the TF210969, at nearly twice the unit price.",
-      "The gap is the body rather than the electronics. Where the TF210969 is the volume line with a 240-piece minimum, the TF211013 sits in the middle of the range, and it is the one a buyer picks when the shelf needs a step between the entry gun and the top model.",
-      "The top of the range is the TF211527 single-tube Gatling at $14.50 with an 80-piece minimum. Taking one carton of each is the practical way to see whether those price steps are visible to a customer standing in front of the shelf.",
+      "The TF211013 is the second generation of the fire-breathing water gun at $6.13 with a 144-piece minimum. It runs the same 3.7 V 500 mAh lithium pack as the TF210969, at nearly twice the unit price. The body is the difference: longer, with a drum reservoir under the grip, a red-dot style optic on the top rail, a wire brace looped over the barrel, and the LED flame at the muzzle. Two colourways are produced, transparent blue and black, so the model covers both the bright and the tactical end of a shelf.",
+      "That brace is a small detail with a practical consequence: it protects the barrel end when the unit is put down against a wall or dropped, which is the failure point on a long-barrelled toy. The optic is moulded rather than functional, which is worth knowing before a buyer puts this in front of a customer expecting a sighting device. Everything else about the unit is the same family as the third-generation pistol: same pack, same automatic action, same flame effect.",
+      "The gap is the body rather than the electronics. Where the TF210969 is the volume line with a 240-piece minimum, the TF211013 sits in the middle of the range, and it is the one a buyer picks when the shelf needs a step between the entry gun and the top model. A carton holds 48 pieces at 0.198 CBM and 0.52 kg per unit, a 20GP takes 141 cartons and 6,768 pieces, and the 144-piece minimum is three cartons. The top of the range is the TF211527 single-tube Gatling at $14.50 with an 80-piece minimum, and taking one carton of each is the practical way to see whether those price steps are visible to a customer standing in front of the shelf.",
       "The lithium pack is installed and included with the shipment. Dry-cell models are shipped without batteries."
+    ],
+    "visible_features": [
+      "Longer body than the third-generation pistol, with a drum reservoir under the grip",
+      "Red-dot style optic mounted on the top rail",
+      "Wire brace looped over the barrel end",
+      "Two colourways: transparent blue and black",
+      "LED flame effect at the muzzle",
+      "48 pieces per carton at 0.198 CBM, 0.52 kg per unit gross"
     ]
   },
   "TF211527": {
     "headline": "The top of the water gun range",
     "overview": [
-      "The TF211527 is a single-tube Gatling electric water gun at $14.50 with an 80-piece minimum: the highest unit price in the water gun range.",
-      "The name describes the mechanism: a single tube feeding a Gatling-style rotating arrangement, fired continuously rather than in single shots. At this price the buyer is more likely to be a specialist toy retailer or a summer-season display buyer than a general wholesaler.",
-      "It sits above the TF210969 at $3.42 and the TF211013 at $6.13. The three share a category but not a customer: the cheapest is a volume line, the middle one steps up on body, and this one is taken in smaller numbers for a display or for a specific customer request."
+      "The TF211527 is a single-tube Gatling electric water gun at $14.50 with an 80-piece minimum: the highest unit price in the water gun range. The name describes the mechanism: a single clear tube at the front feeding a Gatling-style rotating arrangement, fired continuously rather than in single shots. The body is black with a rifle stock at the rear, a carry handle over the top, GATLING printed on the flank, and a large clear cylindrical reservoir mounted under the rear of the body, so the water level is visible without turning the unit over.",
+      "The box is the other part of the product at this price. It is printed GATTLING and ICE MIST, with ELECTRIC FLASHING PLAY and POWERFUL FLASH SPRAY across the front and an 8+ age mark, which is a different presentation from the colour boxes lower down the range: it is aimed at the buyer who reads the carton before opening it, and the age mark keeps the product out of the wrong part of a store. The stock and the carry handle also mean this is the one model here that is held against the shoulder rather than at arm's length.",
+      "At this price the buyer is more likely to be a specialist toy retailer or a summer-season display buyer than a general wholesaler. The packing is the least efficient in the range, which is what a large single unit costs: only 8 pieces per carton at 0.118 CBM and 1.29 kg per unit, so a 20GP holds 237 cartons and 1,896 pieces, the lowest piece count in the water gun range. The 80-piece minimum is ten cartons, the highest carton count at the minimum here, so this is the model to plan as part of an LCL shipment rather than a courier order. It sits above the TF210969 at $3.42 and the TF211013 at $6.13: the cheapest is a volume line, the middle one steps up on body, and this one is taken in smaller numbers for a display or for a specific customer request."
+    ],
+    "visible_features": [
+      "Single clear barrel tube feeding a Gatling-style rotating arrangement",
+      "Rifle stock at the rear and a carry handle over the top",
+      "Large clear cylindrical reservoir mounted under the rear of the body",
+      "GATLING printed on the flank",
+      "Box printed GATTLING and ICE MIST with an 8+ age mark",
+      "8 pieces per carton at 0.118 CBM, 1.29 kg per unit gross"
     ],
     "open_specs": "Battery configuration for this item is confirmed per order rather than published on this page."
   },
@@ -471,7 +558,7 @@
     "headline": "An optic, a drum and a foregrip",
     "overview": [
       "The TF210960 takes the fire-breathing family into a submachine-gun form. The body is longer than the pistol models, with a vertical foregrip under the barrel, a skeleton stock at the rear and a red-dot style optic mounted on the top rail, and the reservoir is a drum under the body rather than under the grip. Two colourways are shown, blue with a clear upper and green with a clear upper, so the coloured lower receiver is the variant rather than the whole body. The muzzle carries the LED flame effect and the flank is printed WATER GUN and CASE EJECTION.",
-      "Its carton is one of the most efficient in the range: 18 pieces at 0.087 CBM and 9 kg gross, 0.50 kg per unit, and a 20GP takes 321 cartons, 5,778 pieces. The 144-piece minimum is exactly eight cartons, 0.696 CBM, which is the highest carton count at the minimum anywhere in the water gun range: every other model here starts at three to five cartons. That makes it the one model where the entry order is worth planning against a small LCL shipment rather than a courier.",
+      "Its carton is one of the most efficient in the range: 18 pieces at 0.087 CBM and 9 kg gross, 0.50 kg per unit, and a 20GP takes 321 cartons, 5,778 pieces. The 144-piece minimum is exactly eight cartons, 0.696 CBM, which is more cartons at the minimum than most of the range, where three to five is the norm; only the TF211527 Gatling starts higher, at ten. That makes it the one model where the entry order is worth planning against a small LCL shipment rather than a courier.",
       "At $6.13 it is priced against the TF210965 rifle at $10.15 above it and the two Space models below it. The reason to take this rather than a pistol is the optic and the foregrip: the two-handed hold and the sight change how the product is played with, and that is what a parent is buying when they move up from a $3.42 pistol. The green variant also gives a buyer a second colourway inside the same SKU, which is unusual at this price and useful for a display that would otherwise be all blue."
     ],
     "visible_features": [
