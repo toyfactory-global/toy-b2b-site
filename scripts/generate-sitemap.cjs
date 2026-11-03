@@ -5,8 +5,14 @@ const BASE_URL = 'https://toyfactoryglobal.com';
 const TODAY = new Date().toISOString().split('T')[0];
 
 // Static pages
+// Keep in sync with src/pages: this list is the ONLY source of sitemap entries
+// for non-product pages, so a page that exists but is missing here silently
+// drops out of the sitemap on the next regeneration. That happened on 2026-11-02
+// (/products and /contact disappeared while both pages were live and indexed).
 const pages = [
   { loc: '/', priority: 1.0, changefreq: 'weekly' },
+  { loc: '/products', priority: 0.9, changefreq: 'weekly' },
+  { loc: '/contact', priority: 0.6, changefreq: 'monthly' },
   { loc: '/privacy', priority: 0.3, changefreq: 'monthly' },
   { loc: '/terms', priority: 0.3, changefreq: 'monthly' },
   { loc: '/return', priority: 0.3, changefreq: 'monthly' },
