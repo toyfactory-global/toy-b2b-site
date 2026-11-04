@@ -34,6 +34,14 @@ const related = products
 
 const guide = GUIDES[product.category];
 
+/* A second, data-driven guide exists only for water guns so far: it compares
+   all 15 models on price, MOQ and container load. Linking it from every water
+   gun product page gives the new URL the internal links it needs to be crawled,
+   and gives the buyer the comparison at the moment they are deciding. */
+const EXTRA_GUIDE = product.category === 'Water Guns'
+  ? { slug: 'water-gun-models-compared', title: 'All 15 Water Guns Compared by Price, MOQ and Container Load' }
+  : null;
+
 /* Long-form copy lives in src/data/product-content.json, separate from the
    verified logistics data. A SKU without an entry simply skips this block.
    Container figures are arithmetic from the carton data, never typed in by
@@ -585,12 +593,23 @@ const compareSet = [product, ...related.slice(0, 3)]
 					))}
 				</div>
 
-				{guide && (
-					<p class="mt-12 text-gray-400 text-sm leading-[1.9] max-w-3xl">
-						Buying guide:
-						<a href={`/blog/${guide.slug}`} class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">{guide.title}</a>
-						&mdash; how this category is specified, priced and shipped.
-					</p>
+				{(guide || EXTRA_GUIDE) && (
+					<div class="mt-12 space-y-2 max-w-3xl">
+						{guide && (
+							<p class="text-gray-400 text-sm leading-[1.9]">
+								Buying guide:
+								<a href={`/blog/${guide.slug}`} class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">{guide.title}</a>
+								&mdash; how this category is specified, priced and shipped.
+							</p>
+						)}
+						{EXTRA_GUIDE && (
+							<p class="text-gray-400 text-sm leading-[1.9]">
+								Comparing models:
+								<a href={`/blog/${EXTRA_GUIDE.slug}`} class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">{EXTRA_GUIDE.title}</a>
+								&mdash; every model side by side on price, MOQ and container load.
+							</p>
+						)}
+					</div>
 				)}
 			</section>
 

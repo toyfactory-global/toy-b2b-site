@@ -58,6 +58,19 @@ const catIntro = {
 
 const intros = catIntro[category] || [];
 
+/* Guides surfaced on the category page. The comparison page is data-driven, so
+   it only exists for water guns; the category guide exists for every category. */
+const CATEGORY_GUIDES = {
+  'Bubble Toys': [{ slug: 'bubble-machine-buyer-guide', title: "How to Choose the Right Bubble Machine: A Wholesale Buyer's Guide", note: 'format, output and packaging compared.' }],
+  'Water Guns': [
+    { slug: 'water-gun-models-compared', title: 'All 15 Water Guns Compared by Price, MOQ and Container Load', note: 'the comparison table a buyer would build by hand.' },
+    { slug: 'water-gun-wholesale-guide', title: 'Electric Water Gun Wholesale Guide 2026', note: 'how the range is specified and shipped.' },
+  ],
+  'Track Toys': [{ slug: 'track-car-wholesale-guide', title: 'Track Car Toys Wholesale Guide 2026', note: '3D, magnetic and dinosaur sets compared.' }],
+  'Educational Toys': [{ slug: 'stem-toys-import-guide', title: 'STEM Toys Import Guide 2026', note: 'what distributors need to know.' }],
+};
+const guides = CATEGORY_GUIDES[category] || [];
+
 const prices = catProducts.map((p) => p.price);
 const moqs = catProducts.map((p) => p.moq);
 const priceFrom = Math.min(...prices);
@@ -129,6 +142,18 @@ const jsonLd = [
         <div class="max-w-3xl mb-16 space-y-5">
           {intros.map((para) => (
             <p class="text-gray-400 text-base leading-[1.9]">{para}</p>
+          ))}
+        </div>
+      )}
+
+      {guides.length > 0 && (
+        <div class="max-w-3xl mb-16 border-l-2 border-gold/40 pl-6 space-y-2">
+          <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-3">Read before you order</span>
+          {guides.map((g) => (
+            <p class="text-gray-400 text-sm leading-[1.9]">
+              <a href={`/blog/${g.slug}`} class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">{g.title}</a>
+              &mdash; {g.note}
+            </p>
           ))}
         </div>
       )}
