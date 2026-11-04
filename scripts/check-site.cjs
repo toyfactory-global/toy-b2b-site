@@ -22,7 +22,7 @@ const ALLOWED_LINK_EXT = /\.(html|xml|txt|webp|png|jpg|jpeg|gif|svg|ico|mp4|webm
 const CF_MAX_FILE = 25 * 1024 * 1024; // Cloudflare Pages per-file limit
 // Pages that must exist but must never be advertised: they answer errors, they
 // are not content. Excluded from the sitemap check and the orphan check.
-const NOINDEX_PAGES = new Set(['/404']);
+const NOINDEX_PAGES = new Set(['/404', '/thanks']);
 
 const errors = [];
 const warnings = [];

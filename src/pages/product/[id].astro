@@ -590,27 +590,47 @@ const compareSet = [product, ...related.slice(0, 3)]
 				<div class="max-w-3xl">
 					<span class="text-gold font-bold text-[9px] uppercase tracking-[0.5em] mb-6 block italic underline underline-offset-4 decoration-gold/50">Project Inquiry</span>
 					<h2 class="text-4xl md:text-5xl font-display font-extrabold uppercase mb-6 tracking-tighter italic">Inquire About {product.id}</h2>
-					<p class="text-gray-500 mb-16 uppercase text-[9px] tracking-[0.3em] font-bold leading-loose">
+					<p class="text-gray-500 mb-10 uppercase text-[9px] tracking-[0.3em] font-bold leading-loose">
 						Our engineering team will review your requirements and provide a formal manufacturing proposal within 24 hours.
 					</p>
-					
-					<form class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+					{/* Trust signals sit directly above the CTA. Every line below is already
+					    stated elsewhere on the site, so nothing here is a new claim. */}
+					<ul class="flex flex-wrap gap-x-8 gap-y-3 mb-10 text-[9px] font-bold uppercase tracking-[0.3em] text-gray-500">
+						<li>ISO 9001:2015 Certified</li>
+						<li>Est. 2001 · Chenghai, China</li>
+						<li>MOQ and Price Published</li>
+						<li>FOB Yantian / Shantou</li>
+					</ul>
+
+					{/* This form used to have no action, no method and unnamed inputs, so
+					    every inquiry typed into a product page was discarded on submit. */}
+					<form action="https://formspree.io/f/mkoyapvg" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-10">
+						<input type="hidden" name="_subject" value={`RFQ ${product.id} - ${product.name}`} />
+						<input type="hidden" name="item_number" value={product.id} />
+						<input type="hidden" name="product_page" value={`https://toyfactoryglobal.com/product/${product.id}`} />
+						<input type="hidden" name="_next" value="https://toyfactoryglobal.com/thanks" />
+						<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
 						<div class="space-y-4">
-							<label class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">Client Representative</label>
-							<input type="text" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white uppercase tracking-widest placeholder:text-gray-700" placeholder="Full Name">
+							<label for="rfq-name" class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">Name</label>
+							<input id="rfq-name" type="text" name="name" required style="text-transform:none" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white tracking-widest placeholder:text-gray-700" placeholder="Full name">
 						</div>
 						<div class="space-y-4">
-							<label class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">Official Email</label>
-							<input type="email" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white uppercase tracking-widest placeholder:text-gray-700" placeholder="Business Address">
+							<label for="rfq-email" class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">Business Email</label>
+							<input id="rfq-email" type="email" name="email" required style="text-transform:none" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white tracking-widest placeholder:text-gray-700" placeholder="you@company.com">
 						</div>
 						<div class="col-span-full space-y-4">
-							<label class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">Project Scope</label>
-							<textarea rows="5" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white uppercase tracking-widest leading-relaxed placeholder:text-gray-700" placeholder={`I am interested in Item: ${product.id} (${product.name}). Target quantity, branding requirements, and destination...`}></textarea>
+							<label for="rfq-message" class="text-[11px] font-bold text-gray-300 uppercase tracking-widest ml-1">What you need</label>
+							<textarea id="rfq-message" name="message" rows="5" required style="text-transform:none" class="w-full bg-white/[0.03] border border-white/10 p-6 focus:border-gold outline-none text-base text-white tracking-widest leading-relaxed placeholder:text-gray-700" placeholder={`Item ${product.id}: target quantity, branding, destination port...`}></textarea>
 						</div>
-						<button class="bg-gold text-dark font-black py-7 uppercase hover:bg-white transition tracking-[0.5em] text-xs italic shadow-[0_20px_50px_rgba(201,168,76,0.15)]">
+						<button type="submit" class="bg-gold text-dark font-black py-7 uppercase hover:bg-white transition tracking-[0.5em] text-xs italic shadow-[0_20px_50px_rgba(201,168,76,0.15)]">
 							Send Manufacturing Inquiry
 						</button>
 					</form>
+
+					<p class="mt-8 text-gray-500 text-xs leading-[1.8]">
+						Prefer to talk first? <a href={waUrl} target="_blank" rel="noopener" class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">Message us on WhatsApp</a> with item number {product.id} already filled in, or email <a href="mailto:hntoys7@sinuotoys.com" class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">hntoys7@sinuotoys.com</a>.
+					</p>
 				</div>
 			</section>
 		</div>
