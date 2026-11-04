@@ -27,6 +27,8 @@ const CAT_BLURB = {
 };
 
 const GUIDES = [
+  ['water-gun-models-compared', 'Electric Water Guns Compared: Every Model by Price, MOQ and Container Load', '2026-11-04'],
+  ['verify-china-toy-factory', 'How to Verify a China Toy Factory Before You Pay a Deposit', '2026-11-04'],
   ['china-toy-sourcing-guide', 'How to Source Toys from China: Factory Direct Buying Guide 2026', '2026-08-19'],
   ['track-car-wholesale-guide', 'Track Car Toys Wholesale Guide 2026: 3D, Magnetic & Dinosaur Sets', '2026-08-06'],
   ['water-gun-wholesale-guide', 'Electric Water Gun Wholesale Guide 2026: Choosing the Right Blaster', '2026-08-03'],

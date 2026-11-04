@@ -45,6 +45,9 @@ const content = productContent[product.id] || null;
    question every importer asks before ordering, so it belongs on the page
    rather than in an email thread. */
 const BATTERY_POLICY = 'Dry-cell batteries are never included with shipments. Lithium batteries are installed in the unit and included.';
+/* Confirmed by the factory owner on 2026-11-04: there is no free-sample
+   programme. One phrasing, used on every page that mentions samples. */
+const SAMPLE_POLICY = 'Samples are charged at the unit price, and the courier cost is paid by the buyer. Ask for the sample of the exact item number you intend to order, together with its carton data.';
 const DEFAULT_CONTAINER_NOTE = 'Container figures are arithmetic from the carton data on this page, not a loading plan: they assume about 28 CBM usable in a 20GP, 56 in a 40GP and 68 in a 40HQ. Palletization, carton orientation and mixed-SKU orders all reduce the real count, so treat these as the ceiling for a single-SKU shipment.';
 const DEFAULT_OEM = 'OEM and ODM briefs are quoted per project. Send the artwork, the destination market and the packaging requirement, and the reply covers tooling, sample and carton costs before anything is committed.';
 
@@ -343,6 +346,12 @@ const compareSet = [product, ...related.slice(0, 3)]
 					<div class="mt-6 bg-white/[0.02] border border-white/5 px-8 py-6">
 						<span class="text-[9px] font-bold text-gold uppercase tracking-[0.4em] block mb-2">Battery Shipping Policy</span>
 						<p class="text-gray-400 text-sm leading-[1.7]">{BATTERY_POLICY}</p>
+					</div>
+
+					<!-- Sample policy: confirmed by the factory owner 2026-11-04. -->
+					<div class="mt-3 bg-white/[0.02] border border-white/5 px-8 py-6">
+						<span class="text-[9px] font-bold text-gold uppercase tracking-[0.4em] block mb-2">Sample Policy</span>
+						<p class="text-gray-400 text-sm leading-[1.7]">{SAMPLE_POLICY}</p>
 					</div>
 				</div>
 

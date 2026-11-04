@@ -1,0 +1,244 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'water-gun-models-compared',
+  title: 'Electric Water Guns Compared: Every Model by Price, MOQ and Container Load',
+  description:
+    'All 15 wholesale electric water guns in one table: unit price, minimum quantity in cartons, pieces per 20GP and weight per unit. Read the three numbers that decide whether an order makes money.',
+  date: '2026-11-04',
+  category: 'Price & Logistics',
+  image: '/images/products/TF211527.webp',
+});
+
+/* Everything below is computed from src/data/products.json at build time. If a
+   price or a carton spec is corrected, this page corrects itself. No figure on
+   this page is typed by hand. */
+const firstNumber = (v) => {
+  const m = String(v ?? '').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+};
+
+const rows = products
+  .filter((p) => p.category === 'Water Guns')
+  .map((p) => {
+    const qty = firstNumber(p.specs?.qty_per_carton);
+    const cbm = firstNumber(p.specs?.cbm);
+    const gw = firstNumber(p.specs?.gw_nw);
+    const cartons = qty ? Math.ceil(p.moq / qty) : null;
+    const pcs20 = qty && cbm ? Math.floor(28 / cbm + 1e-9) * qty : null;
+    return {
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      moq: p.moq,
+      qty,
+      cartons,
+      cbm: cartons && cbm ? Math.round(cartons * cbm * 1000) / 1000 : null,
+      cbmPerCarton: cbm,
+      pcs20,
+      kgUnit: qty && gw ? Math.round((gw / qty) * 100) / 100 : null,
+    };
+  })
+  .sort((a, b) => a.price - b.price);
+
+const prices = rows.map((r) => r.price);
+const moqs = rows.map((r) => r.moq);
+const kg = rows.map((r) => r.kgUnit).filter((v) => v !== null);
+const tiers = [
+  { label: 'Under $4', test: (p) => p < 4 },
+  { label: '$4 to $7', test: (p) => p >= 4 && p < 7 },
+  { label: '$7 to $10', test: (p) => p >= 7 && p < 10 },
+  { label: '$10 and above', test: (p) => p >= 10 },
+].map((t) => {
+  const inTier = rows.filter((r) => t.test(r.price));
+  return {
+    label: t.label,
+    count: inTier.length,
+    from: inTier.length ? Math.min(...inTier.map((r) => r.price)) : null,
+    to: inTier.length ? Math.max(...inTier.map((r) => r.price)) : null,
+    cheapestMoq: inTier.length ? Math.min(...inTier.map((r) => r.moq)) : null,
+  };
+});
+const lowestMoq = Math.min(...moqs);
+const lowestMoqModel = rows.find((r) => r.moq === lowestMoq);
+const lightest = rows.reduce((a, b) => (a.kgUnit <= b.kgUnit ? a : b));
+const heaviest = rows.reduce((a, b) => (a.kgUnit >= b.kgUnit ? a : b));
+
+const faqs = [
+  {
+    q: 'What is the cheapest electric water gun you make?',
+    a: `The ${rows[0].id} at $${rows[0].price} per unit on a ${rows[0].moq}-piece minimum, which is ${rows[0].cartons} cartons and about ${rows[0].cbm} CBM. The most expensive in the range is the ${rows[rows.length - 1].id} at $${rows[rows.length - 1].price}.`,
+  },
+  {
+    q: 'What is the lowest minimum order quantity for a water gun?',
+    a: `The ${lowestMoqModel.id} at ${lowestMoq} pieces, which is one carton of ${lowestMoqModel.qty}. Nothing else in the water gun range can be ordered below three cartons, so this is the model to use when you want to test a market before committing to a container.`,
+  },
+  {
+    q: 'How many water guns fit in a 20GP container?',
+    a: `It ranges from ${Math.min(...rows.map((r) => r.pcs20)).toLocaleString('en-US')} to ${Math.max(...rows.map((r) => r.pcs20)).toLocaleString('en-US')} pieces depending on the model, because carton cube varies far more than unit price does. The figure for each model is in the table above, calculated at about 28 CBM usable per 20GP before palletisation.`,
+  },
+  {
+    q: 'Are samples free?',
+    a: 'No. Samples are charged, and the courier cost is paid by the buyer. That is stated on the quotation rather than discovered later, and it is the same for every model on this page.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="Electric Water Guns Compared: Price, MOQ and Container Load | TOYFACTORY"
+  description={post.description}
+  keywords="electric water gun wholesale, water gun MOQ, water gun container load, fire-breathing water gun price, water gun manufacturer China"
+  jsonLd={[post, blogBreadcrumb(post.title, 'water-gun-models-compared'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Price &amp; Logistics</span>
+          <span class="text-gray-600 text-[9px] uppercase tracking-widest">Updated 2026-11-04</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold uppercase tracking-tighter italic mb-8 leading-[1.05]">
+          Every Electric Water Gun, Compared by the Three Numbers That Decide an Order
+        </h1>
+        <p class="text-gray-300 text-lg leading-[1.9] border-l-2 border-gold/40 pl-6">
+          This page lists all {rows.length} electric water guns we manufacture with the numbers that actually decide whether an order works: unit price, minimum quantity expressed in cartons, and how many pieces fit a 20GP. Prices run from ${Math.min(...prices)} to ${Math.max(...prices)} per unit.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto mb-10">
+        <table class="w-full text-left min-w-[900px]">
+          <thead>
+            <tr class="text-[9px] uppercase tracking-widest text-gray-600">
+              <th class="pb-3 font-bold">Model</th>
+              <th class="pb-3 font-bold text-right">Price</th>
+              <th class="pb-3 font-bold text-right">MOQ</th>
+              <th class="pb-3 font-bold text-right">Cartons at MOQ</th>
+              <th class="pb-3 font-bold text-right">CBM at MOQ</th>
+              <th class="pb-3 font-bold text-right">Pcs / 20GP</th>
+              <th class="pb-3 font-bold text-right">KG / Unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr class="border-t border-white/5">
+                <td class="py-4 pr-6">
+                  <a href={`/product/${r.id}`} class="text-[11px] font-bold uppercase tracking-tight text-white hover:text-gold transition">{r.id}</a>
+                  <span class="block text-[9px] text-gray-600 uppercase tracking-widest leading-snug mt-1">{r.name}</span>
+                </td>
+                <td class="py-4 text-sm text-gray-300 text-right">${r.price}</td>
+                <td class="py-4 text-sm text-gray-300 text-right">{r.moq}</td>
+                <td class="py-4 text-sm text-gray-300 text-right">{r.cartons}</td>
+                <td class="py-4 text-sm text-gray-300 text-right">{r.cbm}</td>
+                <td class="py-4 text-sm text-gray-300 text-right">{r.pcs20.toLocaleString('en-US')}</td>
+                <td class="py-4 text-sm text-gray-300 text-right">{r.kgUnit}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-gray-500 text-xs leading-[1.7] mb-20">
+        Cartons at MOQ is the minimum quantity divided by units per carton, rounded up. Pieces per 20GP assumes about 28 CBM usable and is a ceiling for a single-SKU load, not a loading plan. Palletisation and mixed orders reduce it.
+      </p>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-6">Why cartons, not pieces, is the number to compare</h2>
+      <p class="text-gray-400 leading-[1.9] mb-6">
+        A 60-piece minimum sounds lighter than a 144-piece minimum, but the commitment is what you pay and what you store. Here the same model ordered at 60 pieces is one carton, while another at 144 is three: the carton count is what determines the deposit, the warehouse space and the freight band. Every MOQ on this page divides exactly into cartons, so there is never a part-carton minimum to negotiate.
+      </p>
+      <p class="text-gray-400 leading-[1.9] mb-20">
+        The spread is wide: the lowest minimum is {lowestMoq} pieces and the highest is {Math.max(...moqs)}. A buyer testing a market should start at the low end of that range and spend the difference on advertising rather than inventory.
+      </p>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-6">The four price tiers, and which channel each one suits</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {tiers.map((t) => (
+          <div class="bg-white/[0.02] border border-white/5 p-6">
+            <div class="flex items-baseline justify-between mb-3">
+              <span class="text-gold font-display font-extrabold text-lg">{t.label}</span>
+              <span class="text-gray-600 text-[9px] uppercase tracking-widest">{t.count} models</span>
+            </div>
+            <p class="text-gray-500 text-sm leading-[1.8]">
+              {t.count > 0
+                ? `$${t.from} to $${t.to} per unit, lowest minimum ${t.cheapestMoq} pieces.`
+                : 'No model falls in this band.'}
+            </p>
+          </div>
+        ))}
+      </div>
+      <p class="text-gray-400 leading-[1.9] mb-20">
+        The entry tier is where impulse retail and party-supply chains buy, and it is also where the price difference between factories is thinnest, so shipping efficiency decides the margin. The top tier is a specification sale: those units are bought by buyers who have already decided they want a large, visible product, and they will ask about the battery and the box before they ask about the discount.
+      </p>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-6">Sea or air: read the weight column before you promise a delivery date</h2>
+      <p class="text-gray-400 leading-[1.9] mb-6">
+        Unit weight ranges from {lightest.kgUnit} kg ({lightest.id}) to {heaviest.kgUnit} kg ({heaviest.id}) across the range, which is a five-fold difference in air freight per piece. Anything over roughly 0.6 kg per unit rarely justifies air unless the order is small and the retail price is high; below that, air becomes a real option for a first order that has to land before a season.
+      </p>
+      <p class="text-gray-400 leading-[1.9] mb-20">
+        Volume matters more than weight for sea freight, and the two do not move together. The {rows[0].id} packs {rows[0].qty} pieces into {rows[0].cbmPerCarton} CBM, which is {((rows[0].cbmPerCarton / rows[0].qty) / (heaviest.cbmPerCarton / heaviest.qty)).toFixed(1)} times as many pieces per cubic metre as the {heaviest.id}, which fits only {heaviest.qty} into {heaviest.cbmPerCarton} CBM. Comparing landed cost per piece rather than FOB price per piece is the only comparison that survives contact with a freight quote.
+      </p>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-6">Battery and charging</h2>
+      <p class="text-gray-400 leading-[1.9] mb-20">
+        Dry-cell batteries are never included with shipments. Lithium batteries are installed in the unit and included, which is what makes these products shippable by air at all. Where the capacity is fixed it is published on the product page; where it is not, it is confirmed per order rather than guessed at here. If your market restricts lithium in toys, say so before the quotation and the configuration is agreed in writing.
+      </p>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-6">Certification is per model, not per catalogue</h2>
+      <p class="text-gray-400 leading-[1.9] mb-20">
+        No single certificate covers a catalogue. Safety certification is issued per model and per destination market: CE and EN-71 for the EU, ASTM F963 and CPSIA for the US, UKCA for the UK. Tell us the item number and the market and we confirm which test reports exist for that item before you order. Factory-level, we operate an ISO 9001:2015 quality management system and have been audited under BSCI, SEDEX and GSV.
+      </p>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-6">Samples are charged, and courier is paid by the buyer</h2>
+      <p class="text-gray-400 leading-[1.9] mb-20">
+        We do not run a free-sample programme. A sample is invoiced at the unit price plus the courier cost, which the buyer pays. That keeps the sample queue short and means a request is answered on its merits rather than by volume. Order the sample of the exact model you intend to buy, and ask for the carton data at the same time so the sample arrives with the numbers you need to price the container.
+      </p>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-10">Questions buyers ask before ordering</h2>
+      <div class="divide-y divide-white/5 border-y border-white/5 mb-20">
+        {faqs.map((f, i) => (
+          <details class="group py-6" open={i === 0}>
+            <summary class="flex items-start justify-between gap-8 cursor-pointer list-none">
+              <h3 class="text-sm md:text-base font-bold text-white uppercase tracking-tight leading-snug group-hover:text-gold transition">{f.q}</h3>
+              <span class="text-gold shrink-0 text-lg leading-none mt-0.5 group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="mt-4 text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Send the item numbers you are considering and the quantity you have in mind. You will get the carton data, the certification position for your market and a quotation in writing.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href={"/product/" + rows[0].id} class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">See the entry model</a>
+          <a href="/category/water-guns" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Browse water guns</a>
+          <a href="/products" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">All 41 models</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,221 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'verify-china-toy-factory',
+  title: 'How to Verify a China Toy Factory Before You Pay a Deposit',
+  description:
+    'Seven checks that separate a real toy factory from a trading company reselling someone else\'s catalogue: licence scope, video walkthrough, certificate numbers, test reports, sampling, pre-shipment inspection and payment documents.',
+  date: '2026-11-04',
+  category: 'Sourcing',
+  image: '/images/products/TF169193.webp',
+});
+
+const checks = [
+  {
+    n: '01',
+    h: 'Match the legal name to the business licence scope',
+    ask: 'Send the business licence, and confirm the company name is the same on the licence, the quotation, the proforma invoice and the bank account.',
+    good: 'All four names match character for character. The scope of business includes manufacturing of toys, not only trading or import-export.',
+    bad: 'The quotation comes from one company, the bank account belongs to another, and the licence says "trading" or "technology" rather than production.',
+  },
+  {
+    n: '02',
+    h: 'Ask for a live video walkthrough, not a photo album',
+    ask: 'A scheduled call at working hours in their time zone, walking from the loading bay through the production floor to the warehouse. Ask them to stop at the injection machines and read the tonnage plate.',
+    good: 'They agree to a time you choose, the walk is continuous and handheld, and the person can answer questions about what is in frame.',
+    bad: 'They only send rendered images or a stock video, the call is "not convenient this week", or the walkthrough cuts between unrelated rooms.',
+  },
+  {
+    n: '03',
+    h: 'Look for the machines that match your product',
+    ask: 'Which machines make your item, and how many of them are there? For plastic toys that means injection machines and their tonnage; for plush it is sewing lines.',
+    good: 'Specific answers with numbers, and the tonnage is consistent with the size of the parts you are buying.',
+    bad: 'Vague claims such as "we have many machines", or a machine list that would not physically produce your product.',
+  },
+  {
+    n: '04',
+    h: 'Verify certificate numbers, do not accept certificate images',
+    ask: 'For ISO 9001 and any audit reports, give the certificate number and the issuing body. For product safety, ask which test reports exist for the specific item number you are buying.',
+    good: 'Numbers you can look up on the issuing body\'s own site, and a straight answer of "tests exist for models A and B, not C" when that is the truth.',
+    bad: 'A generic PDF with no number, a certificate that expired, or a claim that "all products are CE certified" with nothing per model.',
+  },
+  {
+    n: '05',
+    h: 'Order a charged sample, and check what arrives with it',
+    ask: 'The sample of the exact model, plus the carton dimensions, units per carton, gross weight and CBM for that model.',
+    good: 'The sample matches the photos, and the carton data arrives in the same message so you can price freight before committing.',
+    bad: 'A different model arrives "because it is the same inside", or the carton data is only supplied after the deposit.',
+  },
+  {
+    n: '06',
+    h: 'Agree the inspection standard before production, not after',
+    ask: 'Which AQL levels apply, who pays for a third-party inspection, and at what point in production it happens.',
+    good: 'A written answer naming the standard, usually AQL 2.5 for major defects and 4.0 for minor, and agreement that you may send your own inspector.',
+    bad: 'Inspection is described as "we check every piece ourselves", with no standard and no right to a third party.',
+  },
+  {
+    n: '07',
+    h: 'Get the payment schedule and the document set in writing',
+    ask: 'Deposit percentage, balance trigger, which documents you receive and when: commercial invoice, packing list, bill of lading, certificate of origin.',
+    good: 'A clear sequence where the balance is tied to a document or an inspection result rather than to a phone call.',
+    bad: 'Full payment up front, or a balance due before you have seen the inspection report.',
+  },
+];
+
+const questions = [
+  'Please send your business licence and confirm the exact legal company name.',
+  'Is the quoted price from a factory or a trading company? Please send a live video walkthrough.',
+  'For item ____, what are the carton dimensions, units per carton, gross weight and CBM?',
+  'Which test reports exist for item ____ for the ____ market, and what are their numbers?',
+  'What is the sample cost and who pays the courier?',
+  'Which AQL standard applies, and may we send a third-party inspector?',
+  'What is the deposit percentage and what triggers the balance?',
+  'What is the production lead time after deposit, in writing?',
+  'Which port do you ship from, and what are the Incoterms you quote?',
+];
+
+const faqs = [
+  {
+    q: 'How long does it take to verify a Chinese toy factory?',
+    a: 'About a week if you ask for everything at once. The licence and the certificate numbers come back the same day, the video walkthrough takes one scheduled call, and a sample takes as long as courier takes. The delay is almost always caused by asking one question at a time.',
+  },
+  {
+    q: 'Should I use a third-party inspection company?',
+    a: 'For a first order, yes. The cost is small against the value of the shipment, and the inspection is the only evidence you will have that the goods match the sample before the balance is paid. Agree who pays for it and when it happens before production starts, not after.',
+  },
+  {
+    q: 'Is a trading company always a bad sign?',
+    a: 'No. A good trading company can be worth the margin if it holds stock, consolidates several factories or handles documents well. What matters is that you know which one you are buying from, because it changes who is responsible when something goes wrong, and it changes what you can ask for.',
+  },
+  {
+    q: 'What should a first order look like?',
+    a: 'Small enough to lose without damaging the business, large enough to be a real test: usually the minimum of one or two models rather than a mixed container. Pay for a sample first, then place the minimum order, then scale once the goods, the packaging and the documents have all behaved.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="How to Verify a China Toy Factory Before You Pay a Deposit | TOYFACTORY"
+  description={post.description}
+  keywords="verify china toy factory, toy supplier verification, china toy manufacturer audit, AQL inspection toys, toy factory due diligence"
+  jsonLd={[post, blogBreadcrumb(post.title, 'verify-china-toy-factory'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[900px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Sourcing</span>
+          <span class="text-gray-600 text-[9px] uppercase tracking-widest">Updated 2026-11-04</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold uppercase tracking-tighter italic mb-8 leading-[1.05]">
+          How to Verify a China Toy Factory Before You Pay a Deposit
+        </h1>
+        <p class="text-gray-300 text-lg leading-[1.9] border-l-2 border-gold/40 pl-6">
+          Seven checks, in the order that costs you least: licence scope, a live video walkthrough, machinery that matches your product, certificate numbers you can look up, a charged sample, an inspection standard agreed in writing, and a payment schedule tied to documents. Most bad factories fail at check two.
+        </p>
+      </div>
+
+      <p class="text-gray-400 leading-[1.9] mb-16">
+        Nearly every sourcing disaster is visible before the deposit. The problem is that the questions are usually asked one at a time, so a supplier who is unprepared simply answers the easy ones and the expensive ones never get asked. Send the whole list at once and the gaps show up immediately.
+      </p>
+
+      {checks.map((c) => (
+        <section class="mb-14 pb-14 border-b border-white/5 last:border-0">
+          <div class="flex items-baseline gap-4 mb-4">
+            <span class="text-gold font-display font-extrabold text-2xl italic">{c.n}</span>
+            <h2 class="text-xl md:text-2xl font-display font-extrabold uppercase tracking-tight leading-tight">{c.h}</h2>
+          </div>
+          <dl class="space-y-3 text-sm leading-[1.9]">
+            <div class="flex gap-4">
+              <dt class="w-16 shrink-0 text-[9px] font-bold uppercase tracking-widest text-gray-600 pt-1">Ask</dt>
+              <dd class="text-gray-300">{c.ask}</dd>
+            </div>
+            <div class="flex gap-4">
+              <dt class="w-16 shrink-0 text-[9px] font-bold uppercase tracking-widest text-gray-600 pt-1">Good</dt>
+              <dd class="text-gray-400">{c.good}</dd>
+            </div>
+            <div class="flex gap-4">
+              <dt class="w-16 shrink-0 text-[9px] font-bold uppercase tracking-widest text-gray-600 pt-1">Red flag</dt>
+              <dd class="text-gray-500">{c.bad}</dd>
+            </div>
+          </dl>
+        </section>
+      ))}
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-6">Send this list to any supplier</h2>
+      <p class="text-gray-400 leading-[1.9] mb-6">
+        Nine questions, one email. A factory that sells direct will answer most of them from a document it already has; a trading company will answer the commercial ones and get quiet on the production ones.
+      </p>
+      <ol class="space-y-3 mb-20">
+        {questions.map((q, i) => (
+          <li class="flex gap-4 text-sm text-gray-300 leading-[1.8]">
+            <span class="text-gold font-bold shrink-0 w-6">{String(i + 1).padStart(2, '0')}</span>
+            <span>{q}</span>
+          </li>
+        ))}
+      </ol>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-6">What we send before you order</h2>
+      <p class="text-gray-400 leading-[1.9] mb-6">
+        Since this page tells buyers to ask hard questions, it is fair to state what we answer. All of the following are available before a deposit, and none of it requires an NDA:
+      </p>
+      <ul class="space-y-3 mb-6 text-sm text-gray-300 leading-[1.8]">
+        <li class="flex gap-3"><span class="text-gold mt-0.5">&#9656;</span><span>Carton dimensions, units per carton, gross weight, net weight and CBM for any item number, published on the product page itself.</span></li>
+        <li class="flex gap-3"><span class="text-gold mt-0.5">&#9656;</span><span>Container loading at about 28 CBM per 20GP, 56 per 40GP and 68 per 40HQ, calculated from the carton data rather than quoted from memory.</span></li>
+        <li class="flex gap-3"><span class="text-gold mt-0.5">&#9656;</span><span>The certification position for the item numbers and the destination market you name: which test reports exist, and an honest answer where none does.</span></li>
+        <li class="flex gap-3"><span class="text-gold mt-0.5">&#9656;</span><span>Lead time in writing, tiered by whether the model is in stock (10-15 days) or bulk and custom (25-35 days after deposit).</span></li>
+        <li class="flex gap-3"><span class="text-gold mt-0.5">&#9656;</span><span>A charged sample with the courier paid by the buyer, so the sample queue stays short and quotes are answered on merit.</span></li>
+      </ul>
+      <p class="text-gray-500 text-sm leading-[1.8] mb-20">
+        Factory level: ISO 9001:2015 quality management, with audits under GMPC, ISO 22716, BSCI, SEDEX and GSV. Established 2001 in Chenghai, Shantou, with a factory of more than 5,000m². Shipment from Yantian or Shantou.
+      </p>
+
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold uppercase tracking-tighter italic mb-10">Questions buyers ask</h2>
+      <div class="divide-y divide-white/5 border-y border-white/5 mb-20">
+        {faqs.map((f, i) => (
+          <details class="group py-6" open={i === 0}>
+            <summary class="flex items-start justify-between gap-8 cursor-pointer list-none">
+              <h3 class="text-sm md:text-base font-bold text-white uppercase tracking-tight leading-snug group-hover:text-gold transition">{f.q}</h3>
+              <span class="text-gold shrink-0 text-lg leading-none mt-0.5 group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="mt-4 text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Paste the nine questions into an email along with the item numbers you want and the market you sell into. You will get the answers, the carton data and a quotation in writing.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/products" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Browse the catalogue</a>
+          <a href="/blog/china-toy-sourcing-guide" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Sourcing guide</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
