@@ -1,4 +1,6 @@
 ---
+import { GA4_ID, CLARITY_ID } from '../config/analytics';
+
 interface Props {
 	title: string;
 	description?: string;
@@ -113,6 +115,57 @@ const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/h
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+		<!-- ANALYTICS. Both scripts stay dormant until an ID is pasted into
+		     src/config/analytics.ts, so an unconfigured site ships no third-party JS. -->
+		{GA4_ID && (
+			<>
+				<script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} async></script>
+				<script is:inline define:vars={{ GA4_ID }}>
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){ dataLayer.push(arguments); }
+					gtag('js', new Date());
+					gtag('config', GA4_ID, { anonymize_ip: true });
+				</script>
+			</>
+		)}
+		{CLARITY_ID && (
+			<script is:inline define:vars={{ CLARITY_ID }}>
+				(function(c,l,a,r,i,t,y){
+					c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+					t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+					y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+				})(window, document, "clarity", "script", CLARITY_ID);
+			</script>
+		)}
+		{GA4_ID && (
+			<script is:inline>
+				/* Conversion events. Delegated on document, so it covers every
+				   WhatsApp / mailto / tel link on every page without touching markup. */
+				document.addEventListener('click', function (e) {
+					var a = e.target && e.target.closest ? e.target.closest('a') : null;
+					if (!a) return;
+					var href = a.getAttribute('href') || '';
+					var name = null;
+					if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp.com') > -1) name = 'whatsapp_click';
+					else if (href.indexOf('mailto:') === 0) name = 'email_click';
+					else if (href.indexOf('tel:') === 0) name = 'phone_click';
+					if (name && window.gtag) gtag('event', name, { link_url: href, page_path: location.pathname });
+				});
+				/* Form submits are captured before navigation, so the hit is not lost. */
+				document.addEventListener('submit', function (e) {
+					var f = e.target;
+					if (!f || !f.action) return;
+					if (window.gtag) gtag('event', 'form_submit', {
+						form_destination: f.action,
+						page_path: location.pathname
+					});
+				});
+				if (location.pathname === '/products' && window.gtag) {
+					gtag('event', 'catalog_view', { page_path: '/products' });
+				}
+			</script>
+		)}
 	</head>
 	<body class="font-sans antialiased min-h-screen">
 		<slot />
