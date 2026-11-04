@@ -22,6 +22,8 @@ const pages = [
   { loc: '/blog/water-gun-wholesale-guide', priority: 0.6, changefreq: 'monthly' },
   { loc: '/blog/track-car-wholesale-guide', priority: 0.6, changefreq: 'monthly' },
   { loc: '/blog/china-toy-sourcing-guide', priority: 0.6, changefreq: 'monthly' },
+  { loc: '/blog/water-gun-models-compared', priority: 0.7, changefreq: 'monthly' },
+  { loc: '/blog/verify-china-toy-factory', priority: 0.7, changefreq: 'monthly' },
   { loc: '/category/bubble-toys', priority: 0.7, changefreq: 'weekly' },
   { loc: '/category/water-guns', priority: 0.7, changefreq: 'weekly' },
   { loc: '/category/track-toys', priority: 0.7, changefreq: 'weekly' },
