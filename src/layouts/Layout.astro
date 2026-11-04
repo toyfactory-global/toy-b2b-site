@@ -201,6 +201,27 @@ const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/h
 				});
 			});
 		</script>
+
+		<!-- ATTRIBUTION. Fills the hidden fields on every RFQ form with the page,
+		     the referrer and the campaign, so each submission that arrives in
+		     Formspree already says where it came from. Independent of GA4, which
+		     matters because the form log is the fallback when analytics is off. -->
+		<script is:inline>
+			(function () {
+				var params = new URLSearchParams(location.search);
+				function fill(name, value) {
+					var fields = document.querySelectorAll('input[name="' + name + '"]');
+					for (var i = 0; i < fields.length; i++) {
+						if (!fields[i].value) fields[i].value = value || '';
+					}
+				}
+				fill('page_path', location.pathname);
+				fill('referrer', document.referrer || 'direct');
+				fill('utm_source', params.get('utm_source'));
+				fill('utm_medium', params.get('utm_medium'));
+				fill('utm_campaign', params.get('utm_campaign'));
+			})();
+		</script>
 	</body>
 </html>
 <style is:global>

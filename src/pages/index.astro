@@ -353,6 +353,14 @@ const getProductsByCategory = (catId) => {
 					<div class="bg-dark p-16 border border-dark/20">
 						<h3 class="text-white text-3xl font-display font-bold uppercase mb-10 tracking-tight italic">Quick RFQ</h3>
 						<form action="https://formspree.io/f/mkoyapvg" method="POST" id="rfq-form-v2" class="grid grid-cols-1 gap-10">
+							<input type="hidden" name="_subject" value="Website RFQ - homepage" />
+							<input type="hidden" name="_next" value="https://toyfactoryglobal.com/thanks" />
+							<input type="hidden" name="form_name" value="home_rfq" />
+							<input type="hidden" name="page_path" value="" />
+							<input type="hidden" name="referrer" value="" />
+							<input type="hidden" name="utm_source" value="" />
+							<input type="hidden" name="utm_medium" value="" />
+							<input type="hidden" name="utm_campaign" value="" />
 							<input type="text" name="company" placeholder="COMPANY NAME" required style="text-transform: none !important; -webkit-text-transform: none !important;" class="bg-transparent border-b border-white/20 p-4 text-white text-xs tracking-widest focus:border-gold outline-none placeholder:text-gray-700">
 							<input type="email" name="email" placeholder="BUSINESS EMAIL" required style="text-transform: none !important; -webkit-text-transform: none !important;" class="bg-transparent border-b border-white/20 p-4 text-white text-xs tracking-widest focus:border-gold outline-none placeholder:text-gray-700">
 							<textarea name="message" placeholder="PROJECT DETAILS" rows="3" required style="text-transform: none !important; -webkit-text-transform: none !important;" class="bg-transparent border-b border-white/20 p-4 text-white text-xs tracking-widest focus:border-gold outline-none placeholder:text-gray-700"></textarea>
