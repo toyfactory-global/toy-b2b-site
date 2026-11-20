@@ -16,7 +16,7 @@
  * Nothing renders while both values are empty, so an unfilled config cannot
  * slow the site down or send data anywhere.
  */
-export const GA4_ID = '';
+export const GA4_ID = 'G-4SXFLZ056F';
 export const CLARITY_ID = '';
 
 /**
