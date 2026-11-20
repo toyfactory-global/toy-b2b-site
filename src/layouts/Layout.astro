@@ -124,9 +124,13 @@ const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/h
 				<script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} async></script>
 				<script is:inline define:vars={{ GA4_ID }}>
 					window.dataLayer = window.dataLayer || [];
-					function gtag(){ dataLayer.push(arguments); }
-					gtag('js', new Date());
-					gtag('config', GA4_ID, { anonymize_ip: true });
+					/* Astro wraps define:vars scripts in an IIFE, so a bare
+					   `function gtag(){}` stays local and window.gtag is undefined.
+					   The conversion listeners further down test window.gtag, so it
+					   has to be assigned explicitly or none of them ever fire. */
+					window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+					window.gtag('js', new Date());
+					window.gtag('config', GA4_ID, { anonymize_ip: true });
 				</script>
 			</>
 		)}
