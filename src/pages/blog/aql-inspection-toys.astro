@@ -1,0 +1,241 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import facts from '../../data/factory.json';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'aql-inspection-toys',
+  title: 'AQL Inspection for Toys: How Many Pieces Actually Get Checked',
+  description:
+    'AQL is not "inspect five cartons". It is a sample size read off the lot size, and the difference decides whether a defect reaches your customer. The table, the defects, and what to write on the purchase order.',
+  date: '2026-11-21',
+  category: 'Quality & Compliance',
+  image: '/images/products/TF213415.webp',
+});
+
+/* Sample sizes and acceptance numbers below follow ISO 2859-1, single sampling,
+   general inspection level II, AQL 2.5 in normal severity. They are the industry
+   standard, not a claim about how this factory inspects — see the note at the end. */
+const table = [
+  { lot: '91 – 150', code: 'F', sample: 20, ac: 1, re: 2 },
+  { lot: '151 – 280', code: 'G', sample: 32, ac: 2, re: 3 },
+  { lot: '501 – 1,200', code: 'J', sample: 80, ac: 5, re: 6 },
+  { lot: '1,201 – 3,200', code: 'K', sample: 125, ac: 7, re: 8 },
+  { lot: '3,201 – 10,000', code: 'L', sample: 200, ac: 10, re: 11 },
+];
+
+const faqs = [
+  {
+    q: 'Does AQL 2.5 mean 2.5% of the order is inspected?',
+    a: 'No, and this is the most common misreading. AQL is the quality level you are willing to accept, not the share of goods inspected. The share inspected comes from the sample size, which is read off the lot size: for a lot of 3,000 pieces at general level II the sample is 125 pieces, about four per cent.',
+  },
+  {
+    q: 'Is a lower AQL number stricter?',
+    a: 'Yes. AQL 1.0 allows fewer defects than AQL 2.5 for the same sample size, which means a stricter inspection and a higher chance the lot is rejected. Tighter is not automatically better: it costs more, rejects more, and on a cheap item it can make the order uneconomic.',
+  },
+  {
+    q: 'Who should do the inspection, the factory or a third party?',
+    a: 'Both, at different moments. The factory inspects to catch problems before they become a shipment; a third party inspects because you want a number that does not come from the party being measured. On a first order the third-party inspection is usually worth more than any discount you can negotiate.',
+  },
+  {
+    q: 'What is the difference between critical, major and minor defects?',
+    a: 'Critical means unsafe or illegal to sell — a sharp edge, a loose small part, a missing warning. Major means the product does not work or cannot be sold as described. Minor is cosmetic and does not affect function. Each class gets its own AQL, and a critical defect usually stops the lot at one occurrence regardless of the sample result.',
+  },
+  {
+    q: 'When in the process should the inspection happen?',
+    a: 'After production is finished and packed, before the balance is paid and before the container is loaded. Inspecting earlier catches problems you can still fix but measures a lot that is still changing; inspecting after loading measures nothing you can act on.',
+  },
+  {
+    q: 'How does this factory handle quality control?',
+    a: `The factory assessment records ${facts.facility.qcInspectors} in-house QC inspectors covering all ${facts.facility.productionLines} production lines, finished goods checked by ${facts.quality.finishedGoods.toLowerCase()}, written inspection instructions, records kept on file, lot traceability to the main raw material and a closed-loop corrective action process. It does not record a specific AQL level, so we do not print one. If you want an AQL level written into your order, name it and it becomes a term on the purchase order.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="AQL Inspection for Toys: How Many Pieces Get Checked"
+  description={post.description}
+  keywords="AQL inspection toys, AQL 2.5 meaning, toy quality inspection, pre-shipment inspection toys, sample size AQL table"
+  jsonLd={[post, blogBreadcrumb(post.title, 'aql-inspection-toys'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Quality &amp; Compliance</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 6 min read</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          AQL inspection for toys: how many pieces actually get checked
+        </h1>
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          &ldquo;We inspect five cartons&rdquo; is not an inspection. It is a habit. AQL is a table: you look up the lot
+          size, the table gives you a sample size, and the sample tells you whether to accept or reject. Here is the
+          table and how to use it.
+        </p>
+      </div>
+
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">AQL is an acceptance rule, not a percentage</h2>
+          <p>
+            AQL stands for acceptable quality limit. It is the defect rate you are willing to live with on a lot, and it
+            is used together with a sample size to produce two numbers: the maximum number of defects you accept (Ac) and
+            the number at which you reject (Re).
+          </p>
+          <p>
+            The sample size does not come from the AQL. It comes from the lot size, read off a table. That is why two
+            orders of 500 and 5,000 pieces at the same AQL are inspected very differently — and why &ldquo;we check five
+            cartons&rdquo; tells you nothing until you know how many pieces that is and how big the lot was.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The table, at the level most toy orders use</h2>
+          <p>
+            General inspection level II, AQL 2.5 for major defects, single sampling, normal severity — the default
+            combination on a first toy order. Read across from your lot size:
+          </p>
+          <div class="overflow-x-auto border border-white/10 my-8">
+            <table class="w-full text-sm min-w-[620px]">
+              <thead>
+                <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                  <th class="text-left px-5 py-4 font-bold">Lot size (pieces)</th>
+                  <th class="text-right px-5 py-4 font-bold">Code</th>
+                  <th class="text-right px-5 py-4 font-bold">Sample</th>
+                  <th class="text-right px-5 py-4 font-bold">Accept</th>
+                  <th class="text-right px-5 py-4 font-bold">Reject from</th>
+                </tr>
+              </thead>
+              <tbody>
+                {table.map((r) => (
+                  <tr class="border-b border-white/5 last:border-0">
+                    <td class="px-5 py-4 text-white">{r.lot}</td>
+                    <td class="px-5 py-4 text-right text-gray-500">{r.code}</td>
+                    <td class="px-5 py-4 text-right text-gold font-bold">{r.sample}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.ac}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.re}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            An order of 3,000 pieces is inspected on 125 pieces. Seven major defects is a pass; eight is a reject. Note
+            what that means in practice: a supplier who inspects 30 pieces and finds two defects has found a rate four
+            times worse than the rule allows, but a buyer looking only at the count would call it &ldquo;only two
+            problems&rdquo;.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Why the same defect counts differently</h2>
+          <p>
+            <span class="text-white">Critical</span> — unsafe or illegal to sell. A sharp edge, a small part that comes
+            loose, a missing warning. One occurrence usually stops the lot regardless of the sample result, because the
+            rule is not about statistics at that point, it is about liability.
+          </p>
+          <p>
+            <span class="text-white">Major</span> — does not work, or cannot be sold as described. Faulty battery
+            compartment, wrong colour against the approved sample, broken sound module.
+          </p>
+          <p>
+            <span class="text-white">Minor</span> — cosmetic. A scuff on a surface that will be handled in transit, a
+            label a millimetre off centre. Buyers who apply major-level strictness to minor defects end up rejecting
+            lots they would happily sell.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What to write on the order</h2>
+          <p>
+            Four lines turn AQL from a word into an enforceable term:
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/10 my-8">
+            {[
+              ['The standard and the level', 'ISO 2859-1, general inspection level II (or your buyer’s spec).'],
+              ['The AQL per defect class', 'Typically critical 0, major 2.5, minor 4.0 — but write the numbers.'],
+              ['The inspection point', 'After packing, before the balance and before loading.'],
+              ['The consequence', 'What happens on a reject: rework, sort, discount or replacement.'],
+            ].map(([k, v]) => (
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <div class="text-white text-sm font-bold mb-1">{k}</div>
+                <div class="text-gray-400 text-sm leading-[1.7]">{v}</div>
+              </div>
+            ))}
+          </div>
+          <p>
+            The fourth line is the one people leave out. AQL without a consequence is a report, not a term. The usual
+            wording is a rework obligation with a re-inspection at the supplier&rsquo;s cost, and a right to cancel if
+            the second inspection also fails.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Factory QC and third-party inspection are different jobs</h2>
+          <p>
+            This factory runs {facts.facility.qcInspectors} in-house inspectors across {facts.facility.productionLines}{' '}
+            production lines, with finished goods checked by {facts.quality.finishedGoods.toLowerCase()}, written
+            instructions, records on file and lot traceability back to the main raw material. That is a production
+            control system, and its purpose is to stop defects before they multiply.
+          </p>
+          <p>
+            A third-party inspection answers a different question: does the lot meet the rule, according to someone who
+            was not paid by the supplier. On a first order, that independence is worth more than the discount you might
+            negotiate by skipping it.
+          </p>
+          <p class="text-gray-500 text-sm">
+            The assessment behind our factory page does not record a specific AQL level, so this site does not print
+            one. If you want a level applied to your order, name it — it goes on the purchase order as a term.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Inspection questions</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          If you are ordering through an inspection company, send them this page alongside the purchase order. It gives
+          the inspector the lot size, the sample and the acceptance numbers in one place.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/factory" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Factory QC figures</a>
+          <a href="/blog/verify-china-toy-factory" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Verify the factory</a>
+          <a href="/contact" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Ask a question</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>

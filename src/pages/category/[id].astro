@@ -71,6 +71,16 @@ const CATEGORY_GUIDES = {
 };
 const guides = CATEGORY_GUIDES[category] || [];
 
+/* The buyer-type page that matches this range, so a visitor arriving on a
+   collection can read the page written for their kind of business. */
+const CATEGORY_INDUSTRY = {
+  'Bubble Toys': { slug: 'party-supplies-distributors', label: 'party & novelty distributors' },
+  'Water Guns': { slug: 'party-supplies-distributors', label: 'party & novelty distributors' },
+  'Track Toys': { slug: 'gift-and-novelty-retailers', label: 'gift shops and novelty retailers' },
+  'Educational Toys': { slug: 'schools-and-educational-distributors', label: 'schools and educational distributors' },
+} as Record<string, { slug: string; label: string }>;
+const industry = CATEGORY_INDUSTRY[category];
+
 const prices = catProducts.map((p) => p.price);
 const moqs = catProducts.map((p) => p.moq);
 const priceFrom = Math.min(...prices);
@@ -143,6 +153,17 @@ const jsonLd = [
           {intros.map((para) => (
             <p class="text-gray-400 text-base leading-[1.9]">{para}</p>
           ))}
+        </div>
+      )}
+
+      {industry && (
+        <div class="max-w-3xl mb-10 border border-white/10 px-6 py-5">
+          <p class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mb-2">Buying for resale?</p>
+          <p class="text-gray-400 text-sm leading-[1.8]">
+            The page written for <a href={`/industries/${industry.slug}`} class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">{industry.label}</a>
+            explains which of these models to start with, and why the carton count matters more than the unit price.
+            Container maths is in the <a href="/container-calculator" class="text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition">calculator</a>.
+          </p>
         </div>
       )}
 

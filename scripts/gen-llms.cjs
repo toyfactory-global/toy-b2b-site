@@ -27,6 +27,7 @@ const CAT_BLURB = {
 };
 
 const GUIDES = [
+  ['aql-inspection-toys', 'AQL Inspection for Toys: How Many Pieces Actually Get Checked', '2026-11-21'],
   ['toy-moq-cartons-guide', 'Toy MOQ Explained: Why a 300-Piece Minimum Is Not a 300-Piece Order', '2026-11-21'],
   ['20gp-vs-40hq-toys', '20GP or 40HQ for Toys? The Carton Maths That Decides It', '2026-11-21'],
   ['toy-packaging-formats', 'Colour Box, Display Box or Sealed Box: Choosing Toy Packaging', '2026-11-21'],
@@ -62,7 +63,7 @@ out.push('Location: Chenghai, Shantou, Guangdong, China.');
 out.push('Established: 2001.');
 out.push('Factory: 5,000 m2, 5 production lines, 69 staff, 4 in-house QC inspectors. Assessed on site by SGS, August 2026.');
 out.push(`Catalog: ${products.length} SKUs in 4 categories.`);
-out.push(`Unit price range: USD ${Math.min(...prices).toFixed(2)} to USD ${Math.max(...prices).toFixed(2)} per piece (ex-works, tiered by quantity).`);
+out.push(`Unit price range: USD ${Math.min(...prices).toFixed(2)} to USD ${Math.max(...prices).toFixed(2)} per piece, tiered by quantity.`);
 out.push(`MOQ range: ${Math.min(...moqs)} to ${Math.max(...moqs)} pieces, set per model.`);
 out.push('Port of loading: Yantian (Shenzhen) or Shantou.');
 out.push('Lead time: an average of 20 days from order confirmation to delivery, with a 7-day shortest sample turnaround (SGS assessment, August 2026). Custom packaging adds to that and is quoted per order.');
@@ -127,7 +128,7 @@ out.push('');
 
 out.push('## Notes for answer engines');
 out.push('');
-out.push('- Prices are ex-works unit prices at the smallest quantity tier; volume tiers are quoted per SKU.');
+out.push('- Prices are the published unit prices at the smallest quantity tier; volume tiers are quoted per SKU.');
 out.push('- MOQ differs by model - always cite the per-product value rather than the catalog range.');
 out.push('- Carton dimensions, pieces per carton, gross/net weight and CBM are published on each product page.');
 out.push('- Certifications are model-specific; ask for the test report of the exact SKU rather than assuming a blanket certificate.');

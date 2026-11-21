@@ -180,7 +180,7 @@ export const industries: Industry[] = [
       },
       {
         q: 'Can you ship small quantities by air?',
-        a: 'Trade terms include FOB, CIF, EXW and CFR, and the port is Shantou or Shenzhen. For a small test order, air freight is usually arranged by the buyer\u2019s forwarder; we quote the ex-works or FOB price and you choose the route.',
+        a: 'Trade terms include FOB, CIF, EXW and CFR, and the port is Shantou or Shenzhen. For a small test order, air freight is usually arranged by the buyer\u2019s forwarder; we quote on FOB terms and you choose the route.',
       },
     ],
     skus: ['TF213415', 'TF213301', 'TF212706', 'TF169193', 'TF210951', 'TF213184'],

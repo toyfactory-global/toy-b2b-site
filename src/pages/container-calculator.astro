@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: 'Does the total price include freight?',
-    a: 'No. The price shown is the ex-works unit price multiplied by quantity, which is what the factory invoices before freight and duties. Freight depends on your port, the term and the forwarder, and is not estimated here.',
+    a: 'No. The figure shown is the published unit price multiplied by quantity — the goods value before freight, insurance and duties. Freight depends on your port, the term and the forwarder, and is not estimated here.',
   },
   {
     q: 'What if the CBM for a model is missing?',
@@ -121,7 +121,7 @@ const jsonLd = [
                 <th class="text-right px-5 py-3 font-bold">Pcs</th>
                 <th class="text-right px-5 py-3 font-bold">Cartons</th>
                 <th class="text-right px-5 py-3 font-bold">CBM</th>
-                <th class="text-right px-5 py-3 font-bold">Ex-works</th>
+                <th class="text-right px-5 py-3 font-bold">Goods value</th>
                 <th class="px-5 py-3"></th>
               </tr>
             </thead>
@@ -146,7 +146,7 @@ const jsonLd = [
           </div>
           <div class="bg-[#0A0A0F] px-6 py-6">
             <div id="tUsd" class="text-2xl font-display font-extrabold text-white">$0</div>
-            <div class="text-[9px] uppercase tracking-[0.25em] text-gray-500 mt-2">Ex-works</div>
+            <div class="text-[9px] uppercase tracking-[0.25em] text-gray-500 mt-2">Goods value</div>
           </div>
         </div>
 
@@ -175,7 +175,7 @@ const jsonLd = [
         </h2>
         <div class="space-y-5 max-w-3xl text-gray-400 text-base leading-[1.9]">
           <p>
-            Two models can show the same ex-works price and land at very different costs per piece. The difference is the
+            Two models can show the same unit price and land at very different costs per piece. The difference is the
             carton: how many pieces fit inside it, and how much space it takes. A model with a large retail box can fill a
             container at half the piece count you budgeted for, and the freight per unit doubles without anyone noticing
             until the loading list arrives.

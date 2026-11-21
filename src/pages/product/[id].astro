@@ -361,6 +361,16 @@ const compareSet = [product, ...related.slice(0, 3)]
 							<p class="text-gray-400 text-sm leading-[1.7]">{SAMPLE_POLICY}</p>
 						</div>
 					</div>
+
+					<!-- Container planning: the carton data above is what feeds these two. -->
+					<div class="col-span-full mt-4 px-8 py-5 border border-white/5 bg-white/[0.01]">
+						<p class="text-gray-500 text-xs leading-[1.8]">
+							Planning a shipment?
+							<a href="/container-calculator" class="text-gold hover:text-white transition underline underline-offset-4 decoration-gold/40">Work out container fill</a>
+							<span class="text-gray-700 mx-2">/</span>
+							<a href="/packing-data" class="text-gold hover:text-white transition underline underline-offset-4 decoration-gold/40">Compare all {products.length} models</a>
+						</p>
+					</div>
 				</div>
 
 				<!-- RIGHT: PRODUCT INFO -->
