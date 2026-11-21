@@ -1,0 +1,296 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import productsRaw from '../data/products.json';
+
+// Client-side calculator. The dataset is embedded at build time from
+// products.json, so the maths uses the same numbers as the quotation.
+// Container volumes are assumptions (28 / 68 CBM usable) and are labelled.
+
+const products = (Array.isArray(productsRaw) ? productsRaw : (productsRaw as any).products) as any[];
+const num = (s: any) => {
+  const m = String(s || '').match(/([0-9]+(?:\.[0-9]+)?)/);
+  return m ? parseFloat(m[1]) : 0;
+};
+const data = products
+  .map((p) => {
+    const s = p.specs || {};
+    return {
+      id: p.id,
+      name: p.name,
+      cat: p.category,
+      moq: p.moq,
+      price: p.price,
+      qpc: parseInt(String(s.qty_per_carton || '0'), 10) || 0,
+      cbm: num(s.cbm),
+    };
+  })
+  .sort((a, b) => a.id.localeCompare(b.id));
+
+const faqs = [
+  {
+    q: 'How does the calculator work?',
+    a: 'Pick models and enter the quantity of each. The tool divides your quantity by pieces per carton to get cartons, multiplies by the CBM of that carton to get volume, then compares the total volume against 28 CBM (20GP) or 68 CBM (40HQ). The carton data is the same data used to quote.',
+  },
+  {
+    q: 'Why 28 and 68 cubic metres?',
+    a: 'Those are working assumptions for usable space after packaging waste, not the nominal container volume. A 20GP is often quoted around 33 CBM and a 40HQ around 76 CBM; usable space is lower because cartons do not stack perfectly. Your forwarder may use different constants — the total CBM is shown so you can redo the maths with theirs.',
+  },
+  {
+    q: 'Does the total price include freight?',
+    a: 'No. The price shown is the ex-works unit price multiplied by quantity, which is what the factory invoices before freight and duties. Freight depends on your port, the term and the forwarder, and is not estimated here.',
+  },
+  {
+    q: 'What if the CBM for a model is missing?',
+    a: 'That model is left out of the volume total and flagged in the results, because a zero CBM would silently understate the volume. Ask for the measurement and it will be added.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Toy container and carton calculator',
+    url: 'https://toyfactoryglobal.com/container-calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Any',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Calculate cartons, cubic metres and container fill for a mixed order of wholesale toys, using published carton data.',
+    publisher: { '@id': 'https://toyfactoryglobal.com/#organization' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://toyfactoryglobal.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Container calculator', item: 'https://toyfactoryglobal.com/container-calculator' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Layout
+  title="Toy Container & Carton Calculator | CBM, Cartons, Fill Rate"
+  description="Work out cartons, cubic metres and container fill for a mixed order of wholesale toys, using published carton data. Free, no signup."
+  keywords="container loading calculator, carton cbm calculator, how many cartons fit 40hq, toy freight calculator"
+  jsonLd={jsonLd}
+>
+  <SiteNav />
+
+  <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-5xl mx-auto px-8">
+      <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">Tool</p>
+      <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
+        How full is<br /><span class="text-gold">the container?</span>
+      </h1>
+      <p class="text-gray-400 text-base leading-[1.9] max-w-3xl mb-12">
+        Add the models you are considering and the quantity of each. The calculator turns pieces into cartons, cartons into
+        cubic metres, and cubic metres into container fill — using the same carton data that appears on every product page.
+        Nothing is rounded up to make a number look better.
+      </p>
+
+      <div id="app" class="border border-white/10">
+        <div class="p-6 border-b border-white/10 flex flex-wrap gap-3 items-end">
+          <label class="flex-1 min-w-[280px]">
+            <span class="block text-[9px] uppercase tracking-[0.3em] text-gray-500 mb-2">Model</span>
+            <select id="model" class="w-full bg-[#0A0A0F] border border-white/15 text-white text-sm px-4 py-3">
+              {data.map((d) => (
+                <option value={d.id}>{d.id} — {d.name.slice(0, 60)}{d.cbm ? '' : ' (no CBM)'}</option>
+              ))}
+            </select>
+          </label>
+          <label class="w-[160px]">
+            <span class="block text-[9px] uppercase tracking-[0.3em] text-gray-500 mb-2">Quantity (pcs)</span>
+            <input id="qty" type="number" min="1" value="1000" class="w-full bg-[#0A0A0F] border border-white/15 text-white text-sm px-4 py-3" />
+          </label>
+          <button id="add" class="bg-gold text-dark px-6 py-3 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">Add</button>
+          <button id="clear" class="border border-white/20 text-gray-400 px-6 py-3 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-white/50 transition">Clear</button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm min-w-[700px]">
+            <thead>
+              <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                <th class="text-left px-5 py-3 font-bold">Model</th>
+                <th class="text-right px-5 py-3 font-bold">Pcs</th>
+                <th class="text-right px-5 py-3 font-bold">Cartons</th>
+                <th class="text-right px-5 py-3 font-bold">CBM</th>
+                <th class="text-right px-5 py-3 font-bold">Ex-works</th>
+                <th class="px-5 py-3"></th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr id="empty"><td colspan="6" class="px-5 py-10 text-center text-gray-600 text-xs uppercase tracking-[0.2em]">Nothing added yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 border-t border-white/10">
+          <div class="bg-[#0A0A0F] px-6 py-6">
+            <div id="tPcs" class="text-2xl font-display font-extrabold text-white">0</div>
+            <div class="text-[9px] uppercase tracking-[0.25em] text-gray-500 mt-2">Pieces</div>
+          </div>
+          <div class="bg-[#0A0A0F] px-6 py-6">
+            <div id="tCtn" class="text-2xl font-display font-extrabold text-white">0</div>
+            <div class="text-[9px] uppercase tracking-[0.25em] text-gray-500 mt-2">Cartons</div>
+          </div>
+          <div class="bg-[#0A0A0F] px-6 py-6">
+            <div id="tCbm" class="text-2xl font-display font-extrabold text-gold">0.000</div>
+            <div class="text-[9px] uppercase tracking-[0.25em] text-gray-500 mt-2">CBM</div>
+          </div>
+          <div class="bg-[#0A0A0F] px-6 py-6">
+            <div id="tUsd" class="text-2xl font-display font-extrabold text-white">$0</div>
+            <div class="text-[9px] uppercase tracking-[0.25em] text-gray-500 mt-2">Ex-works</div>
+          </div>
+        </div>
+
+        <div class="p-6 border-t border-white/10 space-y-4">
+          <div>
+            <div class="flex justify-between text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-2">
+              <span>20GP · 28 CBM usable</span><span id="p20Txt">0%</span>
+            </div>
+            <div class="h-2 bg-white/10"><div id="p20" class="h-2 bg-gold" style="width:0%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-2">
+              <span>40HQ · 68 CBM usable</span><span id="p40Txt">0%</span>
+            </div>
+            <div class="h-2 bg-white/10"><div id="p40" class="h-2 bg-gold" style="width:0%"></div></div>
+          </div>
+          <p id="note" class="text-gray-600 text-xs leading-relaxed pt-2">
+            Container volumes are working assumptions (28 / 68 CBM usable), not measurements of your loading plan.
+          </p>
+        </div>
+      </div>
+
+      <section class="mt-20 mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-6">
+          Why this matters more than the unit price
+        </h2>
+        <div class="space-y-5 max-w-3xl text-gray-400 text-base leading-[1.9]">
+          <p>
+            Two models can show the same ex-works price and land at very different costs per piece. The difference is the
+            carton: how many pieces fit inside it, and how much space it takes. A model with a large retail box can fill a
+            container at half the piece count you budgeted for, and the freight per unit doubles without anyone noticing
+            until the loading list arrives.
+          </p>
+          <p>
+            That is why the calculator works backwards from volume rather than forwards from budget. Enter the quantities
+            you are considering and see what the container does; then adjust the mix until the fill rate sits where you want
+            it, instead of discovering an overfull or half-empty container at the port.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-10">
+          How the numbers are produced
+        </h2>
+        <div class="border-t border-white/10">
+          {faqs.map((f) => (
+            <div class="border-b border-white/5 py-8">
+              <h3 class="text-white text-lg font-bold tracking-tight mb-3">{f.q}</h3>
+              <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="border border-gold/30 p-10">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Next</p>
+        <p class="text-white text-xl font-display font-bold tracking-tight mb-6">Send the mix and the quote follows the same numbers.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="bg-gold text-dark px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">Request a quotation</a>
+          <a href="/packing-data" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">Download the data</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script id="dataset" type="application/json" set:html={JSON.stringify(data)} />
+  <script is:inline>
+    (function () {
+      var DATA = JSON.parse(document.getElementById('dataset').textContent);
+      var byId = {};
+      DATA.forEach(function (d) { byId[d.id] = d; });
+
+      var lines = [];
+      var tbody = document.getElementById('rows');
+      var emptyRow = document.getElementById('empty');
+
+      function money(n) {
+        return '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      }
+
+      function render() {
+        var pcs = 0, ctn = 0, cbm = 0, usd = 0, missing = 0;
+        while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+
+        if (!lines.length) {
+          tbody.appendChild(emptyRow);
+        } else {
+          lines.forEach(function (l, i) {
+            var d = byId[l.id];
+            var cartons = d.qpc ? Math.ceil(l.qty / d.qpc) : 0;
+            var vol = cartons * d.cbm;
+            pcs += l.qty; ctn += cartons; cbm += vol; usd += l.qty * d.price;
+            if (!d.cbm) missing++;
+
+            var tr = document.createElement('tr');
+            tr.className = 'border-b border-white/5';
+            tr.innerHTML =
+              '<td class="px-5 py-3 text-white">' + d.id + '<span class="text-gray-600 text-xs ml-2">' + d.cat + '</span></td>' +
+              '<td class="px-5 py-3 text-right text-gray-300">' + l.qty.toLocaleString('en-US') + '</td>' +
+              '<td class="px-5 py-3 text-right text-gray-300">' + (cartons || '—') + '</td>' +
+              '<td class="px-5 py-3 text-right ' + (d.cbm ? 'text-gray-300' : 'text-red-400') + '">' + (d.cbm ? vol.toFixed(3) : 'no CBM') + '</td>' +
+              '<td class="px-5 py-3 text-right text-gray-400">' + money(l.qty * d.price) + '</td>' +
+              '<td class="px-5 py-3 text-right"><button data-i="' + i + '" class="text-gray-600 hover:text-gold text-xs uppercase tracking-widest">remove</button></td>';
+            tbody.appendChild(tr);
+          });
+        }
+
+        document.getElementById('tPcs').textContent = pcs.toLocaleString('en-US');
+        document.getElementById('tCtn').textContent = ctn.toLocaleString('en-US');
+        document.getElementById('tCbm').textContent = cbm.toFixed(3);
+        document.getElementById('tUsd').textContent = money(usd);
+
+        var p20 = Math.min(100, (cbm / 28) * 100);
+        var p40 = Math.min(100, (cbm / 68) * 100);
+        document.getElementById('p20').style.width = p20 + '%';
+        document.getElementById('p40').style.width = p40 + '%';
+        document.getElementById('p20Txt').textContent = Math.round((cbm / 28) * 100) + '%';
+        document.getElementById('p40Txt').textContent = Math.round((cbm / 68) * 100) + '%';
+
+        document.getElementById('note').textContent = missing
+          ? missing + ' line(s) have no recorded CBM and are excluded from the volume total. Ask for the measurement.'
+          : 'Container volumes are working assumptions (28 / 68 CBM usable), not measurements of your loading plan.';
+      }
+
+      document.getElementById('add').addEventListener('click', function () {
+        var id = document.getElementById('model').value;
+        var qty = parseInt(document.getElementById('qty').value, 10);
+        if (!byId[id] || !qty || qty < 1) return;
+        var existing = lines.filter(function (l) { return l.id === id; })[0];
+        if (existing) existing.qty += qty; else lines.push({ id: id, qty: qty });
+        render();
+      });
+
+      document.getElementById('clear').addEventListener('click', function () { lines = []; render(); });
+
+      tbody.addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-i]');
+        if (!btn) return;
+        lines.splice(parseInt(btn.getAttribute('data-i'), 10), 1);
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</Layout>

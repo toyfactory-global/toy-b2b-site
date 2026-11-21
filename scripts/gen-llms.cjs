@@ -75,6 +75,24 @@ out.push(`- [OEM / ODM process](${SITE}/oem-odm): three customisation routes (li
 out.push(`- [About](${SITE}/about): who we are, where we ship (North America 40%, Eastern Europe 20%, South America 10%, Middle East 10%, Western Europe 10%, South Asia 10%), and who answers the email.`);
 out.push('');
 
+out.push('## Buyer types');
+out.push('');
+out.push(`One page per type of buyer, because a party distributor, a gift shop and a school need different things from the same catalogue. Index: ${SITE}/industries`);
+out.push(`- Party and novelty distributors: ${SITE}/industries/party-supplies-distributors`);
+out.push(`- Gift shops and novelty retailers: ${SITE}/industries/gift-and-novelty-retailers`);
+out.push(`- Marketplace and Shopify sellers: ${SITE}/industries/online-sellers`);
+out.push(`- Schools and educational distributors: ${SITE}/industries/schools-and-educational-distributors`);
+out.push(`- Private label brands: ${SITE}/industries/private-label-brands`);
+out.push(`- Wholesale distributors filling mixed containers: ${SITE}/industries/wholesale-distributors`);
+out.push('');
+
+out.push('## Tools and open data');
+out.push('');
+out.push(`- Packing dataset: ${SITE}/packing-data — MOQ, pieces per carton, carton size, CBM, weights and pieces per 20GP/40HQ for every published model. CSV: ${SITE}/data/packing-data.csv`);
+out.push(`- Container calculator: ${SITE}/container-calculator — enter quantities, get cartons, CBM and container fill (28 CBM for 20GP, 68 CBM for 40HQ, stated as assumptions)`);
+out.push(`- Full catalogue content: ${SITE}/llms-full.txt`);
+out.push('');
+
 out.push('## Collections');
 out.push('');
 out.push(`- [All products](${SITE}/products): the complete catalog hub, ${products.length} models across ${CAT_ORDER.length} collections with unit price and MOQ for every item.`);

@@ -1,0 +1,80 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import { industries } from '../../data/industries';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': 'https://toyfactoryglobal.com/industries#webpage',
+    url: 'https://toyfactoryglobal.com/industries',
+    name: 'Buyer types | Wholesale toys by who you sell to',
+    description: 'The same factory, six different buyers: party distributors, gift shops, online sellers, schools, private label brands and wholesalers.',
+    inLanguage: 'en',
+    isPartOf: { '@id': 'https://toyfactoryglobal.com/#website' },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: industries.map((i, n) => ({
+        '@type': 'ListItem',
+        position: n + 1,
+        name: i.nav,
+        url: `https://toyfactoryglobal.com/industries/${i.slug}`,
+      })),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://toyfactoryglobal.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Buyer types', item: 'https://toyfactoryglobal.com/industries' },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Buyer Types | Wholesale Toys By Who You Sell To"
+  description="Six buyer types, six different sets of questions: party distributors, gift shops, online sellers, schools, private label brands and wholesale distributors."
+  keywords="wholesale toys by buyer type, toy distributor supply, gift shop toys wholesale, private label toys, school toys supplier"
+  jsonLd={jsonLd}
+>
+  <SiteNav />
+
+  <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-5xl mx-auto px-8">
+      <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">Buyer types</p>
+      <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
+        The same factory.<br /><span class="text-gold">Six different buyers.</span>
+      </h1>
+      <p class="text-gray-400 text-base leading-[1.9] max-w-3xl mb-16">
+        A party distributor, a gift shop and a school buy from the same catalogue and need completely different things
+        from it: carton volume, shelf dimensions, budget cycles. These six pages are written for the buyer rather than
+        for the product, which is why the advice differs even when the models overlap.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+        {industries.map((i) => (
+          <a href={`/industries/${i.slug}`} class="group bg-[#0A0A0F] px-8 py-9 hover:bg-white/[0.03] transition-colors block">
+            <p class="text-[9px] uppercase tracking-[0.3em] text-gray-600 mb-3">{i.eyebrow}</p>
+            <h2 class="text-white text-xl font-display font-bold tracking-tight mb-3 group-hover:text-gold transition-colors">{i.nav}</h2>
+            <p class="text-gray-400 text-sm leading-[1.7]">{i.metaDescription}</p>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-16 border border-white/10 p-10">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Not sure which one you are</p>
+        <p class="text-gray-400 text-sm leading-[1.9] mb-8 max-w-2xl">
+          Most buyers are a mix. If you resell online and also supply a couple of shops, start with the online seller page
+          and take the carton guidance from the distributor page — the arithmetic is the same.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/products" class="bg-gold text-dark px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">Browse the catalogue</a>
+          <a href="/contact" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">Ask directly</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import type { Industry } from '../data/industries';
+import productsRaw from '../data/products.json';
+
+interface Props {
+  industry: Industry;
+}
+const { industry } = Astro.props;
+
+const all = (Array.isArray(productsRaw) ? productsRaw : (productsRaw as any).products) as any[];
+const rows = industry.skus
+  .map((id) => all.find((p) => p.id === id))
+  .filter(Boolean)
+  .map((p: any) => {
+    const qpc = parseInt(String(p.specs?.qty_per_carton || '0'), 10) || 0;
+    return {
+      id: p.id,
+      name: p.name,
+      moq: p.moq,
+      price: p.price,
+      cartons: qpc ? Math.ceil(p.moq / qpc) : null,
+      qpc,
+      carton: p.specs?.carton_size || '-',
+      cbm: p.specs?.cbm || '-',
+      image: p.images?.[0] || null,
+    };
+  });
+
+const url = `https://toyfactoryglobal.com/industries/${industry.slug}`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: industry.metaTitle,
+    description: industry.metaDescription,
+    inLanguage: 'en',
+    isPartOf: { '@id': 'https://toyfactoryglobal.com/#website' },
+    about: { '@id': 'https://toyfactoryglobal.com/#organization' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://toyfactoryglobal.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Buyer types', item: 'https://toyfactoryglobal.com/industries' },
+      { '@type': 'ListItem', position: 3, name: industry.nav, item: url },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: industry.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<Layout title={industry.metaTitle} description={industry.metaDescription} keywords={industry.keywords} jsonLd={jsonLd}>
+  <SiteNav />
+
+  <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-6xl mx-auto px-8">
+      <nav class="text-[10px] uppercase tracking-[0.25em] text-gray-600 mb-10">
+        <a href="/" class="hover:text-gold transition">Home</a>
+        <span class="mx-3">/</span>
+        <a href="/industries" class="hover:text-gold transition">Buyer types</a>
+        <span class="mx-3">/</span>
+        <span class="text-gray-400">{industry.nav}</span>
+      </nav>
+
+      <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">{industry.eyebrow}</p>
+      <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
+        {industry.h1}
+      </h1>
+      <p class="text-gray-400 text-base leading-[1.9] max-w-3xl mb-16">{industry.lede}</p>
+
+      {industry.sections.map((s) => (
+        <section class="mb-16">
+          <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-6">
+            {s.h2}
+          </h2>
+          <div class="space-y-5 max-w-3xl">
+            {s.p.map((para) => (
+              <p class="text-gray-400 text-base leading-[1.9]">{para}</p>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <!-- Model table -->
+      <section class="mb-16">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-3">
+          Models that suit this buyer
+        </h2>
+        <p class="text-gray-600 text-[10px] uppercase tracking-[0.2em] mb-8">
+          Prices, minimums and carton data are read from the same records used to quote; nothing here is rounded
+        </p>
+        <div class="overflow-x-auto border border-white/10">
+          <table class="w-full text-sm min-w-[820px]">
+            <thead>
+              <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                <th class="text-left px-5 py-4 font-bold">Model</th>
+                <th class="text-right px-5 py-4 font-bold">MOQ</th>
+                <th class="text-right px-5 py-4 font-bold">= Cartons</th>
+                <th class="text-right px-5 py-4 font-bold">Unit price</th>
+                <th class="text-right px-5 py-4 font-bold">Pcs / carton</th>
+                <th class="text-left px-5 py-4 font-bold">Carton</th>
+                <th class="text-right px-5 py-4 font-bold">CBM</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr class="border-b border-white/5 last:border-0 hover:bg-white/[0.02]">
+                  <td class="px-5 py-4">
+                    <a href={`/product/${r.id}`} class="text-white hover:text-gold transition font-bold">{r.id}</a>
+                  </td>
+                  <td class="px-5 py-4 text-right text-gray-300">{r.moq}</td>
+                  <td class="px-5 py-4 text-right text-gold font-bold">{r.cartons ?? '-'}</td>
+                  <td class="px-5 py-4 text-right text-gray-300">${Number(r.price).toFixed(2)}</td>
+                  <td class="px-5 py-4 text-right text-gray-400">{r.qpc || '-'}</td>
+                  <td class="px-5 py-4 text-gray-400 text-xs whitespace-nowrap">{r.carton}</td>
+                  <td class="px-5 py-4 text-right text-gray-400">{r.cbm}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-gray-500 text-xs leading-relaxed mt-4 max-w-3xl">
+          &ldquo;= Cartons&rdquo; is the minimum expressed as cartons, which is the number that decides freight. A model
+          with a low piece minimum but a large carton can tie up more cash than a model with a higher minimum.
+        </p>
+      </section>
+
+      <!-- FAQ -->
+      <section class="mb-16">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-10">
+          Questions this buyer type usually asks
+        </h2>
+        <div class="border-t border-white/10">
+          {industry.faqs.map((f) => (
+            <div class="border-b border-white/5 py-8">
+              <h3 class="text-white text-lg font-bold tracking-tight mb-3">{f.q}</h3>
+              <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="border border-gold/30 p-10">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Next</p>
+        <p class="text-white text-xl font-display font-bold tracking-tight mb-6">
+          Send the models and the quantities, and the carton maths comes back with the quotation.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="bg-gold text-dark px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">Contact the factory</a>
+          <a href={industry.categoryHref} class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">
+            {industry.categoryLabel}
+          </a>
+          <a href="/industries" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">
+            Other buyer types
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

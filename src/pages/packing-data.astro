@@ -1,0 +1,239 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import productsRaw from '../data/products.json';
+
+// Original data asset: the packing numbers for every published model, in one
+// table, downloadable as CSV. Every value comes from products.json — the same
+// records used to quote. The container columns use 28 / 68 CBM of usable volume,
+// which is an assumption about container space and is labelled as one.
+
+const products = (Array.isArray(productsRaw) ? productsRaw : (productsRaw as any).products) as any[];
+const num = (s: any) => {
+  const m = String(s || '').match(/([0-9]+(?:\.[0-9]+)?)/);
+  return m ? parseFloat(m[1]) : 0;
+};
+const CBM_20 = 28;
+const CBM_40HQ = 68;
+
+const rows = products.map((p) => {
+  const s = p.specs || {};
+  const cbm = num(s.cbm);
+  const qpc = parseInt(String(s.qty_per_carton || '0'), 10) || 0;
+  const c20 = cbm > 0 ? Math.floor(CBM_20 / cbm + 1e-9) : 0;
+  const c40 = cbm > 0 ? Math.floor(CBM_40HQ / cbm + 1e-9) : 0;
+  return {
+    id: p.id,
+    name: p.name,
+    category: p.category,
+    moq: p.moq,
+    price: p.price,
+    qpc,
+    cartonsAtMoq: qpc ? Math.ceil(p.moq / qpc) : 0,
+    carton: s.carton_size || '',
+    cbm: s.cbm || '',
+    gw: s.gw_nw || '',
+    pcs20: c20 && qpc ? c20 * qpc : 0,
+    pcs40: c40 && qpc ? c40 * qpc : 0,
+  };
+});
+
+const withData = rows.filter((r) => r.cbm !== '');
+const updated = '2026-11-21';
+
+const faqs = [
+  {
+    q: 'What exactly is in this dataset?',
+    a: `One row per published model — ${rows.length} of them — with the minimum order, unit price, pieces per carton, carton dimensions, CBM, gross and net weight, and the number of cartons and pieces that fit a 20GP and a 40HQ container. The CSV download contains the same table.`,
+  },
+  {
+    q: 'Where do these numbers come from?',
+    a: 'From the internal product records used to generate quotations, not from a marketing sheet. That is why a page price and a quoted price do not disagree. Where a figure has not been recorded for a model, the cell is left empty rather than filled with a zero.',
+  },
+  {
+    q: 'How were the container columns calculated?',
+    a: `Cartons per container = usable volume ÷ CBM per carton, rounded down. The two constants used are ${CBM_20} CBM for a 20GP and ${CBM_40HQ} CBM for a 40HQ — assumptions about usable space after packaging waste, not measurements of your loading plan. Your forwarder's figure may differ; the CBM column lets you redo the maths with their number.`,
+  },
+  {
+    q: 'Why do some models have an empty container column?',
+    a: 'Because the CBM for that carton has not been recorded. An empty cell is a signal to ask us for the measurement; a zero would look like a fact and quietly produce a wrong freight quote.',
+  },
+  {
+    q: 'Can I use this table in my own analysis or in an article?',
+    a: 'Yes. Cite it as the TOYFACTORY packing dataset with the retrieval date, and link to this page. The CSV is provided so the numbers can be checked rather than copied from a screenshot.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: 'TOYFACTORY packing dataset: MOQ, carton and container data for 41 toy models',
+    description: `Packing and container-loading data for ${rows.length} wholesale toy models: MOQ, unit price, pieces per carton, carton dimensions, CBM, gross and net weight, and pieces per 20GP and 40HQ container.`,
+    url: 'https://toyfactoryglobal.com/packing-data',
+    dateModified: updated,
+    creator: { '@id': 'https://toyfactoryglobal.com/#organization' },
+    isAccessibleForFree: true,
+    license: 'https://toyfactoryglobal.com/terms',
+    keywords: ['wholesale toys', 'carton data', 'container loading', 'CBM', 'MOQ', 'toy manufacturing'],
+    variableMeasured: [
+      'Minimum order quantity (pieces)',
+      'Unit price (USD, ex-works)',
+      'Pieces per carton',
+      'Carton dimensions',
+      'Volume per carton (CBM)',
+      'Gross and net weight per carton',
+      'Pieces per 20GP container',
+      'Pieces per 40HQ container',
+    ],
+    distribution: {
+      '@type': 'DataDownload',
+      contentUrl: 'https://toyfactoryglobal.com/data/packing-data.csv',
+      encodingFormat: 'text/csv',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://toyfactoryglobal.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Packing data', item: 'https://toyfactoryglobal.com/packing-data' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Layout
+  title="Toy Carton & Container Packing Data (41 Models, CSV)"
+  description="Open packing dataset for 41 wholesale toy models: MOQ, pieces per carton, carton size, CBM, weights and pieces per 20GP/40HQ. Downloadable as CSV."
+  keywords="toy carton data, container loading calculator toys, CBM per carton, toy MOQ list, wholesale toy packing data"
+  jsonLd={jsonLd}
+>
+  <SiteNav />
+
+  <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-7xl mx-auto px-8">
+      <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">Open data · {rows.length} models</p>
+      <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95] max-w-4xl">
+        Every carton,<br /><span class="text-gold">in one table.</span>
+      </h1>
+      <p class="text-gray-400 text-base leading-[1.9] max-w-3xl mb-6">
+        Most suppliers publish a price and make you ask for the rest. This is the rest: pieces per carton, carton
+        dimensions, CBM, weights, and how many pieces fit a 20GP and a 40HQ — for all {rows.length} published models,
+        in one downloadable file.
+      </p>
+      <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mb-12">
+        Source: internal product records · last updated {updated} · {withData.length} of {rows.length} models carry a
+        recorded CBM
+      </p>
+
+      <div class="flex flex-wrap gap-4 mb-12">
+        <a href="/data/packing-data.csv" download class="bg-gold text-dark px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">
+          Download CSV
+        </a>
+        <a href="/container-calculator" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">
+          Container calculator
+        </a>
+      </div>
+
+      <div class="overflow-x-auto border border-white/10 mb-8">
+        <table class="w-full text-xs min-w-[1100px]">
+          <thead>
+            <tr class="border-b border-white/10 text-[8px] uppercase tracking-[0.15em] text-gray-500">
+              <th class="text-left px-3 py-3 font-bold">Model</th>
+              <th class="text-left px-3 py-3 font-bold">Collection</th>
+              <th class="text-right px-3 py-3 font-bold">MOQ</th>
+              <th class="text-right px-3 py-3 font-bold">Cartons</th>
+              <th class="text-right px-3 py-3 font-bold">USD</th>
+              <th class="text-right px-3 py-3 font-bold">Pcs/ctn</th>
+              <th class="text-left px-3 py-3 font-bold">Carton cm</th>
+              <th class="text-right px-3 py-3 font-bold">CBM</th>
+              <th class="text-left px-3 py-3 font-bold">G.W./N.W.</th>
+              <th class="text-right px-3 py-3 font-bold">Pcs 20GP</th>
+              <th class="text-right px-3 py-3 font-bold">Pcs 40HQ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr class="border-b border-white/5 last:border-0 hover:bg-white/[0.02]">
+                <td class="px-3 py-2.5"><a href={`/product/${r.id}`} class="text-white hover:text-gold transition">{r.id}</a></td>
+                <td class="px-3 py-2.5 text-gray-500 whitespace-nowrap">{r.category}</td>
+                <td class="px-3 py-2.5 text-right text-gray-300">{r.moq}</td>
+                <td class="px-3 py-2.5 text-right text-gold">{r.cartonsAtMoq || '—'}</td>
+                <td class="px-3 py-2.5 text-right text-gray-300">{Number(r.price).toFixed(2)}</td>
+                <td class="px-3 py-2.5 text-right text-gray-400">{r.qpc || '—'}</td>
+                <td class="px-3 py-2.5 text-gray-400 whitespace-nowrap">{r.carton || '—'}</td>
+                <td class="px-3 py-2.5 text-right text-gray-400">{r.cbm || '—'}</td>
+                <td class="px-3 py-2.5 text-gray-400 whitespace-nowrap">{r.gw || '—'}</td>
+                <td class="px-3 py-2.5 text-right text-gray-300">{r.pcs20 ? r.pcs20.toLocaleString('en-US') : '—'}</td>
+                <td class="px-3 py-2.5 text-right text-gray-300">{r.pcs40 ? r.pcs40.toLocaleString('en-US') : '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="border border-white/10 p-8 mb-20">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gold mb-4">How to read the container columns</p>
+        <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">
+          Cartons per container = usable volume ÷ CBM per carton, rounded down. The constants used here are
+          <span class="text-white"> {CBM_20} CBM for a 20GP</span> and <span class="text-white">{CBM_40HQ} CBM for a 40HQ</span>
+          — assumptions about usable space after packaging waste, not a loading plan. Your forwarder may use a different
+          figure; the CBM column is there so you can redo the arithmetic with theirs. A dash means the figure has not
+          been recorded for that model, which is different from zero.
+        </p>
+      </div>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-6">
+          Using this data
+        </h2>
+        <div class="space-y-5 max-w-3xl text-gray-400 text-base leading-[1.9]">
+          <p>
+            The table is meant to be checked, not admired. If you are comparing suppliers, ask each one for the same
+            eight columns and put them side by side — the supplier whose carton is 20% larger is often 20% more expensive
+            per unit once freight is added, even when the ex-works price looks lower.
+          </p>
+          <p>
+            For sourcing decisions, the two columns that change conclusions most often are pieces per carton and CBM.
+            A model at a high unit price with a small carton can cost less per landed unit than a cheap model that
+            arrives in oversize boxes.
+          </p>
+          <p class="text-gray-500 text-sm">
+            Citation: TOYFACTORY packing dataset, retrieved {updated}, https://toyfactoryglobal.com/packing-data
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-10">
+          Questions about this table
+        </h2>
+        <div class="border-t border-white/10">
+          {faqs.map((f) => (
+            <div class="border-b border-white/5 py-8">
+              <h3 class="text-white text-lg font-bold tracking-tight mb-3">{f.q}</h3>
+              <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="border border-gold/30 p-10">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Need a number that is not here</p>
+        <p class="text-white text-xl font-display font-bold tracking-tight mb-6">
+          Ask for the model and we send the measurement, not an estimate.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="bg-gold text-dark px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">Ask for a figure</a>
+          <a href="/factory" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">Factory figures</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

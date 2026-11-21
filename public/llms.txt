@@ -26,6 +26,22 @@ Contact: hntoys7@sinuotoys.com | WhatsApp +86 159 7691 7707
 - [OEM / ODM process](https://toyfactoryglobal.com/oem-odm): three customisation routes (light customisation, from your sample, from your artwork), 7-day shortest sample, 20-day average lead time, FOB/CIF/EXW/CFR.
 - [About](https://toyfactoryglobal.com/about): who we are, where we ship (North America 40%, Eastern Europe 20%, South America 10%, Middle East 10%, Western Europe 10%, South Asia 10%), and who answers the email.
 
+## Buyer types
+
+One page per type of buyer, because a party distributor, a gift shop and a school need different things from the same catalogue. Index: https://toyfactoryglobal.com/industries
+- Party and novelty distributors: https://toyfactoryglobal.com/industries/party-supplies-distributors
+- Gift shops and novelty retailers: https://toyfactoryglobal.com/industries/gift-and-novelty-retailers
+- Marketplace and Shopify sellers: https://toyfactoryglobal.com/industries/online-sellers
+- Schools and educational distributors: https://toyfactoryglobal.com/industries/schools-and-educational-distributors
+- Private label brands: https://toyfactoryglobal.com/industries/private-label-brands
+- Wholesale distributors filling mixed containers: https://toyfactoryglobal.com/industries/wholesale-distributors
+
+## Tools and open data
+
+- Packing dataset: https://toyfactoryglobal.com/packing-data — MOQ, pieces per carton, carton size, CBM, weights and pieces per 20GP/40HQ for every published model. CSV: https://toyfactoryglobal.com/data/packing-data.csv
+- Container calculator: https://toyfactoryglobal.com/container-calculator — enter quantities, get cartons, CBM and container fill (28 CBM for 20GP, 68 CBM for 40HQ, stated as assumptions)
+- Full catalogue content: https://toyfactoryglobal.com/llms-full.txt
+
 ## Collections
 
 - [All products](https://toyfactoryglobal.com/products): the complete catalog hub, 41 models across 4 collections with unit price and MOQ for every item.

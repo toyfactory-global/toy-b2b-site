@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "node scripts/gen-llms.cjs && node scripts/gen-llms-full.cjs && astro build && node scripts/check-site.cjs",
+    "build": "node scripts/gen-llms.cjs && node scripts/gen-llms-full.cjs && node scripts/gen-packing-csv.cjs && astro build && node scripts/check-site.cjs",
     "verify": "node scripts/check-site.cjs",
     "preview": "astro preview",
     "astro": "astro"
