@@ -1,22 +1,83 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
 import { blogPosting, blogBreadcrumb } from '../../lib/schema';
 
 const post = blogPosting({
   slug: 'bubble-machine-buyer-guide',
-  title: "How to Choose the Right Bubble Machine: A Wholesale Buyer's Guide",
-  description: 'Expert guide for wholesale bubble machine buyers. Compare industrial garden lamp, multi-hole guns, and automatic machines. MOQ, certifications, and factory pricing explained.',
-  date: '2026-07-24',
+  title: 'Bubble Machine Wholesale Guide: Ten Models Compared on Cartons',
+  description:
+    'Wholesale bubble machines compared on cartons per container, cash to enter and value density. Ten models from $1.58, MOQ 72 to 720, with the questions that actually separate them.',
+  date: '2026-11-21',
   category: 'Product Guide',
-  image: '/images/products/TF200892-3.webp',
+  image: '/images/products/TF200892.webp',
 });
+
+const firstNumber = (v: any) => {
+  const m = String(v ?? '').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+};
+
+const rows = products
+  .filter((p: any) => p.category === 'Bubble Toys')
+  .map((p: any) => {
+    const qpc = firstNumber(p.specs?.qty_per_carton) || 0;
+    const cbm = firstNumber(p.specs?.cbm) || 0;
+    return {
+      id: p.id,
+      moq: p.moq,
+      price: p.price,
+      qpc,
+      cbm,
+      cartons: qpc ? Math.ceil(p.moq / qpc) : 0,
+      cash: Math.round(p.moq * p.price),
+      ctn20: cbm ? Math.floor(28 / cbm + 1e-9) : 0,
+      density: cbm && qpc ? Math.round((p.price * qpc) / cbm) : 0,
+    };
+  })
+  .sort((a: any, b: any) => a.price - b.price);
+
+const cheapest = rows[0];
+const priciest = rows[rows.length - 1];
+const lowestCash = [...rows].sort((a, b) => a.cash - b.cash)[0];
+const highestCash = [...rows].sort((a, b) => b.cash - a.cash)[0];
+const densest = [...rows].sort((a, b) => b.density - a.density)[0];
+
+const faqs = [
+  {
+    q: 'What is a typical MOQ for wholesale bubble machines?',
+    a: `In this collection it runs from ${Math.min(...rows.map((r) => r.moq))} to ${Math.max(...rows.map((r) => r.moq))} pieces, and the minimum is set by the carton rather than by negotiation. Express it in cartons before comparing suppliers: the low-piece minimums here are ${Math.min(...rows.map((r) => r.cartons))} cartons, while the high ones reach ${Math.max(...rows.map((r) => r.cartons))}.`,
+  },
+  {
+    q: 'Why is the cheapest bubble machine per piece not the best first order?',
+    a: `The lowest unit price is the ${cheapest.id} at $${cheapest.price}, but its minimum is ${cheapest.moq} pieces, so entering costs about $${cheapest.cash.toLocaleString('en-US')}. The ${lowestCash.id} costs more per piece at $${lowestCash.price} and less in total at about $${lowestCash.cash.toLocaleString('en-US')}. On a first order, cash matters more than unit price.`,
+  },
+  {
+    q: 'How many bubble machines fit in a container?',
+    a: `Cartons per 20GP range from ${Math.min(...rows.map((r) => r.ctn20))} to ${Math.max(...rows.map((r) => r.ctn20))} across the ten models, depending on carton volume. Multiply by pieces per carton for the piece count, and remember the container figure uses 28 CBM of usable space — your forwarder may use a different number.`,
+  },
+  {
+    q: 'Battery or plug-in: which sells better?',
+    a: 'That depends on who you sell to, and it is a question about your market rather than about the factory. Battery units travel to events; plug-in units stay where there is power. What the product record tells you is the packaging format, the carton size and the pieces per carton — the electrical specification should be confirmed per item number before you commit, in writing.',
+  },
+  {
+    q: 'Do you supply test reports for bubble machines?',
+    a: 'Testing scope varies by model and by destination market, so it is answered per item number rather than as a catalogue-wide claim. Tell us the model and the country and the reply states which reports exist for that combination. We do not imply a certificate for a market that is not named in the quotation.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
 
-<Layout 
-  title="How to Choose the Right Bubble Machine: A Wholesale Buyer's Guide | TOYFACTORY"
+<Layout
+  title="Bubble Machine Wholesale Guide: Ten Models Compared"
   description={post.description}
-  keywords="Bubble Machine Buying Guide, Wholesale Bubble Machine, Industrial Bubble Machine, Garden Lamp Bubble Machine, Electric Bubble Gun Wholesale"
-  jsonLd={[post, blogBreadcrumb(post.title, 'bubble-machine-buyer-guide')]}
+  keywords="wholesale bubble machine, bubble gun wholesale, bubble toy factory, bulk bubble machines, bubble machine MOQ"
+  jsonLd={[post, blogBreadcrumb(post.title, 'bubble-machine-buyer-guide'), faqSchema]}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
@@ -30,118 +91,152 @@ const post = blogPosting({
   </nav>
 
   <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
-    <div class="max-w-[900px] mx-auto">
-      <!-- Header -->
+    <div class="max-w-[1100px] mx-auto">
       <div class="mb-16">
         <div class="flex items-center gap-3 mb-6">
           <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Product Guide</span>
-          <span class="text-[9px] text-gray-500 uppercase tracking-widest">July 24, 2026</span>
-          <span class="text-[9px] text-gray-600">· 6 min read</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 6 min read</span>
         </div>
-        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white mb-8 uppercase tracking-tighter leading-[1.1] italic">
-          How to Choose the Right <span class="text-gold">Bubble Machine:</span> A Wholesale Buyer's Guide
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          Bubble machine wholesale: ten models compared on cartons
         </h1>
-        <p class="text-gray-400 text-lg leading-relaxed max-w-2xl">
-          Not all bubble machines are created equal. From high-volume industrial units to portable event guns, we break down the five critical factors wholesale buyers must evaluate before placing a bulk order.
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          Bubble machines look like a commodity and are not. The ten models in this collection span a four-fold range in
+          unit price and a two-fold range in carton volume — and the carton is what decides whether a container makes
+          money.
         </p>
       </div>
 
-      <!-- Featured Image -->
       <div class="aspect-[21/9] overflow-hidden bg-white/5 mb-16 border border-white/5">
-        <img src="/images/products/TF200892-3.webp\" alt="Industrial Garden Lamp Bubble Machine — wholesale bubble machine factory" class="w-full h-full object-cover" />
+        <img src="/images/products/TF200892-3.webp" alt="Wholesale bubble machine from a Chenghai toy factory" class="w-full h-full object-cover" />
       </div>
 
-      <!-- Content -->
-      <div class="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed space-y-10">
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Five questions, only two of which the catalogue can answer</h2>
+          <p>
+            Wholesale buyers arrive with five questions: how many bubbles a minute, battery or plug-in, how long it
+            lasts, what the minimum is, and what it costs to ship. The catalogue answers the last two precisely and the
+            other three only by item number — which is why the honest version of this guide is about cartons and cash,
+            and the technical questions are listed at the end for you to ask.
+          </p>
+          <p>
+            What follows is calculated from the same product records used to quote. Nothing here is a marketing figure.
+          </p>
+        </section>
 
-        <p class="text-gray-400 text-lg leading-[1.9]">
-          The global bubble machine market is booming. From amusement parks to wedding planners, from toy distributors to event rental companies — demand for high-output bubble machines has never been stronger. But here's what most first-time buyers don't realize: a bubble machine is not a commodity. The difference between a machine that lasts 50 hours and one that lasts 500 hours comes down to five factors that most Alibaba listings won't tell you about.
-        </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">1. Output Volume: Not All "High-Output" Claims Are Equal</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          Every supplier claims their machine is "high-output." But what does that actually mean? For wholesale buyers, output is measured in <strong class="text-white">bubbles per minute (BPM)</strong> — and there's a massive range.
-        </p>
-        <p class="text-gray-400 leading-[1.9]">
-          A standard <strong class="text-white">8-hole automatic bubble machine</strong> like our <a href="/product/TF213393" class="text-gold hover:text-white transition">TF213393 model</a> produces a consistent, moderate stream ideal for small parties and retail. Step up to an <strong class="text-white">industrial garden lamp bubble machine</strong> like the <a href="/product/TF200892" class="text-gold hover:text-white transition">TF200892</a>, and you're looking at a unit designed for continuous outdoor operation — capable of filling a garden or pool area with dense bubble coverage for hours.
-        </p>
-        <p class="text-gray-400 leading-[1.9]">
-          <strong class="text-white">Key question to ask your supplier:</strong> "What is the rated BPM at maximum output, and has it been tested for continuous operation beyond 2 hours?" If they can't answer, walk away.
-        </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">2. Power Source: Battery vs. Plug-In — It Changes Your Market</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          Battery-operated machines are portable and great for outdoor events, but they have a hard runtime limit. Plug-in machines can run indefinitely but need access to power. The <a href="/product/TF200888" class="text-gold hover:text-white transition">TF200888 Sunflower Multi-Hole Electric Bubble Gun</a> bridges the gap — electric-powered with a handheld form factor, it's popular for event companies that need both portability and reliability.
-        </p>
-        <p class="text-gray-400 leading-[1.9]">
-          For distributors targeting the <strong class="text-white">event rental market</strong>, plug-in industrial models dominate. For <strong class="text-white">retail and consumer markets</strong>, battery-operated wands and guns have higher turnover. Know your end customer before you choose.
-        </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">3. Build Quality & Certifications: The Hidden Cost of "Cheap"</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          A bubble machine contains a motor, a fan, a pump, and rotating wands — all exposed to liquid. Cheap machines use low-grade motors that corrode after weeks of use. Factory-grade machines use sealed bearings, stainless steel shafts, and corrosion-resistant housings.
-        </p>
-        <p class="text-gray-400 leading-[1.9]">
-          At TOYFACTORY, those reports are issued per model and per destination market, not as one certificate covering the whole range &mdash; tell us the model and the market and we confirm which reports exist for that exact item. This isn't just paperwork — it's the difference between clearing customs smoothly and having your container held for weeks. <a href="/#rfq" class="text-gold hover:text-white transition">Ask which test reports exist for the model you are considering</a>.
-        </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">4. MOQ & Tiered Pricing: How to Get the Best Factory Price</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          Direct factory MOQs for bubble machines typically start around 36–72 units for entry-level orders. But the real margins appear at scale:
-        </p>
-        <div class="bg-[#15151A] border border-white/5 p-8 my-8">
-          <div class="space-y-4 text-sm">
-            <div class="flex justify-between pb-4 border-b border-white/5">
-              <span class="text-gray-400 uppercase tracking-wide">Tier 1: 35–157 Units</span>
-              <span class="text-gold font-bold">Base Factory Price</span>
-            </div>
-            <div class="flex justify-between pb-4 border-b border-white/5">
-              <span class="text-gray-400 uppercase tracking-wide">Tier 2: 158–525 Units</span>
-              <span class="text-white font-bold">Volume Discount Applied</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-400 uppercase tracking-wide">Tier 3: 526+ Units</span>
-              <span class="text-white font-bold">Best Rate + Custom Packaging</span>
-            </div>
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The ten models, sorted by unit price</h2>
+          <div class="overflow-x-auto border border-white/10 my-8">
+            <table class="w-full text-sm min-w-[800px]">
+              <thead>
+                <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                  <th class="text-left px-4 py-4 font-bold">Model</th>
+                  <th class="text-right px-4 py-4 font-bold">MOQ</th>
+                  <th class="text-right px-4 py-4 font-bold">Cartons</th>
+                  <th class="text-right px-4 py-4 font-bold">USD/pc</th>
+                  <th class="text-right px-4 py-4 font-bold">Pcs/ctn</th>
+                  <th class="text-right px-4 py-4 font-bold">CBM</th>
+                  <th class="text-right px-4 py-4 font-bold">20GP ctns</th>
+                  <th class="text-right px-4 py-4 font-bold">$ per CBM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr class="border-b border-white/5 last:border-0">
+                    <td class="px-4 py-4"><a href={`/product/${r.id}`} class="text-white hover:text-gold transition font-bold">{r.id}</a></td>
+                    <td class="px-4 py-4 text-right text-gray-300">{r.moq}</td>
+                    <td class="px-4 py-4 text-right text-gold">{r.cartons}</td>
+                    <td class="px-4 py-4 text-right text-gray-300">${r.price}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.qpc}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.cbm}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.ctn20}</td>
+                    <td class="px-4 py-4 text-right text-white">{r.density}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+          <p class="text-gray-500 text-sm">
+            &ldquo;Cartons&rdquo; is the minimum expressed in cartons. &ldquo;$ per CBM&rdquo; is the value of one
+            carton divided by its volume — a rough measure of how much money a container can carry.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The cheap-per-piece trap</h2>
+          <p>
+            The lowest unit price here is the {cheapest.id} at ${cheapest.price}; the highest is the {priciest.id} at $
+            {priciest.price}. If you sorted by price and bought the top of the list, you would be committing about $
+            {cheapest.cash.toLocaleString('en-US')} to enter — against ${lowestCash.cash.toLocaleString('en-US')} for the{' '}
+            {lowestCash.id}, which costs ${lowestCash.price} per piece.
+          </p>
+          <p>
+            That gap is not a trick. A high-volume model is priced for volume: the carton holds more, the minimum is
+            higher, and the unit price assumes you take the volume. The trap is buying it for a market test.
+          </p>
+          <p>
+            At the other end, the {highestCash.id} needs about ${highestCash.cash.toLocaleString('en-US')} to enter. It is
+            a perfectly reasonable model for a distributor who knows the demand; it is a poor first order for someone who
+            does not.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Value density: the number that pays the freight</h2>
+          <p>
+            Bubble machines are bulky and light, so freight is usually decided by volume rather than weight. Divide the
+            value of a carton by its volume and you get how much money a cubic metre of container space can carry: the{' '}
+            {densest.id} carries about ${densest.density} per CBM, and lower-density models carry proportionally less.
+          </p>
+          <p>
+            This matters when two models show a similar unit price. If one needs twice the container space per dollar of
+            goods, its real cost is higher as soon as the container leaves the port. That is also why the carton columns
+            are published on every product page instead of hidden behind a "contact us".
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The three questions to ask by item number</h2>
+          <p>
+            <span class="text-white">Output.</span> Ask for a rated figure at maximum output, and ask whether it was
+            measured or estimated. "High output" is not a specification.
+          </p>
+          <p>
+            <span class="text-white">Power.</span> Battery or mains changes the market you can sell into, and it changes
+            what the carton has to protect. Confirm it per model rather than assuming from a photograph.
+          </p>
+          <p>
+            <span class="text-white">Testing.</span> Reports are issued per model and per destination market. Ask for the
+            combination you actually need — a report for another market is not a shortcut through customs.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Bubble machine questions</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
         </div>
-        <p class="text-gray-400 leading-[1.9]">
-          Industrial models like the <a href="/product/TF200892" class="text-gold hover:text-white transition">TF200892 Garden Lamp Bubble Machine</a> start at just <strong class="text-white">$4.34/unit at 72-piece MOQ</strong> with significant price breaks at higher volumes. <a href="/#rfq" class="text-gold hover:text-white transition">Contact our sales team</a> for a tiered quotation tailored to your order size.
-        </p>
+      </div>
 
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">5. Shipping & Logistics: The Number Most Buyers Ignore</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          A bubble machine's packaging dimensions directly determine your landed cost. The TF200892 ships at <strong class="text-white">0.28 CBM per carton (36 pcs)</strong>, which means a 20ft container fits approximately 96 cartons — 3,456 units — with room to spare. Always check the carton dimensions and CBM on the product spec sheet before calculating your total procurement budget.
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Pick the model that fits your cash rather than the one with the lowest price, then send the item number with the
+          quantity and the destination market.
         </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">The Bottom Line</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          The right bubble machine depends entirely on your distribution channel. Event rental? Go industrial plug-in. Retail? Portable battery models. E-commerce? Mid-range automatic units with strong packaging. At TOYFACTORY, our range covers all three — and our engineering team can customize any model to your market's specifications.
-        </p>
-
-        <!-- CTA -->
-        <div class="bg-gold/5 border border-gold/20 p-10 mt-16 text-center">
-          <h3 class="text-xl font-display font-bold text-white mb-4 uppercase">Ready to Source Bubble Machines?</h3>
-          <p class="text-gray-400 text-sm mb-8">Get a factory-direct quotation with full logistics specifications within 24 hours.</p>
-          <a href="/#rfq" class="inline-block bg-gold text-dark px-12 py-5 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-white transition-all">
-            Start Your Wholesale Inquiry &rarr;
-          </a>
+        <div class="flex flex-wrap gap-4">
+          <a href="/category/bubble-toys" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Bubble toys collection</a>
+          <a href="/industries/party-supplies-distributors" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">For party distributors</a>
+          <a href="/blog/toy-moq-cartons-guide" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">MOQ explained</a>
         </div>
-
       </div>
     </div>
   </article>
-
-  <footer class="py-24 border-t border-white/5 bg-[#050508] text-center">
-    <div class="flex flex-col items-center gap-6">
-      <div class="flex gap-10 text-[9px] text-gray-400 uppercase tracking-[0.4em] font-bold">
-        <a href="/privacy" class="hover:text-gold transition">Privacy</a>
-        <a href="/terms" class="hover:text-gold transition">Terms</a>
-        <a href="/return" class="hover:text-gold transition">Returns</a>
-      </div>
-      <div class="text-[9px] text-gray-500 uppercase tracking-[0.4em] font-bold italic">
-        &copy; 2026 TOYFACTORY Manufacturing. Global B2B Standards.
-      </div>
-    </div>
-  </footer>
 </Layout>

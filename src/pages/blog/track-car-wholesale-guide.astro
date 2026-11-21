@@ -1,22 +1,85 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
 import { blogPosting, blogBreadcrumb } from '../../lib/schema';
 
 const post = blogPosting({
   slug: 'track-car-wholesale-guide',
-  title: 'Track Car Toys Wholesale Guide 2026: 3D, Magnetic & Dinosaur Sets',
-  description: 'B2B guide for wholesale track car toys. Compare 3D track sets, magnetic levitation cars, and dinosaur storage tracks with factory pricing from $4.38.',
-  date: '2026-08-06',
+  title: 'Track Car Toys Wholesale Guide: Nine Models, Real Carton Data',
+  description:
+    'Wholesale track car toys compared on what decides your margin: cartons per container, cash to enter and value density. Nine models, MOQ 30 to 180, published CBM.',
+  date: '2026-11-21',
   category: 'Product Guide',
   image: '/images/products/TF211082.webp',
 });
+
+const firstNumber = (v: any) => {
+  const m = String(v ?? '').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+};
+
+const rows = products
+  .filter((p: any) => p.category === 'Track Toys')
+  .map((p: any) => {
+    const qpc = firstNumber(p.specs?.qty_per_carton) || 0;
+    const cbm = firstNumber(p.specs?.cbm) || 0;
+    const cartons = qpc ? Math.ceil(p.moq / qpc) : 0;
+    return {
+      id: p.id,
+      name: p.name,
+      moq: p.moq,
+      price: p.price,
+      qpc,
+      cbm,
+      cartons,
+      cash: Math.round(p.moq * p.price),
+      ctn20: cbm ? Math.floor(28 / cbm + 1e-9) : 0,
+      density: cbm && qpc ? Math.round((p.price * qpc) / cbm) : 0,
+    };
+  })
+  .sort((a: any, b: any) => a.price - b.price);
+
+const cheapest = rows[0];
+const priciest = rows[rows.length - 1];
+const densest = [...rows].sort((a, b) => b.density - a.density)[0];
+const thinnest = [...rows].sort((a, b) => a.density - b.density)[0];
+const lowest = [...rows].sort((a, b) => a.cash - b.cash)[0];
+
+const faqs = [
+  {
+    q: 'How many track toy cartons fit a 20GP container?',
+    a: `It runs from ${Math.min(...rows.map((r) => r.ctn20))} to ${Math.max(...rows.map((r) => r.ctn20))} cartons across these nine models, because the carton volume varies from ${Math.min(...rows.map((r) => r.cbm))} to ${Math.max(...rows.map((r) => r.cbm))} CBM. That is an eight-fold difference in how much product one container holds, and it matters more than the unit price.`,
+  },
+  {
+    q: 'Which track model costs the least to start with?',
+    a: `By cash rather than unit price, the ${lowest.id}: ${lowest.moq} pieces at $${lowest.price} is about $${lowest.cash.toLocaleString('en-US')}, spread over ${lowest.cartons} cartons. The cheapest model per piece is the ${cheapest.id} at $${cheapest.price}, but check its minimum before treating it as the cheap option.`,
+  },
+  {
+    q: 'Why do two track sets with similar piece counts differ so much in price?',
+    a: 'Usually the electronics, the mould complexity or the packaging, not the plastic. A magnetic levitation set carries magnets, a drive mechanism and a battery compartment; a sliding track is three moulded parts. Two products that look similar on a shelf can be different manufacturing problems, which is why the ex-works price is not a measure of value.',
+  },
+  {
+    q: 'Can track sets be shipped in a mixed container with other categories?',
+    a: 'Yes, and it is common on a first order. Track cartons are among the largest in the catalogue, so they usually set the volume and the rest of the mix fills around them. Add the CBM of every carton on the list and compare the total against the container.',
+  },
+  {
+    q: 'Do you supply replacement cars and track pieces separately?',
+    a: 'That is a question about the specific model and it is answered per item number rather than in a general policy. Ask for the one you are considering and the answer comes in writing with the quotation.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
 
-<Layout 
-  title="Track Car Toys Wholesale Guide 2026: 3D, Magnetic & Dinosaur Sets | TOYFACTORY"
+<Layout
+  title="Track Car Toys Wholesale Guide: Nine Models, Real Carton Data"
   description={post.description}
-  keywords="Track Car Wholesale, 3D Track Car Factory, Magnetic Track Toy, Dinosaur Track Car, Toy Car Importer Guide"
-  jsonLd={[post, blogBreadcrumb(post.title, 'track-car-wholesale-guide')]}
+  keywords="track car toys wholesale, 3D track toy factory, magnetic levitation track toy, dinosaur track storage, wholesale track sets"
+  jsonLd={[post, blogBreadcrumb(post.title, 'track-car-wholesale-guide'), faqSchema]}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
@@ -30,94 +93,143 @@ const post = blogPosting({
   </nav>
 
   <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
-    <div class="max-w-[900px] mx-auto">
+    <div class="max-w-[1100px] mx-auto">
       <div class="mb-16">
         <div class="flex items-center gap-3 mb-6">
           <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Product Guide</span>
-          <span class="text-[9px] text-gray-500 uppercase tracking-widest">Aug 6, 2026</span>
-          <span class="text-[9px] text-gray-600">· 5 min read</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 6 min read</span>
         </div>
-        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white mb-8 uppercase tracking-tighter leading-[1.1] italic">
-          Track Car Toys <span class="text-gold">Wholesale Guide</span> 2026
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          Track car toys wholesale: nine models, real carton data
         </h1>
-        <p class="text-gray-400 text-lg leading-relaxed max-w-2xl">
-          From 121-piece 3D racing sets to magnetic levitation tracks and dinosaur storage cases, track car toys remain a staple of the global toy market. Here's what wholesale buyers should know before sourcing.
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          Track sets sell on two instincts — cars and building — and they carry one hidden problem: the carton. This is
+          the range compared on the numbers that decide whether a container makes money.
         </p>
       </div>
 
-      <div class="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed space-y-10">
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Four sub-types, one buying decision</h2>
+          <p>
+            The nine models in this collection split into four kinds of product: magnetic levitation tracks, large
+            construction sets, dinosaur storage tracks and compact sliding tracks. They look like four categories and they
+            behave like four different businesses, because the carton volume per piece is not comparable.
+          </p>
+          <p>
+            A levitation set is a mechanism with magnets, a drive and a battery compartment. A sliding track is three
+            moulded parts. That difference shows up in the ex-works price and again in the carton, which is why comparing
+            them on price per piece alone tells you almost nothing.
+          </p>
+        </section>
 
-        <p class="text-gray-400 text-lg leading-[1.9]">
-          Track car toys combine two of the most reliable toy purchase drivers: <strong class="text-white">cars</strong> and <strong class="text-white">construction play</strong>. While the category's growth is steady rather than explosive, it enjoys exceptional repeat-purchase rates — parents who buy one track set almost always return for compatible expansion packs. For distributors, this means predictable reorder cycles and a loyal end-customer base.
-        </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">The 4 Track Toy Sub-Types for Wholesale</h2>
-
-        <h3 class="text-lg font-bold text-white uppercase tracking-wide pt-2">1. 3D Building Track Sets</h3>
-        <p class="text-gray-400 leading-[1.9]">
-          Large-piece-count sets dominate this segment. The <a href="/product/TF211082" class="text-gold hover:text-white transition">TF211082 3D Track Car (121 pcs)</a> (MOQ 60, $20.54/piece) is our flagship — it builds a full 3D racing circuit and is a proven bestseller in European retail. The <a href="/product/TF211091" class="text-gold hover:text-white transition">TF211091 Luxury Stereo Version</a> (MOQ 30, $17.45/piece) offers a premium alternative with lower MOQ for boutique channels.
-        </p>
-
-        <h3 class="text-lg font-bold text-white uppercase tracking-wide pt-2">2. Magnetic & Levitation Tracks</h3>
-        <p class="text-gray-400 leading-[1.9]">
-          The wow-factor sub-category. The <a href="/product/TF208740" class="text-gold hover:text-white transition">TF208740 Orbital Magnetic Levitation Electric</a> (MOQ 35, $24.46/piece) uses magnets to float cars along an orbital track — a social-media-friendly product that commands premium retail pricing. The <a href="/product/TF209512" class="text-gold hover:text-white transition">TF209512 Magnetic Track Car (126 pcs)</a> (MOQ 90, $10.80/piece) offers a high-value mid-tier option.
-        </p>
-
-        <h3 class="text-lg font-bold text-white uppercase tracking-wide pt-2">3. Dinosaur Storage Tracks</h3>
-        <p class="text-gray-400 leading-[1.9]">
-          A dual-function design: the dinosaur serves as both track and storage case — solving the "where do we put the cars" problem parents love. The <a href="/product/TF213426" class="text-gold hover:text-white transition">TF213426 Dinosaur Swallow Track (12 alloy cars)</a> (MOQ 100, $13.38/piece) and <a href="/product/TF213415" class="text-gold hover:text-white transition">TF213415 Storage Dinosaur (6 pull-back cars)</a> (MOQ 180, $4.38/piece) cover mid and entry price points.
-        </p>
-
-        <h3 class="text-lg font-bold text-white uppercase tracking-wide pt-2">4. Compact Sliding Tracks</h3>
-        <p class="text-gray-400 leading-[1.9]">
-          The <a href="/product/TF212344" class="text-gold hover:text-white transition">TF212344 PVC Double Track Sliding Car</a> (MOQ 80, $5.49/piece) is a space-efficient, low-shipping-cost option — ideal for e-commerce sellers targeting compact or travel-friendly toy segments.
-        </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">Pricing Tiers at a Glance</h2>
-        <div class="bg-[#15151A] border border-white/5 p-8 my-8">
-          <div class="space-y-4 text-sm">
-            <div class="flex justify-between pb-4 border-b border-white/5">
-              <span class="text-gray-400">Entry-Level</span>
-              <span class="text-white font-bold">$4.38 – $10.80/piece</span>
-            </div>
-            <div class="flex justify-between pb-4 border-b border-white/5">
-              <span class="text-gray-400">Mid-Range</span>
-              <span class="text-white font-bold">$13.38 – $17.45/piece</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-400">Premium</span>
-              <span class="text-white font-bold">$20.54 – $24.46/piece</span>
-            </div>
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The nine models, sorted by price</h2>
+          <div class="overflow-x-auto border border-white/10 my-8">
+            <table class="w-full text-sm min-w-[820px]">
+              <thead>
+                <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                  <th class="text-left px-4 py-4 font-bold">Model</th>
+                  <th class="text-right px-4 py-4 font-bold">MOQ</th>
+                  <th class="text-right px-4 py-4 font-bold">Cartons</th>
+                  <th class="text-right px-4 py-4 font-bold">USD/pc</th>
+                  <th class="text-right px-4 py-4 font-bold">Pcs/ctn</th>
+                  <th class="text-right px-4 py-4 font-bold">CBM</th>
+                  <th class="text-right px-4 py-4 font-bold">20GP ctns</th>
+                  <th class="text-right px-4 py-4 font-bold">$ per CBM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr class="border-b border-white/5 last:border-0">
+                    <td class="px-4 py-4"><a href={`/product/${r.id}`} class="text-white hover:text-gold transition font-bold">{r.id}</a></td>
+                    <td class="px-4 py-4 text-right text-gray-300">{r.moq}</td>
+                    <td class="px-4 py-4 text-right text-gold">{r.cartons}</td>
+                    <td class="px-4 py-4 text-right text-gray-300">${r.price}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.qpc}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.cbm}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.ctn20}</td>
+                    <td class="px-4 py-4 text-right text-white">{r.density}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
+          <p class="text-gray-500 text-sm">
+            &ldquo;$ per CBM&rdquo; is the value of one carton divided by its volume — a rough measure of how much money
+            a container can carry. Higher is better for freight; it is not a measure of quality.
+          </p>
+        </section>
 
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">Logistics: The Hidden Margin Factor</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          Track sets ship in large cartons, so CBM efficiency drives your landed cost. Our carton configurations are optimized for container loading — a 20ft container fits 96 cartons of the TF211082 (0.28 CBM each). Always request the full <strong class="text-white">carton dimensions, CBM, and gross/net weight</strong> for each item before calculating your total procurement budget.
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The number that decides the container</h2>
+          <p>
+            Cartons per 20GP across these nine models run from {Math.min(...rows.map((r) => r.ctn20))} to{' '}
+            {Math.max(...rows.map((r) => r.ctn20))}. Same container, an eight-fold difference in product. A range built
+            only from the big-carton models can fill a container at a piece count you did not plan for.
+          </p>
+          <p>
+            Value density tells the other half of the story: {densest.id} carries about ${densest.density} of goods per
+            cubic metre, while {thinnest.id} carries ${thinnest.density}. If freight is your biggest variable cost, the
+            second one costs you roughly {Math.round(thinnest.density / densest.density * 10) / 10} times more per dollar
+            of goods moved — before anyone talks about margin.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Cash to enter, not price per piece</h2>
+          <p>
+            The lowest unit price here is the {cheapest.id} at ${cheapest.price}; the highest is the {priciest.id} at $
+            {priciest.price}. Neither number tells you what a first order costs. Multiply the minimum by the price and
+            the ranking changes: {lowest.id} needs about ${lowest.cash.toLocaleString('en-US')} across {lowest.cartons}{' '}
+            cartons, which is the smallest commitment in the collection.
+          </p>
+          <p>
+            Track sets are the category where buyers most often order too wide and too shallow — one of each, all at the
+            minimum. Because minimums here run from {Math.min(...rows.map((r) => r.moq))} to{' '}
+            {Math.max(...rows.map((r) => r.moq))} pieces, &ldquo;one of each&rdquo; is a much bigger decision than it
+            looks.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What to ask for before you commit</h2>
+          <p>
+            Pieces per carton, carton dimensions, CBM, gross weight and the minimum expressed in cartons. Those five
+            numbers turn a catalogue into a loading plan. Everything on this page was calculated from the same records
+            used to quote, and the full table for all 41 models is downloadable.
+          </p>
+          <p>
+            One practical note on construction sets: the carton is usually the biggest in the collection, so they should
+            be the first thing you put into a container plan and the last thing you cut.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Track toy questions</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Send two or three item numbers and the quantity you have in mind. The reply includes the cartons, the CBM and
+          the container fill, so you can see the freight consequence before you commit.
         </p>
-
-        <div class="bg-gold/5 border border-gold/20 p-10 mt-16 text-center">
-          <h3 class="text-xl font-display font-bold text-white mb-4 uppercase">Source Track Toys at Factory Pricing</h3>
-          <p class="text-gray-400 text-sm mb-8">Request our complete track toy catalog with 7 models, tiered pricing, and logistics specs.</p>
-          <a href="/#rfq" class="inline-block bg-gold text-dark px-12 py-5 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-white transition-all">
-            Request Track Toy Catalog &rarr;
-          </a>
+        <div class="flex flex-wrap gap-4">
+          <a href="/category/track-toys" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Track toys collection</a>
+          <a href="/container-calculator" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Container calculator</a>
+          <a href="/packing-data" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Packing data</a>
         </div>
-
       </div>
     </div>
   </article>
-
-  <footer class="py-24 border-t border-white/5 bg-[#050508] text-center">
-    <div class="flex flex-col items-center gap-6">
-      <div class="flex gap-10 text-[9px] text-gray-400 uppercase tracking-[0.4em] font-bold">
-        <a href="/privacy" class="hover:text-gold transition">Privacy</a>
-        <a href="/terms" class="hover:text-gold transition">Terms</a>
-        <a href="/return" class="hover:text-gold transition">Returns</a>
-      </div>
-      <div class="text-[9px] text-gray-500 uppercase tracking-[0.4em] font-bold italic">
-        &copy; 2026 TOYFACTORY Manufacturing. Global B2B Standards.
-      </div>
-    </div>
-  </footer>
 </Layout>

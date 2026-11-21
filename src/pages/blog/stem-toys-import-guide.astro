@@ -1,22 +1,83 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
 import { blogPosting, blogBreadcrumb } from '../../lib/schema';
 
 const post = blogPosting({
   slug: 'stem-toys-import-guide',
-  title: 'STEM Toys Import Guide 2026: What Distributors Need to Know',
-  description: 'Complete guide for STEM toy importers and distributors. Learn about certifications, top-selling educational toys, solar robot kits, and ISO-certified factory sourcing for 2026.',
-  date: '2026-07-24',
-  category: 'Industry Insights',
-  image: '/images/products/TF169193.webp',
+  title: 'Educational Toys Wholesale: Seven Models and the Freight Maths',
+  description:
+    'Buying educational toys for schools, catalogues and retail: the seven models compared on cash to enter, cartons and value density, plus what to confirm per item before you order.',
+  date: '2026-11-21',
+  category: 'Product Guide',
+  image: '/images/products/TF208799.webp',
 });
+
+const firstNumber = (v: any) => {
+  const m = String(v ?? '').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+};
+
+const rows = products
+  .filter((p: any) => p.category === 'Educational Toys')
+  .map((p: any) => {
+    const qpc = firstNumber(p.specs?.qty_per_carton) || 0;
+    const cbm = firstNumber(p.specs?.cbm) || 0;
+    return {
+      id: p.id,
+      moq: p.moq,
+      price: p.price,
+      qpc,
+      cbm,
+      cartons: qpc ? Math.ceil(p.moq / qpc) : 0,
+      cash: Math.round(p.moq * p.price),
+      ctn20: cbm ? Math.floor(28 / cbm + 1e-9) : 0,
+      density: cbm && qpc ? Math.round((p.price * qpc) / cbm) : 0,
+    };
+  })
+  .sort((a: any, b: any) => b.density - a.density);
+
+const densest = rows[0];
+const thinnest = rows[rows.length - 1];
+const lowestCash = [...rows].sort((a, b) => a.cash - b.cash)[0];
+const highestCash = [...rows].sort((a, b) => b.cash - a.cash)[0];
+const margin = Math.round(densest.density / thinnest.density);
+
+const faqs = [
+  {
+    q: 'What MOQ applies to educational toys?',
+    a: `It runs from ${Math.min(...rows.map((r) => r.moq))} to ${Math.max(...rows.map((r) => r.moq))} pieces across these seven models, and the figure is set by the carton. Expressed in cartons the minimums are ${Math.min(...rows.map((r) => r.cartons))} to ${Math.max(...rows.map((r) => r.cartons))}, which is the number a school or a catalogue buyer should compare.`,
+  },
+  {
+    q: 'Which educational model is cheapest to ship?',
+    a: `By value per cubic metre it is the ${densest.id} at about $${densest.density} of goods per CBM. The ${thinnest.id} carries about $${thinnest.density}, roughly ${margin} times less per unit of container space. If freight is a large share of your landed cost, that difference matters more than a dollar of unit price.`,
+  },
+  {
+    q: 'Are these toys graded by age?',
+    a: 'Where the supplier artwork prints an age, it is published on the product page. Where it is not printed, the page says nothing rather than inventing a figure. For a school purchase order, ask for the exact item number and the destination country, and the age marking is confirmed in writing.',
+  },
+  {
+    q: 'Do educational buyers need different certification?',
+    a: 'The requirement depends on the destination market and on who is buying — a school in one country and a retailer in another can face different obligations for the same toy. Testing is issued per model and per market, so the only useful question is the item number plus the country.',
+  },
+  {
+    q: 'Can a school order a small quantity?',
+    a: `The practical floor is the carton. The lowest cash commitment here is the ${lowestCash.id} at about $${lowestCash.cash.toLocaleString('en-US')} for ${lowestCash.moq} pieces, and the highest is the ${highestCash.id} at about $${highestCash.cash.toLocaleString('en-US')}. A single-classroom order usually does not reach a carton, which is why small buyers normally go through a local distributor.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
 
-<Layout 
-  title="STEM Toys Import Guide 2026: What Distributors Need to Know | TOYFACTORY"
+<Layout
+  title="Educational Toys Wholesale: Seven Models and the Freight Maths"
   description={post.description}
-  keywords="STEM Toys Import Guide, Educational Toys Wholesale, Solar Robot Kit Factory, STEM Toy Distributor, Import Toys from China 2026"
-  jsonLd={[post, blogBreadcrumb(post.title, 'stem-toys-import-guide')]}
+  keywords="educational toys wholesale, school toys supplier, STEM toys import, classroom toys bulk, educational toy factory"
+  jsonLd={[post, blogBreadcrumb(post.title, 'stem-toys-import-guide'), faqSchema]}
 >
   <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
@@ -30,159 +91,155 @@ const post = blogPosting({
   </nav>
 
   <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
-    <div class="max-w-[900px] mx-auto">
-      <!-- Header -->
+    <div class="max-w-[1100px] mx-auto">
       <div class="mb-16">
         <div class="flex items-center gap-3 mb-6">
-          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Industry Insights</span>
-          <span class="text-[9px] text-gray-500 uppercase tracking-widest">July 24, 2026</span>
-          <span class="text-[9px] text-gray-600">· 7 min read</span>
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Product Guide</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 6 min read</span>
         </div>
-        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white mb-8 uppercase tracking-tighter leading-[1.1] italic">
-          STEM Toys Import Guide <span class="text-gold">2026:</span> What Distributors Need to Know
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          Educational toys wholesale: seven models and the freight maths
         </h1>
-        <p class="text-gray-400 text-lg leading-relaxed max-w-2xl">
-          The global educational toy market is accelerating. Learn which STEM categories are driving demand, what certifications you absolutely need, and how to source from ISO-certified factories for maximum margin.
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          Educational buyers talk about curriculum and durability. The freight invoice talks about cubic metres. These
+          seven models are compared on the second thing, because it is the one that quietly decides your margin.
         </p>
       </div>
 
-      <!-- Featured Image -->
-      <div class="aspect-[21/9] overflow-hidden bg-white/5 mb-16 border border-white/5">
-        <img src="/images/products/TF169193.webp\" alt="12-in-1 Solar Robot STEM Kit — wholesale educational toy manufacturer" class="w-full h-full object-cover" />
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Two buyers, one catalogue, different questions</h2>
+          <p>
+            A school district buys against a term date and a budget line. A catalogue distributor buys against a reorder
+            cycle. Both need the same three things: a minimum they can afford, a carton that fits their storage, and a
+            delivery date that does not move.
+          </p>
+          <p>
+            What separates the seven models below is not how educational they are. It is how much container space each
+            one consumes per dollar of goods — a difference of roughly {margin} times between the best and the worst.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Seven models, ranked by value density</h2>
+          <div class="overflow-x-auto border border-white/10 my-8">
+            <table class="w-full text-sm min-w-[800px]">
+              <thead>
+                <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                  <th class="text-left px-4 py-4 font-bold">Model</th>
+                  <th class="text-right px-4 py-4 font-bold">MOQ</th>
+                  <th class="text-right px-4 py-4 font-bold">Cartons</th>
+                  <th class="text-right px-4 py-4 font-bold">USD/pc</th>
+                  <th class="text-right px-4 py-4 font-bold">Pcs/ctn</th>
+                  <th class="text-right px-4 py-4 font-bold">CBM</th>
+                  <th class="text-right px-4 py-4 font-bold">20GP ctns</th>
+                  <th class="text-right px-4 py-4 font-bold">$ per CBM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr class="border-b border-white/5 last:border-0">
+                    <td class="px-4 py-4"><a href={`/product/${r.id}`} class="text-white hover:text-gold transition font-bold">{r.id}</a></td>
+                    <td class="px-4 py-4 text-right text-gray-300">{r.moq}</td>
+                    <td class="px-4 py-4 text-right text-gold">{r.cartons}</td>
+                    <td class="px-4 py-4 text-right text-gray-300">${r.price}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.qpc}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.cbm}</td>
+                    <td class="px-4 py-4 text-right text-gray-400">{r.ctn20}</td>
+                    <td class="px-4 py-4 text-right text-white">{r.density}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="text-gray-500 text-sm">
+            Sorted by $ per CBM, highest first. Cartons per 20GP uses 28 CBM of usable space — an assumption, not a
+            measurement of your loading plan.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The small carton is the quiet hero</h2>
+          <p>
+            The {densest.id} carries about ${densest.density} of goods per cubic metre, on a carton of just{' '}
+            {densest.cbm} CBM. The {thinnest.id} carries ${thinnest.density} on {thinnest.cbm} CBM. Put a container of
+            each on the water and the first one is carrying roughly {margin} times the value for the same freight.
+          </p>
+          <p>
+            This is not an argument for buying only dense products — a range needs variety, and a customer who wants the
+            bigger item will buy it somewhere. It is an argument for knowing which lines pay for the freight and which
+            ones you are subsidising.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Cash to enter, before any negotiation</h2>
+          <p>
+            The lowest cash commitment in this collection is the {lowestCash.id} at roughly $
+            {lowestCash.cash.toLocaleString('en-US')} for {lowestCash.moq} pieces; the highest is the {highestCash.id}{' '}
+            at about ${highestCash.cash.toLocaleString('en-US')}. Neither figure includes freight or a packaging run.
+          </p>
+          <p>
+            For a school buyer the minimum is usually the obstacle, not the price. That is why institutional purchases
+            normally reach the factory through a distributor who can split a carton across several customers — worth
+            knowing before you spend a term trying to buy thirty pieces direct.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Why catalogue buyers need the item number to stay the same</h2>
+          <p>
+            A school catalogue is reprinted every year and a distributor's customers order from it by reference. If the
+            item number behind a listing changes, every reorder has to be re-matched, and the first thing that breaks is
+            the price comparison against last year. Stability of the item number is worth more to this buyer than a new
+            colour.
+          </p>
+          <p>
+            It also matters for documentation. Test reports, age markings and packaging artwork are tied to a model, not
+            to a mood. A model that stays in production keeps its history; a model that is quietly replaced every season
+            starts from zero each time, and the buyer pays for that in approval cycles rather than in price.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What to confirm per item number</h2>
+          <p>
+            Age marking, small parts, battery requirement and the applicable test reports are all item-level facts. They
+            are answered per model and per destination market, in writing, with the quotation. None of them can be
+            answered honestly for "the educational range" as a whole, and a supplier who offers to is giving you a
+            sentence rather than a document.
+          </p>
+          <p>
+            Everything numeric on this page comes from the product records and is published, model by model, on the
+            packing dataset.
+          </p>
+        </section>
       </div>
 
-      <!-- Content -->
-      <div class="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed space-y-10">
-
-        <p class="text-gray-400 text-lg leading-[1.9]">
-          The numbers don't lie. The global STEM toy market surpassed <strong class="text-white">$12 billion in 2025</strong> and is projected to exceed <strong class="text-white">$15 billion by 2028</strong>, growing at a compound annual rate of 8-10% year-over-year. For toy distributors, this isn't a trend — it's a structural shift in how parents and educators purchase toys. But importing STEM toys isn't like importing plush animals or action figures. The certification requirements are stricter, the safety standards are higher, and the supply chain demands more due diligence.
-        </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">The Top 3 STEM Toy Categories for Importers in 2026</h2>
-        
-        <h3 class="text-lg font-bold text-white uppercase tracking-wide pt-2">1. Solar-Powered Robotics Kits</h3>
-        <p class="text-gray-400 leading-[1.9]">
-          Solar robot kits like the <a href="/product/TF169193" class="text-gold hover:text-white transition">TF169193 12-in-1 Solar Powered Robot STEM Kit</a> are leading the category. These kits teach children about renewable energy, mechanical engineering, and problem-solving — and they require zero batteries, which parents love. Our factory-direct pricing starts at <strong class="text-white">$4.50/unit at 96-piece MOQ</strong>, making them accessible for mid-size distributors while leaving healthy retail margins.
-        </p>
-
-        <h3 class="text-lg font-bold text-white uppercase tracking-wide pt-2">2. Creative Engineering & DIY Kits</h3>
-        <p class="text-gray-400 leading-[1.9]">
-          Pottery machines, clay modeling kits, and bouquet pressing machines fall into this high-margin subcategory. The <a href="/product/TF169001" class="text-gold hover:text-white transition">TF169001 Simulation Pottery Machine</a> and <a href="/product/TF197926" class="text-gold hover:text-white transition">TF197926 Ceramic Clay Machine</a> are perennially strong sellers in European and North American markets, where "maker culture" drives demand for hands-on creative toys.
-        </p>
-
-        <h3 class="text-lg font-bold text-white uppercase tracking-wide pt-2">3. Electronic Learning & Phonics Toys</h3>
-        <p class="text-gray-400 leading-[1.9]">
-          Interactive readers and electronic learning devices bridge the gap between screen time and education. Products like the <a href="/product/TF211030" class="text-gold hover:text-white transition">TF211030 Interactive Dinosaur Phonics Reader</a> (800 English words) are particularly strong in ESL markets across Southeast Asia, the Middle East, and Latin America.
-        </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">The Certification Checklist: Don't Ship Without These</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          Importing educational toys into Western markets requires a specific set of certifications. At minimum, your factory should provide:
-        </p>
-        <div class="bg-[#15151A] border border-white/5 p-8 my-8">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="flex gap-3">
-              <span class="text-gold text-lg shrink-0"></span>
-              <div>
-                <div class="text-white font-bold text-sm">CE Mark</div>
-                <div class="text-gray-500 text-xs">Required for EU market entry</div>
-              </div>
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Educational toy questions</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
             </div>
-            <div class="flex gap-3">
-              <span class="text-gold text-lg shrink-0"></span>
-              <div>
-                <div class="text-white font-bold text-sm">ASTM F963</div>
-                <div class="text-gray-500 text-xs">US toy safety standard</div>
-              </div>
-            </div>
-            <div class="flex gap-3">
-              <span class="text-gold text-lg shrink-0"></span>
-              <div>
-                <div class="text-white font-bold text-sm">EN-71</div>
-                <div class="text-gray-500 text-xs">European toy safety directive</div>
-              </div>
-            </div>
-            <div class="flex gap-3">
-              <span class="text-gold text-lg shrink-0"></span>
-              <div>
-                <div class="text-white font-bold text-sm">RoHS</div>
-                <div class="text-gray-500 text-xs">Hazardous substances compliance</div>
-              </div>
-            </div>
-            <div class="flex gap-3">
-              <span class="text-gold text-lg shrink-0"></span>
-              <div>
-                <div class="text-white font-bold text-sm">ISO 9001</div>
-                <div class="text-gray-500 text-xs">Factory quality management</div>
-              </div>
-            </div>
-            <div class="flex gap-3">
-              <span class="text-gold text-lg shrink-0"></span>
-              <div>
-                <div class="text-white font-bold text-sm">BSCI / SEDEX</div>
-                <div class="text-gray-500 text-xs">Ethical manufacturing audit</div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-        <p class="text-gray-400 leading-[1.9]">
-          TOYFACTORY publishes its factory figures and its SGS assessment, but claims no blanket certificate for the catalogue: product test reports are issued per model and per market, so ask which of these six exist for the exact SKU you are considering. <a href="/#rfq" class="text-gold hover:text-white transition">Request our certification binder</a> before placing your first order.
-        </p>
+      </div>
 
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">Factory Audits: Why They Matter More Than Price</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          A low unit price means nothing if the factory fails a social compliance audit and your shipment gets blocked. Our 5,000m² Chenghai facility runs four in-house QC inspectors across five production lines and was <strong class="text-white">assessed on site by SGS in August 2026</strong>. For distributors supplying major retail chains (Walmart, Target, Carrefour), these factory-level certifications are often non-negotiable requirements in the vendor onboarding process.
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          If you supply schools, work backwards from the term date rather than forwards from your stock level — the
+          factory averages twenty days in production, and the sea leg is usually the longer half.
         </p>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">Pricing Strategy: Where Distributors Make Their Margin</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          The sweet spot for STEM toy distributor margins is the <strong class="text-white">$4–$25 factory cost range</strong>. At this level:
-        </p>
-        <div class="bg-[#15151A] border border-white/5 p-8 my-8">
-          <div class="space-y-4 text-sm">
-            <div class="flex justify-between pb-4 border-b border-white/5">
-              <span class="text-gray-400">Solar Robot Kit (12-in-1)</span>
-              <span class="text-white font-bold">Factory $4.50 — Retail $19.99–$29.99</span>
-            </div>
-            <div class="flex justify-between pb-4 border-b border-white/5">
-              <span class="text-gray-400">Simulation Pottery Machine</span>
-              <span class="text-white font-bold">Factory $21.69 — Retail $49.99–$69.99</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-400">Interactive Phonics Reader</span>
-              <span class="text-white font-bold">Factory $12.69 — Retail $34.99–$44.99</span>
-            </div>
-          </div>
+        <div class="flex flex-wrap gap-4">
+          <a href="/category/educational-toys" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Educational collection</a>
+          <a href="/industries/schools-and-educational-distributors" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">For schools</a>
+          <a href="/packing-data" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Packing data</a>
         </div>
-
-        <h2 class="text-2xl font-display font-bold text-white uppercase tracking-tight pt-4">The 2026 Outlook: What's Next for STEM Toys</h2>
-        <p class="text-gray-400 leading-[1.9]">
-          Three trends are shaping the STEM toy import landscape this year. First, <strong class="text-white">sustainability</strong> — buyers increasingly want toys that teach environmental consciousness. Solar-powered kits win here. Second, <strong class="text-white">screen-free coding</strong> — physical programming toys that don't require tablets. Third, <strong class="text-white">AI-integrated learning</strong> — interactive toys that adapt to a child's learning pace. Distributors who position themselves in these sub-niches now will own the category in 2027.
-        </p>
-
-        <!-- CTA -->
-        <div class="bg-gold/5 border border-gold/20 p-10 mt-16 text-center">
-          <h3 class="text-xl font-display font-bold text-white mb-4 uppercase">Source STEM Toys from a Certified Factory</h3>
-          <p class="text-gray-400 text-sm mb-8">Get our complete STEM toy catalog with certification documentation, pricing tiers, and logistics specs.</p>
-          <a href="/#rfq" class="inline-block bg-gold text-dark px-12 py-5 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-white transition-all">
-            Request STEM Toy Catalog &rarr;
-          </a>
-        </div>
-
       </div>
     </div>
   </article>
-
-  <footer class="py-24 border-t border-white/5 bg-[#050508] text-center">
-    <div class="flex flex-col items-center gap-6">
-      <div class="flex gap-10 text-[9px] text-gray-400 uppercase tracking-[0.4em] font-bold">
-        <a href="/privacy" class="hover:text-gold transition">Privacy</a>
-        <a href="/terms" class="hover:text-gold transition">Terms</a>
-        <a href="/return" class="hover:text-gold transition">Returns</a>
-      </div>
-      <div class="text-[9px] text-gray-500 uppercase tracking-[0.4em] font-bold italic">
-        &copy; 2026 TOYFACTORY Manufacturing. Global B2B Standards.
-      </div>
-    </div>
-  </footer>
 </Layout>
