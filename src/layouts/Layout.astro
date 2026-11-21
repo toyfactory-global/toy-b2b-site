@@ -226,6 +226,37 @@ const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/h
 				fill('utm_campaign', params.get('utm_campaign'));
 			})();
 		</script>
+	<!-- LEAD LOG. A fire-and-forget copy of every inquiry, sent alongside the
+	     normal submission. The form still posts straight to Formspree, so a
+	     blocked or lost beacon costs us one row in the log, never the inquiry. -->
+	<script is:inline>
+		(function () {
+			var LOG = 'https://kidstoyglobal.com/api/inquiry-log';
+			function send(form) {
+				var action = form.getAttribute('action') || '';
+				if (action.indexOf('formspree.io') === -1) return;
+				try {
+					var body = new URLSearchParams();
+					new FormData(form).forEach(function (value, key) {
+						var v = typeof value === 'string' ? value : '';
+						body.append(key, v.length > 2000 ? v.slice(0, 2000) : v);
+					});
+					if (!body.get('page_path')) body.append('page_path', location.pathname);
+					if (navigator.sendBeacon) navigator.sendBeacon(LOG, body);
+				} catch (e) {
+					/* logging is best-effort only */
+				}
+			}
+			document.addEventListener(
+				'submit',
+				function (e) {
+					var f = e.target;
+					if (f && f.tagName === 'FORM') send(f);
+				},
+				true
+			);
+		})();
+	</script>
 	</body>
 </html>
 <style is:global>
