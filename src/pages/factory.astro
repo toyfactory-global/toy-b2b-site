@@ -1,0 +1,271 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import facts from '../data/factory.json';
+
+// Every figure below is read from src/data/factory.json, which mirrors the SGS
+// assessment of 2026-08-17. Nothing on this page is estimated or rounded up.
+
+const machineUnits = facts.machinery.reduce((sum, m) => sum + m.qty, 0);
+const machineTypes = facts.machinery.length;
+
+const faqs = [
+  {
+    q: 'How large is the factory, and how many people work in it?',
+    a: `The covered floor space is ${facts.facility.floorSpaceSqm.toLocaleString('en-US')} square metres across ${facts.facility.productionLines} production lines. ${facts.people.total} people work on site: ${facts.people.fullTime} full-time and ${facts.people.partTime} part-time. ${facts.people.byDepartment[0].total} of them are on the production floor, ${facts.facility.qcInspectors} are quality inspectors, and ${facts.trade.foreignTradeStaff} handle export orders.`,
+  },
+  {
+    q: 'Do you subcontract any part of production?',
+    a: `No. All ${facts.productionFlow.length} steps — from raw material through oil dripping, powdering, assembly and packing — run inside the same building. The assessment records the factory as not using subcontractors, which is why a lead time can be quoted with confidence instead of being passed on from a third party.`,
+  },
+  {
+    q: 'How does quality control work on the line?',
+    a: `${facts.facility.qcInspectors} QC inspectors cover all ${facts.facility.productionLines} lines, so inspection is not a final gate that only looks at the last carton. Finished goods are checked by random inspection rather than a visual once-over, written inspection instructions are in place, and records are kept. Every finished unit traces back to its main raw material batch by lot number, and complaints go through a closed-loop corrective action rather than a reply and a promise.`,
+  },
+  {
+    q: 'What is the lead time from order to shipment?',
+    a: `The average lead time recorded in the assessment is ${facts.trade.averageLeadTimeDays} days from order confirmation to delivery. The shortest sample turnaround is ${facts.trade.shortestSampleDays} days. Both are averages and minimums — the figure that applies to your order is written on the quotation, because quantities and decoration change it.`,
+  },
+  {
+    q: 'Who assessed the factory, and can I see the report?',
+    a: `SGS carried out a ${facts.assessment.type} on ${formatDate(facts.assessment.date)}. The findings are valid from ${formatDate(facts.assessment.validFrom)} to ${formatDate(facts.assessment.validTo)}. The full report can be sent on request — ask for it together with the item number you are interested in, and it will come with the quotation.`,
+  },
+];
+
+function formatDate(iso: string) {
+  const d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': 'https://toyfactoryglobal.com/factory#webpage',
+    url: 'https://toyfactoryglobal.com/factory',
+    name: 'Inside the Toy Factory: 5,000 m², Five Lines, Four QC Inspectors',
+    description: 'SGS-assessed toy factory in Chenghai, Shantou: 5,000 m² floor space, 5 production lines, 69 staff, 4 QC inspectors, 24 machines, 20-day average lead time.',
+    inLanguage: 'en',
+    isPartOf: { '@id': 'https://toyfactoryglobal.com/#website' },
+    about: { '@id': 'https://toyfactoryglobal.com/#organization' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://toyfactoryglobal.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Factory', item: 'https://toyfactoryglobal.com/factory' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<Layout
+  title="Inside the Toy Factory | 5,000 m², 5 Lines, SGS-Assessed"
+  description="SGS-assessed toy factory in Chenghai, Shantou: 5,000 m², 5 production lines, 69 staff, 4 QC inspectors, 24 machines, no subcontracting, 20-day average lead time."
+  keywords="toy factory China, Chenghai toy factory, SGS assessed toy manufacturer, toy factory audit, wholesale toy factory Shantou"
+  jsonLd={jsonLd}
+>
+  <SiteNav active="factory" />
+
+  <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-5xl mx-auto px-8">
+      <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">Factory · Chenghai, Shantou</p>
+      <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
+        Five thousand square metres.<br /><span class="text-gold">Five lines, four inspectors.</span>
+      </h1>
+      <p class="text-gray-400 text-sm leading-[2] uppercase tracking-[0.15em] max-w-2xl mb-6">
+        Everything on this page was recorded on site by SGS on {formatDate(facts.assessment.date)}. It is the part of
+        the business that buyers normally only see after they ask for a video call, published in the open.
+      </p>
+      <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] max-w-2xl mb-16">
+        Assessment: {facts.assessment.body} {facts.assessment.type} · valid to {formatDate(facts.assessment.validTo)} ·
+        full report on request
+      </p>
+
+      <!-- Headline numbers -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/5 border border-white/5 mb-20">
+        {[
+          { v: `${facts.facility.floorSpaceSqm.toLocaleString('en-US')}`, l: 'm² floor space' },
+          { v: `${facts.facility.productionLines}`, l: 'production lines' },
+          { v: `${facts.people.total}`, l: 'people on site' },
+          { v: `${facts.facility.qcInspectors}`, l: 'QC inspectors' },
+          { v: `${facts.trade.averageLeadTimeDays}`, l: 'days average lead time' },
+        ].map((s) => (
+          <div class="bg-[#0A0A0F] px-6 py-8">
+            <div class="text-3xl font-display font-extrabold text-white tracking-tight">{s.v}</div>
+            <div class="text-[9px] uppercase tracking-[0.25em] text-gray-500 mt-2">{s.l}</div>
+          </div>
+        ))}
+      </div>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Who is on site
+        </h2>
+        <p class="text-gray-400 text-base leading-[1.9] mb-8 max-w-3xl">
+          A factory is a headcount as much as a building. The split below matters more than the total: {facts.people.byDepartment[0].total}
+          people on production, {facts.facility.qcInspectors} on quality, {facts.trade.foreignTradeStaff} on export
+          sales. When a buyer asks who will answer the email and who will check the carton, these are the numbers behind
+          the answer.
+        </p>
+        <div class="border border-white/10">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.25em] text-gray-500">
+                <th class="text-left px-6 py-4 font-bold">Department</th>
+                <th class="text-right px-6 py-4 font-bold">Full-time</th>
+                <th class="text-right px-6 py-4 font-bold">Part-time</th>
+                <th class="text-right px-6 py-4 font-bold">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {facts.people.byDepartment.map((d) => (
+                <tr class="border-b border-white/5 last:border-0">
+                  <td class="px-6 py-4 text-white">{d.name}</td>
+                  <td class="px-6 py-4 text-right text-gray-400">{d.fullTime}</td>
+                  <td class="px-6 py-4 text-right text-gray-400">{d.partTime}</td>
+                  <td class="px-6 py-4 text-right text-white font-bold">{d.total}</td>
+                </tr>
+              ))}
+              <tr class="bg-white/[0.02]">
+                <td class="px-6 py-4 text-gold font-bold uppercase text-[10px] tracking-widest">Total</td>
+                <td class="px-6 py-4 text-right text-gold font-bold">{facts.people.fullTime}</td>
+                <td class="px-6 py-4 text-right text-gold font-bold">{facts.people.partTime}</td>
+                <td class="px-6 py-4 text-right text-gold font-bold">{facts.people.total}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Five lines, {machineTypes} machine types, {machineUnits} machines
+        </h2>
+        <p class="text-gray-400 text-base leading-[1.9] mb-8 max-w-3xl">
+          {facts.facility.productionLines} lines with {facts.facility.lineSupervisors} supervisors and{' '}
+          {facts.facility.lineOperators} operators between them. The machine list is the honest version of &ldquo;we have
+          our own production&rdquo;: it shows what the factory can do in-house and, just as usefully, what it cannot.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/5 border border-white/5">
+          {facts.machinery.map((m) => (
+            <div class="bg-[#0A0A0F] px-6 py-5 flex items-baseline justify-between gap-4">
+              <span class="text-sm text-white">{m.name}</span>
+              <span class="text-[10px] uppercase tracking-[0.2em] text-gray-500 whitespace-nowrap">
+                {m.qty} unit{m.qty > 1 ? 's' : ''} · {m.yearsInUse} yr
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          The eight steps, none of them outsourced
+        </h2>
+        <ol class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 border border-white/5 mb-8">
+          {facts.productionFlow.map((step, i) => (
+            <li class="bg-[#0A0A0F] px-6 py-6">
+              <div class="text-gold font-mono text-[10px] mb-2">{String(i + 1).padStart(2, '0')}</div>
+              <div class="text-sm text-white leading-snug">{step}</div>
+            </li>
+          ))}
+        </ol>
+        <p class="text-gray-400 text-base leading-[1.9] max-w-3xl">
+          The assessment records the factory as not needing subcontractors. That single line is the difference between a
+          supplier and a middleman: it means the date you are given is the date the line can hold, not a date that
+          depends on someone else&rsquo;s queue.
+        </p>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Quality control, in the detail buyers actually ask for
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+          {[
+            { k: 'Inspectors', v: `${facts.facility.qcInspectors} in-house QC staff` },
+            { k: 'Coverage', v: `All ${facts.facility.productionLines} production lines` },
+            { k: 'Finished goods', v: facts.quality.finishedGoods },
+            { k: 'Instructions', v: 'Written inspection instructions in place' },
+            { k: 'Records', v: 'Inspection records kept on file' },
+            { k: 'Traceability', v: facts.quality.lotTraceability },
+            { k: 'Corrective action', v: 'Closed-loop system, not one-off replies' },
+            { k: 'Complaints', v: facts.quality.complaintRecords },
+          ].map((r) => (
+            <div class="bg-[#0A0A0F] px-6 py-5">
+              <div class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mb-2">{r.k}</div>
+              <div class="text-sm text-white leading-snug">{r.v}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          How to check this page instead of trusting it
+        </h2>
+        <div class="space-y-6 text-gray-400 text-base leading-[1.9] max-w-3xl">
+          <p>
+            <span class="text-white font-bold">1. Ask for the report.</span> The SGS assessment can be sent as a PDF with
+            your quotation. It is the same document this page was written from, so you can check every number.
+          </p>
+          <p>
+            <span class="text-white font-bold">2. Ask for a live walkthrough.</span> A video call through the workshop
+            answers in ten minutes what a photo gallery cannot.
+          </p>
+          <p>
+            <span class="text-white font-bold">3. Ask by item number, not by catalogue.</span> Safety testing is issued
+            per model and per destination market, so the only useful question is &ldquo;what exists for this item shipped
+            to this country&rdquo;. We answer that question in writing, and we do not imply a certificate for a market
+            that is not named in the quotation.
+          </p>
+          <p>
+            <span class="text-white font-bold">4. Send your own inspector.</span> If you already work with an inspection
+            company, book them for the production run rather than the sample. A sample is picked by hand; a production
+            run is not.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-10">
+          Questions buyers ask before a first order
+        </h2>
+        <div class="border-t border-white/10">
+          {faqs.map((f) => (
+            <div class="border-b border-white/5 py-8">
+              <h3 class="text-white text-lg font-bold tracking-tight mb-4">{f.q}</h3>
+              <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="border border-gold/30 p-10">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Next step</p>
+        <p class="text-white text-xl font-display font-bold tracking-tight mb-4">
+          Send one item number and one destination country.
+        </p>
+        <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mb-8">
+          That is enough for a quotation with the carton data, the lead time and the exact documents that apply.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="bg-gold text-dark px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">Contact the factory</a>
+          <a href="/oem-odm" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">OEM / ODM process</a>
+          <a href="/products" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">All {facts.catalogue.publishedModels} models</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,48 +1,119 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import facts from '../data/factory.json';
+import productsRaw from '../data/products.json';
 
-// All contact details on this page come from the Organization schema in
-// src/layouts/Layout.astro and the footer of src/pages/index.astro.
-// Nothing here asserts a fact the site did not already publish.
+// Contact details are the ones already published in the Organization schema.
+// Factory figures come from src/data/factory.json (SGS assessment, 2026-08-17).
 const EMAIL = 'hntoys7@sinuotoys.com';
 const PHONE_DISPLAY = '+86 15976917707';
 const WHATSAPP = 'https://api.whatsapp.com/send/?phone=8615976917707&text=Hello%20TOYFACTORY%2C%20I%27m%20interested%20in%20your%20toy%20products.%20Please%20send%20me%20your%20latest%20catalogue%20and%20quotation.&type=phone_number&app_absent=0';
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ContactPage',
-  '@id': 'https://toyfactoryglobal.com/contact#webpage',
-  url: 'https://toyfactoryglobal.com/contact',
-  name: 'Contact TOYFACTORY - B2B Toy Manufacturer',
-  description: 'Direct factory contact for wholesale, OEM and ODM toy enquiries. Email or WhatsApp the Chenghai factory team for a quotation.',
-  isPartOf: { '@id': 'https://toyfactoryglobal.com/#organization' },
-  about: { '@id': 'https://toyfactoryglobal.com/#organization' },
-};
+const products = (Array.isArray(productsRaw) ? productsRaw : (productsRaw as any).products) as any[];
+const moqs = products.map((p) => p.moq).filter((n: any) => typeof n === 'number');
+const moqMin = Math.min(...moqs);
+const moqMax = Math.max(...moqs);
+
+const faqs = [
+  {
+    q: 'How quickly will I get an answer?',
+    a: `Enquiries are read by the export team in Chenghai, on China Standard Time (GMT+8). A request that names an item number and a destination market can be quoted directly, because the carton data and the applicable documents are already recorded against every model. An open-ended request takes longer, since it needs a conversation about quantity and packaging before any number means anything.`,
+  },
+  {
+    q: 'What is the minimum order?',
+    a: `Between ${moqMin} and ${moqMax} units, depending on the model. Each product page states its own minimum together with the pieces per carton, so you can see how many cartons a minimum actually is — which is the number that matters once freight is added.`,
+  },
+  {
+    q: 'Do samples cost anything?',
+    a: `Yes. Samples are charged at the unit price and the courier cost is paid by the buyer. The sample fee is credited back against your first production order of five cartons or more; the courier cost is not credited. Ask for the sample of the exact item number you intend to order, together with its carton data.`,
+  },
+  {
+    q: 'How long is production, and who pays the freight?',
+    a: `The average lead time recorded in the SGS assessment is ${facts.trade.averageLeadTimeDays} days from order confirmation to delivery. Goods ship from ${facts.trade.ports.join(' or ')} on ${facts.trade.incoterms.join(', ')} terms, so how far the freight is quoted depends on which of those you choose.`,
+  },
+  {
+    q: 'Can I visit the factory, or send an inspector?',
+    a: `Visits can be arranged by appointment through the contacts on this page. If you already work with an inspection company, book them against the production run rather than the sample — a sample is picked by hand, a production run is not.`,
+  },
+  {
+    q: 'Do you send certificates with the quotation?',
+    a: `Testing is issued per model and per destination market, not for a catalogue as a whole. Tell us the item number and the market and we confirm in writing which documents exist for that combination. We do not imply a certificate for a market that is not named in the quotation.`,
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': 'https://toyfactoryglobal.com/contact#webpage',
+    url: 'https://toyfactoryglobal.com/contact',
+    name: 'Contact TOYFACTORY - B2B Toy Manufacturer',
+    description: 'Direct factory contact for wholesale, OEM and ODM toy enquiries. Email or WhatsApp the Chenghai factory team for a quotation.',
+    isPartOf: { '@id': 'https://toyfactoryglobal.com/#website' },
+    about: { '@id': 'https://toyfactoryglobal.com/#organization' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://toyfactoryglobal.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://toyfactoryglobal.com/contact' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
 ---
 
 <Layout
-  title="Contact TOYFACTORY | B2B Toy Manufacturer, Chenghai China"
+  title="Contact the Toy Factory | Chenghai, Shantou, China"
   description="Contact the TOYFACTORY team in Chenghai, Shantou for wholesale, OEM and ODM toy enquiries. Email hntoys7@sinuotoys.com or WhatsApp +86 15976917707."
   keywords="contact toy factory, B2B toy manufacturer contact, Chenghai toy factory, toy OEM enquiry, wholesale toy quotation"
   jsonLd={jsonLd}
 >
+  <SiteNav active="contact" />
+
   <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
     <div class="max-w-5xl mx-auto px-8">
       <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">Direct Factory Contact</p>
-      <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
+      <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
         Talk to the <span class="text-gold">factory.</span>
       </h1>
-      <p class="text-gray-400 text-sm leading-[2] uppercase tracking-[0.15em] max-w-2xl mb-20">
-        TOYFACTORY is a B2B toy manufacturer in Chenghai, Shantou, China — founded in 2001 and supplying
-        bubble machines, track toys and STEM ranges for OEM and ODM programmes. Every enquiry below reaches
-        the factory team directly; there is no agency in between.
+      <p class="text-gray-400 text-sm leading-[2] uppercase tracking-[0.15em] max-w-2xl mb-8">
+        TOYFACTORY is a B2B toy manufacturer in Chenghai, Shantou, China — toy manufacturing here since 2001 and
+        supplying bubble machines, water guns, track toys and educational ranges for OEM and ODM programmes. Every
+        enquiry below reaches the factory team directly; there is no agency in between.
       </p>
+      <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] max-w-2xl mb-16">
+        Email, phone and WhatsApp all reach the same person in Chenghai, China Standard Time (GMT+8).
+      </p>
+
+      <!-- Verified factory strip -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 border border-white/5 mb-16">
+        {[
+          { v: `${facts.facility.floorSpaceSqm.toLocaleString('en-US')} m²`, l: 'factory floor' },
+          { v: `${facts.facility.productionLines}`, l: 'production lines' },
+          { v: `${facts.facility.qcInspectors}`, l: 'in-house QC inspectors' },
+          { v: `${facts.trade.averageLeadTimeDays} days`, l: 'average lead time' },
+        ].map((s) => (
+          <div class="bg-[#0A0A0F] px-6 py-7">
+            <div class="text-2xl font-display font-extrabold text-white tracking-tight">{s.v}</div>
+            <div class="text-[9px] uppercase tracking-[0.25em] text-gray-500 mt-2">{s.l}</div>
+          </div>
+        ))}
+      </div>
 
       <div class="border border-white/10 p-10 mb-8">
         <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">A question, a sample, an order</p>
         <p class="text-white text-xl font-display font-bold tracking-tight mb-4">Write to Annie</p>
         <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em]">
-          If you have something to ask, want to see a sample or are ready to place an order, message Annie. The email address, phone number and WhatsApp link below all reach her directly, so you deal with one person from the first reply through to the shipment.
+          If you have something to ask, want to see a sample or are ready to place an order, message Annie. The email
+          address, phone number and WhatsApp link below all reach her directly, so you deal with one person from the
+          first reply through to the shipment.
         </p>
       </div>
 
@@ -68,44 +139,81 @@ const jsonLd = {
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-        <section>
-          <h2 class="text-white text-lg font-bold mb-8 italic uppercase tracking-tight">What to send us</h2>
-          <ul class="space-y-5 text-gray-400 text-sm leading-[1.9]">
-            <li><span class="text-gold font-bold">1.</span> The item you want — an item number, a link or a reference photo.</li>
-            <li><span class="text-gold font-bold">2.</span> Your target market, so the applicable safety standards can be agreed in writing.</li>
-            <li><span class="text-gold font-bold">3.</span> Your quantity per item, so we can quote at the right volume tier.</li>
-            <li><span class="text-gold font-bold">4.</span> Packaging and labelling needs — retail box, barcode, age marking, private label.</li>
-            <li><span class="text-gold font-bold">5.</span> The delivery window you are working towards.</li>
-          </ul>
-        </section>
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-6">
+          What makes a first email quotable
+        </h2>
+        <p class="text-gray-400 text-base leading-[1.9] max-w-3xl mb-8">
+          A quotation is only as good as the input. These five lines turn an enquiry into a number on the same day,
+          because everything behind them — carton data, minimums, loading data — is already recorded against each model.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+          {[
+            { n: '01', t: 'The item', d: 'An item number from this catalogue, a link, or a reference photo.' },
+            { n: '02', t: 'The market', d: 'Destination country or region, so the applicable safety standards can be agreed in writing.' },
+            { n: '03', t: 'The quantity', d: 'Pieces per model, so the price is quoted at the right volume tier rather than the cheapest one.' },
+            { n: '04', t: 'The packaging', d: 'Retail carton, display box, barcode, age marking or private label — whatever the box has to carry.' },
+            { n: '05', t: 'The date', d: 'When you need it in hand, not when you want to order, so the lead time can be checked against the line.' },
+          ].map((s) => (
+            <div class="bg-[#0A0A0F] px-6 py-6 flex gap-5">
+              <span class="text-gold font-mono text-[10px] pt-1">{s.n}</span>
+              <div>
+                <div class="text-white text-sm font-bold mb-1">{s.t}</div>
+                <div class="text-gray-400 text-sm leading-[1.7]">{s.d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <section>
-          <h2 class="text-white text-lg font-bold mb-8 italic uppercase tracking-tight">Good to know</h2>
-          <div class="space-y-6 text-gray-400 text-sm leading-[1.9]">
-            <p>
-              Base MOQ runs from 35 to 108 units depending on the product; prices step down at higher volumes.
-              Current tiers are confirmed on the quotation, not on this page.
-            </p>
-            <p>
-              Sample orders are available for quality evaluation, and the sample fee is refundable against your
-              first bulk order.
-            </p>
-            <p>
-              Certification is model-specific and market-specific. The standards applying to your order are agreed
-              during quotation and recorded in the order — see <a href="/terms" class="text-gold hover:text-white transition-colors">Terms of Service</a>.
-            </p>
-            <p>
-              Returns and claims are handled under the <a href="/return" class="text-gold hover:text-white transition-colors">return policy</a>.
-            </p>
-          </div>
-        </section>
-      </div>
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-6">
+          What comes back
+        </h2>
+        <div class="space-y-5 text-gray-400 text-base leading-[1.9] max-w-3xl">
+          <p>
+            A written quotation with the unit price at your quantity, the pieces per carton and the carton dimensions,
+            the CBM so you can work out your own freight, the lead time for that quantity, and the documents that apply
+            to your market. If any of those cannot be confirmed for your order, it is listed as an open point instead of
+            being filled in with a guess.
+          </p>
+          <p>
+            Trade terms are <span class="text-white">{facts.trade.incoterms.join(', ')}</span>. Payment can be made by{' '}
+            <span class="text-white">{facts.trade.paymentMethods.join(', ')}</span>; the combination that applies is
+            fixed on the quotation and repeated on the invoice.
+          </p>
+        </div>
+      </section>
 
-      <div class="pt-16 mt-20 border-t border-white/10">
-        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-6">Factory</p>
-        <p class="text-white text-sm tracking-tight">Chenghai, Shantou, China</p>
-        <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mt-3">Visits by appointment — arrange through the contacts above.</p>
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-10">
+          Before you write
+        </h2>
+        <div class="border-t border-white/10">
+          {faqs.map((f) => (
+            <div class="border-b border-white/5 py-8">
+              <h3 class="text-white text-lg font-bold tracking-tight mb-4">{f.q}</h3>
+              <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="border border-white/10 p-8">
+          <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Factory</p>
+          <p class="text-white text-sm tracking-tight">Chenghai District, Shantou, Guangdong, China</p>
+          <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mt-3">Visits by appointment — arrange through the contacts above.</p>
+        </div>
+        <div class="border border-white/10 p-8">
+          <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Loading ports</p>
+          <p class="text-white text-sm tracking-tight">{facts.trade.ports.join(' · ')}</p>
+          <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mt-3">
+            <a href="/factory" class="hover:text-gold transition-colors">See the factory figures</a> ·
+            <a href="/oem-odm" class="hover:text-gold transition-colors">OEM / ODM process</a> ·
+            <a href="/return" class="hover:text-gold transition-colors">Returns</a>
+          </p>
+        </div>
       </div>
 
       <div class="pt-12">

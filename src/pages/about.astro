@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import facts from '../data/factory.json';
+
+const faqs = [
+  {
+    q: 'Are you a factory or a trading company?',
+    a: `A factory. ${facts.facility.floorSpaceSqm.toLocaleString('en-US')} square metres in Chenghai, ${facts.facility.productionLines} production lines, ${facts.people.byDepartment[0].total} production staff and ${facts.facility.qcInspectors} in-house QC inspectors, with no subcontracting recorded in the SGS assessment. Orders are handled by ${facts.trade.foreignTradeStaff} export staff who sit in the same building as the lines.`,
+  },
+  {
+    q: 'Which markets do you already ship to?',
+    a: `North America is the largest at ${facts.markets[0].share}% of shipments, followed by Eastern Europe at ${facts.markets[1].share}%. South America, the Middle East, Western Europe and South Asia are each around ${facts.markets[2].share}%. The mix shapes the catalogue: the models that survive are the ones that clear customs in more than one jurisdiction.`,
+  },
+  {
+    q: 'Who are your typical customers?',
+    a: `Brand owners, retailers and wholesalers — ${facts.clientTypes.join(', ').toLowerCase()}. What they have in common is that they buy to resell, so the conversation is about carton data, lead time and documents rather than about retail packaging advice.`,
+  },
+  {
+    q: 'Do you speak English, and who will I be dealing with?',
+    a: `English is the working language for export orders, supported by ${facts.trade.foreignTradeStaff} trade staff. Every enquiry reaches the same person from the first reply through to the shipment, so you are not re-explaining your order to a new colleague each time.`,
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': 'https://toyfactoryglobal.com/about#webpage',
+    url: 'https://toyfactoryglobal.com/about',
+    name: 'About TOYFACTORY: A Toy Factory in Chenghai, Shantou',
+    description: `Toy manufacturer in Chenghai, Shantou. ${facts.facility.floorSpaceSqm.toLocaleString('en-US')} m² factory, ${facts.people.total} staff, ${facts.trade.exportExperienceYears} years of export experience, shipping to North America, Europe, South America, the Middle East and South Asia.`,
+    inLanguage: 'en',
+    isPartOf: { '@id': 'https://toyfactoryglobal.com/#website' },
+    about: { '@id': 'https://toyfactoryglobal.com/#organization' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://toyfactoryglobal.com/' },
+      { '@type': 'ListItem', position: 2, name: 'About', item: 'https://toyfactoryglobal.com/about' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Layout
+  title="About TOYFACTORY | Toy Factory in Chenghai, Shantou"
+  description="A toy factory in Chenghai, Shantou: 5,000 m², 5 lines, 69 staff, 8 years of export experience. Who we are, where we ship, and who answers the email."
+  keywords="about toy factory, Chenghai toy manufacturer, China toy exporter, Shantou toy factory, wholesale toy supplier"
+  jsonLd={jsonLd}
+>
+  <SiteNav active="about" />
+
+  <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-5xl mx-auto px-8">
+      <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">About</p>
+      <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
+        A factory in Chenghai.<br /><span class="text-gold">And a person who answers.</span>
+      </h1>
+      <p class="text-gray-400 text-sm leading-[2] uppercase tracking-[0.15em] max-w-2xl mb-16">
+        Chenghai is the district that makes most of the world&rsquo;s plastic toys. We are one of the factories inside
+        it — not a trading company with a catalogue and a phone number.
+      </p>
+
+      <section class="mb-20 grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div>
+          <h2 class="text-2xl font-display font-extrabold text-white uppercase italic tracking-tight mb-6">What we make</h2>
+          <p class="text-gray-400 text-base leading-[1.9] mb-6">
+            Four collections, {facts.catalogue.publishedModels} models published with full carton data: bubble toys,
+            water guns, track toys and educational toys. Behind that sits a wider range of roughly{' '}
+            {facts.catalogue.widerRangeModels.toLocaleString('en-US')} models the factory can quote on request.
+          </p>
+          <p class="text-gray-400 text-base leading-[1.9]">
+            Toy manufacturing in Chenghai since 2001. Eight years of direct export experience, and{' '}
+            {facts.trade.foreignTradeStaff} staff handling orders in English.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-2xl font-display font-extrabold text-white uppercase italic tracking-tight mb-6">Where it ships</h2>
+          <div class="border border-white/10">
+            {facts.markets.map((m, i) => (
+              <div class={`px-5 py-4 flex items-center justify-between ${i % 2 ? 'bg-white/[0.02]' : ''}`}>
+                <span class="text-sm text-white">{m.region}</span>
+                <span class="text-[10px] uppercase tracking-[0.2em] text-gold">{m.share}%</span>
+              </div>
+            ))}
+          </div>
+          <p class="text-gray-600 text-[10px] uppercase tracking-[0.15em] mt-4 leading-relaxed">
+            Share of shipments, as recorded in the SGS assessment of August 2026.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Who we sell to
+        </h2>
+        <p class="text-gray-400 text-base leading-[1.9] mb-10 max-w-3xl">
+          {facts.clientTypes.join(', ')}. Three different buying patterns, one shared requirement: everything is bought to
+          be resold, so the questions are about cartons, lead time and documents — not about how the toy looks on a shelf.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5">
+          {[
+            { t: 'Brand owners', d: 'Custom artwork, private label, packaging built around a brand rather than around a catalogue number.' },
+            { t: 'Retailers', d: 'Repeat orders on proven models, with the carton data that makes the landed cost predictable.' },
+            { t: 'Wholesalers', d: 'Mixed loads across collections, quoted so the container fills without over-ordering any one line.' },
+          ].map((c) => (
+            <div class="bg-[#0A0A0F] px-7 py-8">
+              <h3 class="text-white font-display font-bold tracking-tight mb-3">{c.t}</h3>
+              <p class="text-gray-400 text-sm leading-[1.8]">{c.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Why the address matters
+        </h2>
+        <div class="space-y-6 text-gray-400 text-base leading-[1.9] max-w-3xl">
+          <p>
+            Chenghai is where the moulds, the mould makers, the paint shops and the packing suppliers all sit within a
+            few kilometres of each other. That density is why a 20-day lead time is realistic here and why a change of
+            colour costs days rather than weeks.
+          </p>
+          <p>
+            It is also why &ldquo;we are a factory&rdquo; is worth checking rather than believing. The{' '}
+            <a href="/factory" class="text-gold hover:text-white transition-colors">factory page</a> publishes the
+            numbers an auditor recorded — floor space, headcount by department, machine list, QC coverage — so a buyer
+            can compare us against anyone else who claims the same address.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Where the numbers on this site come from
+        </h2>
+        <div class="space-y-6 text-gray-400 text-base leading-[1.9] max-w-3xl">
+          <p>
+            Prices, minimums, carton sizes, pieces per carton, gross and net weight, CBM and every container figure are
+            calculated from the same internal product records used to quote orders. They are not typed into the website
+            separately, which is why a quoted price and a page price do not disagree.
+          </p>
+          <p>
+            Factory figures — floor space, headcount, machine list, QC coverage, lead time, markets — come from the SGS
+            assessment described on the <a href="/factory" class="text-gold hover:text-white transition-colors">factory page</a>.
+            Product photographs are of the actual items; where a photo shows a feature in use, the description says so
+            rather than implying something the mould does not do.
+          </p>
+          <p>
+            Where a fact is missing, the page says nothing instead of filling the gap. A weight that has not been
+            recorded does not appear as a zero, and a certificate that has not been confirmed for an item number is not
+            implied anywhere on the site.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-10">
+          Questions about who we are
+        </h2>
+        <div class="border-t border-white/10">
+          {faqs.map((f) => (
+            <div class="border-b border-white/5 py-8">
+              <h3 class="text-white text-lg font-bold tracking-tight mb-4">{f.q}</h3>
+              <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="border border-gold/30 p-10">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Enquiries</p>
+        <p class="text-white text-xl font-display font-bold tracking-tight mb-4">Everything goes to one inbox.</p>
+        <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mb-8">
+          Questions, samples, orders and documents all reach the same person, so nothing gets lost between departments.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="bg-gold text-dark px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">Contact us</a>
+          <a href="/products" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">Browse {facts.catalogue.publishedModels} models</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

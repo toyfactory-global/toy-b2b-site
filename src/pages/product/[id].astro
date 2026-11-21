@@ -95,10 +95,10 @@ const productSchema = {
   "@id": `https://toyfactoryglobal.com/product/${product.id}`,
   "sku": product.id,
   "name": product.name,
-  "description": product.seo_description || `${product.name} — wholesale direct from TOYFACTORY. ISO 9001:2015 certified B2B manufacturer.`,
+  "description": product.seo_description || `${product.name} — wholesale direct from TOYFACTORY. SGS-assessed B2B manufacturer in Shantou, China.`,
   "image": product.images.map(img => `https://toyfactoryglobal.com${img}`),
   "brand": { "@type": "Brand", "name": "TOYFACTORY" },
-  "manufacturer": { "@type": "Organization", "name": "Huanuo Toys", "url": "https://toyfactoryglobal.com" },
+  "manufacturer": { "@type": "Organization", "name": "TOYFACTORY", "url": "https://toyfactoryglobal.com" },
   "category": product.category,
   "offers": {
     "@type": "AggregateOffer",
@@ -127,7 +127,7 @@ const videoSchema = videoUrl ? {
   "@type": "VideoObject",
   "@id": `${videoUrl}#video`,
   "name": `${product.name} — Factory Wholesale Video`,
-  "description": product.seo_description || `${product.name} product demo video. Factory-direct wholesale from TOYFACTORY, ISO 9001:2015 certified.`,
+  "description": product.seo_description || `${product.name} product demo video. Factory-direct wholesale from TOYFACTORY, an SGS-assessed factory in Shantou, China.`,
   "thumbnailUrl": product.images[0] ? `https://toyfactoryglobal.com${product.images[0]}` : "https://toyfactoryglobal.com/favicon.svg",
   "uploadDate": "2026-01-01",
   "contentUrl": videoUrl,
@@ -424,7 +424,7 @@ const compareSet = [product, ...related.slice(0, 3)]
 								</div>
 								<div>
 									<div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-3 font-bold">QC Standard</div>
-									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight italic">ISO-9001 / AQL 2.5</div>
+									<div class="text-sm font-display font-extrabold text-white uppercase tracking-tight italic">4 QC Inspectors · Every Line</div>
 								</div>
 								<div>
 									<div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-3 font-bold">Port of Loading</div>
@@ -553,15 +553,15 @@ const compareSet = [product, ...related.slice(0, 3)]
 				<h2 class="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-tighter italic mb-10">
 					Ordering {product.id}
 				</h2>
-				<div class="max-w-4xl divide-y divide-white/5 border-y border-white/5">
-					{faqs.map((f, i) => (
-						<details class="group py-6" open={i === 0}>
-							<summary class="flex items-start justify-between gap-8 cursor-pointer list-none">
-								<h3 class="text-sm md:text-base font-bold text-white uppercase tracking-tight leading-snug group-hover:text-gold transition">{f.q}</h3>
-								<span class="text-gold shrink-0 text-lg leading-none mt-0.5 group-open:rotate-45 transition-transform">+</span>
-							</summary>
-							<p class="mt-4 text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
-						</details>
+				{/* Questions render open, not collapsed: answer engines and AI
+				    summaries read text, not <details> toggles. Same array feeds the
+				    FAQPage markup in the head, so page and schema cannot drift. */}
+				<div class="max-w-4xl border-t border-white/5">
+					{faqs.map((f) => (
+						<div class="py-8 border-b border-white/5">
+							<h3 class="text-base md:text-lg font-bold text-white tracking-tight leading-snug mb-3">{f.q}</h3>
+							<p class="text-gray-400 text-sm leading-[1.9]">{f.a}</p>
+						</div>
 					))}
 				</div>
 			</section>
@@ -625,7 +625,7 @@ const compareSet = [product, ...related.slice(0, 3)]
 					{/* Trust signals sit directly above the CTA. Every line below is already
 					    stated elsewhere on the site, so nothing here is a new claim. */}
 					<ul class="flex flex-wrap gap-x-8 gap-y-3 mb-10 text-[9px] font-bold uppercase tracking-[0.3em] text-gray-500">
-						<li>ISO 9001:2015 Certified</li>
+						<li>SGS-Assessed Factory (2026)</li>
 						<li>Est. 2001 · Chenghai, China</li>
 						<li>MOQ and Price Published</li>
 						<li>FOB Yantian / Shantou</li>

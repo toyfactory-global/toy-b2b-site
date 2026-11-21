@@ -1,0 +1,211 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import facts from '../data/factory.json';
+import productsRaw from '../data/products.json';
+
+const products = (Array.isArray(productsRaw) ? productsRaw : (productsRaw as any).products) as any[];
+const moqs = products.map((p) => p.moq).filter((n: any) => typeof n === 'number');
+const moqMin = Math.min(...moqs);
+const moqMax = Math.max(...moqs);
+
+const steps = [
+  { n: '01', t: 'Brief', d: 'Item number, target market, quantity, packaging and the date you need it. One email is enough to start.' },
+  { n: '02', t: 'Design', d: 'Light customisation of an existing mould, customisation from your sample, or customisation from your graphic design. CAD drawings are produced in house.' },
+  { n: '03', t: 'Sample', d: `Shortest sample turnaround recorded in the assessment is ${facts.trade.shortestSampleDays} days. Samples are charged at the unit price and the courier is paid by the buyer.` },
+  { n: '04', t: 'Approval', d: 'You approve the sample, the packaging artwork and the label copy in writing before anything is produced.' },
+  { n: '05', t: 'Production', d: `Average lead time is ${facts.trade.averageLeadTimeDays} days from order confirmation to delivery, on ${facts.facility.productionLines} lines with no subcontracting.` },
+  { n: '06', t: 'Inspection and shipping', d: 'Finished goods are checked by the in-house QC team before packing, then shipped from Shantou or Shenzhen on the terms agreed.' },
+];
+
+const faqs = [
+  {
+    q: 'What can actually be customised?',
+    a: `Three routes, and they cost very different amounts. Light customisation keeps the existing mould and changes colours, decoration or labelling. Customisation from your sample rebuilds an existing item to your version. Customisation from your graphic design takes artwork and turns it into product and packaging. Send the artwork or the sample photo and you will be told which of the three applies before any money is spent.`,
+  },
+  {
+    q: 'How fast is a sample, and what does it cost?',
+    a: `The shortest sample turnaround recorded in the SGS assessment is ${facts.trade.shortestSampleDays} days. Samples are charged at the unit price and the courier cost is paid by the buyer. The sample fee is credited back against your first production order of five cartons or more; the courier cost is not credited.`,
+  },
+  {
+    q: 'What is the minimum order?',
+    a: `It depends on the model, not on the customer. Across the ${products.length} published models the range is ${moqMin} to ${moqMax} units, and each product page states its own figure together with the carton quantity, so you can see how many cartons a minimum actually is. Minimums for a fully custom mould are quoted separately because the tooling changes the maths.`,
+  },
+  {
+    q: 'Who owns the design and the mould?',
+    a: `Ask for it in writing before the project starts, not afterwards. If you are paying for tooling, the ownership clause belongs in the quotation alongside the tooling cost. Whatever the answer is, get it on paper while you still have the option to walk away — a supplier who will not commit to it is telling you something.`,
+  },
+  {
+    q: 'Which trade terms and payment methods do you work with?',
+    a: `${facts.trade.incoterms.join(', ')}. Payment can be by ${facts.trade.paymentMethods.join(', ')}. The combination that applies to your order is fixed on the quotation and repeated on the invoice, so there is no ambiguity later.`,
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': 'https://toyfactoryglobal.com/oem-odm#webpage',
+    url: 'https://toyfactoryglobal.com/oem-odm',
+    name: 'OEM and ODM Toy Manufacturing: Sample, Approval, Production',
+    description: `Toy OEM and ODM from a 5,000 m² factory in Chenghai: light customisation, sample-based and artwork-based projects, 7-day shortest sample, 20-day average lead time, MOQ ${moqMin}-${moqMax}.`,
+    inLanguage: 'en',
+    isPartOf: { '@id': 'https://toyfactoryglobal.com/#website' },
+    about: { '@id': 'https://toyfactoryglobal.com/#organization' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://toyfactoryglobal.com/' },
+      { '@type': 'ListItem', position: 2, name: 'OEM / ODM', item: 'https://toyfactoryglobal.com/oem-odm' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Layout
+  title="OEM / ODM Toy Manufacturing | Samples in 7 Days"
+  description="Toy OEM and ODM from a 5,000 m² Chenghai factory: three customisation routes, 7-day shortest sample, 20-day average lead time, FOB/CIF/EXW/CFR."
+  keywords="toy OEM manufacturer, toy ODM factory China, custom toy manufacturing, private label toys, toy sample development"
+  jsonLd={jsonLd}
+>
+  <SiteNav active="oem" />
+
+  <main class="pt-40 pb-32 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-5xl mx-auto px-8">
+      <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-8">OEM / ODM · Private Label</p>
+      <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-10 uppercase italic leading-[0.95]">
+        Your artwork in.<br /><span class="text-gold">Cartons out in 20 days.</span>
+      </h1>
+      <p class="text-gray-400 text-sm leading-[2] uppercase tracking-[0.15em] max-w-2xl mb-16">
+        Three customisation routes, two design engineers, one approval gate. The numbers on this page come from the SGS
+        assessment of the factory and from the published catalogue, not from a sales deck.
+      </p>
+
+      <!-- Three routes -->
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Three ways to make it yours
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5">
+          {[
+            { t: 'Light customisation', d: 'Keep the existing mould. Change colour, decoration, labelling or packaging. Fastest and cheapest, because nothing is retooled.', c: 'Typical fit: testing a market, or a private label on a proven seller.' },
+            { t: 'From your sample', d: 'You send a physical sample; the factory rebuilds it to that standard and quotes the tooling if a new mould is needed.', c: 'Typical fit: you already sell the item and want a second source.' },
+            { t: 'From your artwork', d: 'You send graphic design rather than a physical product. Design work is done in house on CAD, then sampled.', c: 'Typical fit: brand owners building a range from scratch.' },
+          ].map((r) => (
+            <div class="bg-[#0A0A0F] px-7 py-9">
+              <h3 class="text-white text-lg font-display font-bold tracking-tight mb-4">{r.t}</h3>
+              <p class="text-gray-400 text-sm leading-[1.8] mb-5">{r.d}</p>
+              <p class="text-gray-600 text-[10px] uppercase tracking-[0.15em] leading-relaxed">{r.c}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Process -->
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Six steps, with the money only moving after step four
+        </h2>
+        <div class="border-l border-white/10 pl-8 space-y-10">
+          {steps.map((s) => (
+            <div class="relative">
+              <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-[#0A0A0F] border border-gold/50"></span>
+              <div class="text-gold font-mono text-[10px] tracking-[0.3em] mb-2">{s.n}</div>
+              <h3 class="text-white text-lg font-display font-bold tracking-tight mb-2">{s.t}</h3>
+              <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Design capacity -->
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          Who does the design work
+        </h2>
+        <p class="text-gray-400 text-base leading-[1.9] mb-8 max-w-3xl">
+          {facts.design.engineers} design engineers, both with {facts.design.engineerExperience} years in the trade,
+          working on {facts.design.software}. The shortest recorded time from brief to a launched product is{' '}
+          {facts.design.shortestNewProductLaunchDays} days — and {facts.design.thirdPartyTesting.toLowerCase()}.
+        </p>
+        <p class="text-gray-400 text-base leading-[1.9] max-w-3xl">
+          Material packages are supplied to buyers as part of the project, and packaging artwork goes through the same
+          design route as the product itself. Send the label copy, the barcode data and the carton marking you need, and
+          they are quoted with the goods rather than bolted on at the end.
+        </p>
+      </section>
+
+      <!-- Commercials -->
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-8">
+          The commercial terms, in one table
+        </h2>
+        <div class="border border-white/10">
+          <table class="w-full text-sm">
+            <tbody>
+              {[
+                { k: 'Minimum order', v: `${moqMin} to ${moqMax} units, depending on the model` },
+                { k: 'Sample turnaround', v: `${facts.trade.shortestSampleDays} days (shortest recorded)` },
+                { k: 'Production lead time', v: `${facts.trade.averageLeadTimeDays} days from order confirmation` },
+                { k: 'Trade terms', v: facts.trade.incoterms.join(' · ') },
+                { k: 'Payment methods', v: facts.trade.paymentMethods.join(' · ') },
+                { k: 'Loading ports', v: facts.trade.ports.join(' · ') },
+                { k: 'Factory floor space', v: `${facts.facility.floorSpaceSqm.toLocaleString('en-US')} m²` },
+                { k: 'Production capacity', v: `${facts.facility.productionLines} lines, ${facts.facility.lineOperators} operators, no subcontracting` },
+              ].map((r, i) => (
+                <tr class={i % 2 ? 'bg-white/[0.02]' : ''}>
+                  <td class="px-6 py-4 text-[10px] uppercase tracking-[0.25em] text-gray-500 whitespace-nowrap align-top">{r.k}</td>
+                  <td class="px-6 py-4 text-white">{r.v}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- What we won't do -->
+      <section class="mb-20 border-l-2 border-gold/40 pl-8">
+        <h2 class="text-white text-lg font-bold uppercase tracking-[0.15em] mb-6">Three things we will not do</h2>
+        <ul class="space-y-4 text-gray-400 text-sm leading-[1.9]">
+          <li><span class="text-white font-bold">Send a certificate before we check the item number.</span> Testing is per model and per market. A PDF forwarded without that check is decoration.</li>
+          <li><span class="text-white font-bold">Quote a date the line cannot hold.</span> The lead time you get is the one the factory can meet, which is why the number is 20 days and not 12.</li>
+          <li><span class="text-white font-bold">Hide a new mould inside the unit price.</span> If tooling is needed it is quoted as its own line, so you can compare it against a second supplier instead of guessing.</li>
+        </ul>
+      </section>
+
+      <!-- FAQ -->
+      <section class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold text-white uppercase italic tracking-tight mb-10">
+          Questions that come up before a project starts
+        </h2>
+        <div class="border-t border-white/10">
+          {faqs.map((f) => (
+            <div class="border-b border-white/5 py-8">
+              <h3 class="text-white text-lg font-bold tracking-tight mb-4">{f.q}</h3>
+              <p class="text-gray-400 text-sm leading-[1.9] max-w-3xl">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="border border-gold/30 p-10">
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4">Start here</p>
+        <p class="text-white text-xl font-display font-bold tracking-tight mb-4">Send the artwork, or a photo of the sample.</p>
+        <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mb-8">
+          With the target market and the quantity, that is enough to say which of the three routes applies and what it costs.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="bg-gold text-dark px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:bg-white transition">Send a brief</a>
+          <a href="/factory" class="border border-white/20 text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.25em] hover:border-gold transition">See the factory</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

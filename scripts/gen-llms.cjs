@@ -44,28 +44,35 @@ const moqs = products.map((p) => p.moq);
 const slug = (c) => c.replace(/\s+/g, '-').toLowerCase();
 
 const out = [];
-out.push('# TOYFACTORY - Huanuo Toys');
+out.push('# TOYFACTORY');
 out.push('');
 out.push('> B2B toy manufacturer and exporter based in Chenghai, Shantou (Guangdong, China), established 2001.');
 out.push('> 41 wholesale SKUs across bubble toys, water guns, track toys and educational toys.');
-out.push('> ISO 9001:2015 quality system. OEM/ODM for importers, distributors and retail chains. FOB Yantian or Shantou.');
+out.push('> 5,000 m2 factory in Chenghai, Shantou, assessed on site by SGS in August 2026. OEM/ODM for importers, distributors and retail chains. FOB Shantou or Yantian.');
 out.push('');
 
 out.push('## Key facts');
 out.push('');
-out.push('Company: TOYFACTORY (Huanuo Toys), toy manufacturer and exporter.');
+out.push('Company: TOYFACTORY, toy manufacturer and exporter.');
 out.push('Location: Chenghai, Shantou, Guangdong, China.');
 out.push('Established: 2001.');
-out.push('Quality system: ISO 9001:2015. Inspection standard: AQL 2.5.');
+out.push('Factory: 5,000 m2, 5 production lines, 69 staff, 4 in-house QC inspectors. Assessed on site by SGS, August 2026.');
 out.push(`Catalog: ${products.length} SKUs in 4 categories.`);
 out.push(`Unit price range: USD ${Math.min(...prices).toFixed(2)} to USD ${Math.max(...prices).toFixed(2)} per piece (ex-works, tiered by quantity).`);
 out.push(`MOQ range: ${Math.min(...moqs)} to ${Math.max(...moqs)} pieces, set per model.`);
 out.push('Port of loading: Yantian (Shenzhen) or Shantou.');
-out.push('Lead time: 10-15 days for stock models in small quantities; 25-35 days for bulk orders and orders with custom packaging or OEM branding, counted after deposit confirmation.');
+out.push('Lead time: an average of 20 days from order confirmation to delivery, with a 7-day shortest sample turnaround (SGS assessment, August 2026). Custom packaging adds to that and is quoted per order.');
 out.push('Batteries: dry-cell batteries are never included with shipments; lithium batteries are installed in the unit and included.');
-out.push('Customization: OEM and ODM - custom color, private label, packaging design, mold development. Custom OEM briefs from 500 units.');
-out.push('Product test reports are available on request for individual models.');
+out.push('Customization: OEM and ODM - custom colour, private label, packaging built from your artwork, or a new mould. Light customisation, sample-based builds and artwork-based builds are quoted separately because the tooling differs.');
+out.push('Testing scope varies by model and by destination market. Ask for the exact item number plus the target country and the answer is given in writing; no blanket certificate is claimed for the catalogue.');
 out.push('Contact: hntoys7@sinuotoys.com | WhatsApp +86 159 7691 7707');
+out.push('');
+
+out.push('## Factory and company');
+out.push('');
+out.push(`- [Inside the factory](${SITE}/factory): 5,000 m2 floor space, 5 production lines, 69 staff (55 full-time, 14 part-time), 4 in-house QC inspectors, 24 machines across 12 types, no subcontracting. Assessed on site by SGS on 2026-08-17, valid to 2027-08-17.`);
+out.push(`- [OEM / ODM process](${SITE}/oem-odm): three customisation routes (light customisation, from your sample, from your artwork), 7-day shortest sample, 20-day average lead time, FOB/CIF/EXW/CFR.`);
+out.push(`- [About](${SITE}/about): who we are, where we ship (North America 40%, Eastern Europe 20%, South America 10%, Middle East 10%, Western Europe 10%, South Asia 10%), and who answers the email.`);
 out.push('');
 
 out.push('## Collections');

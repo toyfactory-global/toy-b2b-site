@@ -1,0 +1,123 @@
+{
+  "_readme": [
+    "Every number in this file comes from the SGS Production & Trading Assessment",
+    "report 495347874_P+T, dated 2026-08-17, valid 2026-08-18 to 2027-08-17.",
+    "Deliberately NOT included, per the site owner's instruction: the legal entity",
+    "name, business licence number, registered capital, corporate representative,",
+    "the named contact person, the Alibaba store URL and the street address.",
+    "Also NOT included because the report does not support them: ISO 9001, BSCI,",
+    "SEDEX, GSV, GMPC, ISO 22716, any held product certificate, Fortune 500",
+    "clients, trade-show participation, overseas showroom, recall procedure.",
+    "If a line is not in this file, the page must not claim it."
+  ],
+  "assessment": {
+    "body": "SGS",
+    "type": "Production and Trading Assessment",
+    "date": "2026-08-17",
+    "validFrom": "2026-08-18",
+    "validTo": "2027-08-17"
+  },
+  "facility": {
+    "floorSpaceSqm": 5000,
+    "productionLines": 5,
+    "lineSupervisors": 2,
+    "lineOperators": 48,
+    "qcInspectors": 4,
+    "subcontracting": "none",
+    "location": "Chenghai District, Shantou, Guangdong, China"
+  },
+  "people": {
+    "total": 69,
+    "fullTime": 55,
+    "partTime": 14,
+    "byDepartment": [
+      { "name": "Production", "fullTime": 36, "partTime": 14, "total": 50 },
+      { "name": "Sales", "fullTime": 7, "partTime": 0, "total": 7 },
+      { "name": "Quality control", "fullTime": 4, "partTime": 0, "total": 4 },
+      { "name": "Purchasing", "fullTime": 2, "partTime": 0, "total": 2 },
+      { "name": "Engineering / R&D", "fullTime": 2, "partTime": 0, "total": 2 },
+      { "name": "Administration", "fullTime": 2, "partTime": 0, "total": 2 },
+      { "name": "Finance", "fullTime": 1, "partTime": 0, "total": 1 },
+      { "name": "General management", "fullTime": 1, "partTime": 0, "total": 1 }
+    ]
+  },
+  "machinery": [
+    { "name": "High-frequency welding machine", "qty": 5, "yearsInUse": 7 },
+    { "name": "Mixing machine", "qty": 4, "yearsInUse": 3 },
+    { "name": "Oil-drip machine", "qty": 2, "yearsInUse": 3 },
+    { "name": "Filling machine", "qty": 2, "yearsInUse": 7 },
+    { "name": "Capping machine", "qty": 2, "yearsInUse": 7 },
+    { "name": "Auto glue-drip machine", "qty": 2, "yearsInUse": 3 },
+    { "name": "Semi-auto powdering machine", "qty": 2, "yearsInUse": 3 },
+    { "name": "Auto colour oil-drip machine", "qty": 1, "yearsInUse": 3 },
+    { "name": "Auto labelling machine", "qty": 1, "yearsInUse": 3 },
+    { "name": "Grinding machine", "qty": 1, "yearsInUse": 3 },
+    { "name": "Heating and mixing machine", "qty": 1, "yearsInUse": 3 },
+    { "name": "Nail-polish production line", "qty": 1, "yearsInUse": 3 }
+  ],
+  "productionFlow": [
+    "Raw materials",
+    "Oil dripping",
+    "Powdering",
+    "Semi-finished parts",
+    "Assembly",
+    "Inspection",
+    "Packing",
+    "Finished goods"
+  ],
+  "quality": {
+    "inspectors": 4,
+    "everyLineCovered": true,
+    "finishedGoods": "Random inspection",
+    "writtenInstructions": true,
+    "recordsKept": true,
+    "supplierAssessment": true,
+    "lotTraceability": "Finished goods trace back to the main raw material by lot",
+    "closedLoopCorrectiveAction": true,
+    "complaintRecords": "Standard feedback form and written records"
+  },
+  "design": {
+    "engineers": 2,
+    "engineerExperience": "6-10 years",
+    "software": "CAD",
+    "services": [
+      "Light customisation",
+      "Customisation from your sample",
+      "Customisation from graphic design"
+    ],
+    "thirdPartyTesting": "Part of the designed products are tested by a third party",
+    "shortestNewProductLaunchDays": 20
+  },
+  "trade": {
+    "exportExperienceYears": 8,
+    "industryExperienceYears": 8,
+    "foreignTradeStaff": 5,
+    "ports": ["Shantou", "Shenzhen"],
+    "incoterms": ["FOB", "CIF", "EXW", "CFR"],
+    "paymentMethods": ["L/C", "T/T", "PayPal", "Western Union", "Credit card", "Cash", "MoneyGram"],
+    "averageLeadTimeDays": 20,
+    "shortestSampleDays": 7,
+    "languages": ["English"]
+  },
+  "markets": [
+    { "region": "North America", "share": 40 },
+    { "region": "Eastern Europe", "share": 20 },
+    { "region": "South America", "share": 10 },
+    { "region": "Middle East", "share": 10 },
+    { "region": "Western Europe", "share": 10 },
+    { "region": "South Asia", "share": 10 }
+  ],
+  "clientTypes": ["Brand owners", "Retailers", "Wholesalers"],
+  "catalogue": {
+    "publishedModels": 41,
+    "publishedCollections": 4,
+    "widerRangeModels": 7000,
+    "productFamilies": [
+      "Bubble toys",
+      "Water guns",
+      "Track toys",
+      "Educational toys",
+      "Kid makeup sets"
+    ]
+  }
+}

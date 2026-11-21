@@ -73,7 +73,7 @@ const getProductsByCategory = (catId) => {
 				{
 					"@type": "Question",
 					"name": "Where can I wholesale industrial bubble machines from China?",
-					"acceptedAnswer": { "@type": "Answer", "text": "TOYFACTORY is an ISO 9001:2015 certified manufacturer in Shantou, China, specializing in high-volume bubble machines, electric bubble guns, and garden lamp bubble machines. We offer direct factory pricing with MOQ starting from 72 units and global shipping from Yantian port." }
+					"acceptedAnswer": { "@type": "Answer", "text": "TOYFACTORY is a toy manufacturer in Chenghai, Shantou, China, working from a 5,000 m2 factory with 5 production lines and 4 in-house QC inspectors, assessed on site by SGS in August 2026. Direct factory pricing runs from 30 to 720 units depending on the model, shipping from Shantou or Yantian." }
 				},
 				{
 					"@type": "Question",
@@ -83,7 +83,7 @@ const getProductsByCategory = (catId) => {
 				{
 					"@type": "Question",
 					"name": "What certifications does this toy factory hold?",
-					"acceptedAnswer": { "@type": "Answer", "text": "Factory level: ISO 9001:2015 quality management, plus BSCI, SEDEX and GSV factory audits. Product level: safety certification is issued per model and per destination market, so CE and EN-71 apply to the EU, ASTM F963 and CPSIA to the US, and UKCA to the UK. Tell us the item number and the market and we confirm which test reports exist for that item before you order." }
+					"acceptedAnswer": { "@type": "Answer", "text": "Factory level: 5,000 m2 floor space, 5 production lines, 69 staff and 4 in-house QC inspectors, assessed on site by SGS in August 2026. Product level: safety certification is issued per model and per destination market, so CE and EN-71 apply to the EU, ASTM F963 and CPSIA to the US, and UKCA to the UK. Tell us the item number and the market and we confirm which test reports exist for that item before you order." }
 				},
 				{
 					"@type": "Question",
@@ -123,7 +123,10 @@ const getProductsByCategory = (catId) => {
 						<a href="/products" class="hover:text-gold transition-colors text-xs whitespace-nowrap border-t border-white/10 pt-3 mt-1 text-gold">All Products &rarr;</a>
 					</div>
 				</div>
-				<a href="/blog" target="_blank" class="hover:text-gold transition-colors">Blog</a>
+				<a href="/factory" class="hover:text-gold transition-colors">Factory</a>
+				<a href="/oem-odm" class="hover:text-gold transition-colors">OEM / ODM</a>
+				<a href="/blog" class="hover:text-gold transition-colors">Guides</a>
+				<a href="/about" class="hover:text-gold transition-colors">About</a>
 				<a href="#rfq" class="hover:text-gold transition-colors">Contacts</a>
 			</div>
 			<div class="flex items-center gap-8">
@@ -143,7 +146,7 @@ const getProductsByCategory = (catId) => {
 		<section class="relative h-screen flex items-center overflow-hidden">
 			<div class="absolute inset-0 z-0">
 				<div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10"></div>
-				<img src="/images/hero-factory.webp" class="w-full h-full object-cover object-top" alt="Huanuo Toy Factory" fetchpriority="high" decoding="async" />
+				<img src="/images/hero-factory.webp" class="w-full h-full object-cover object-top" alt="Toy factory floor in Chenghai, Shantou" fetchpriority="high" decoding="async" />
 			</div>
 			
 			<div class="relative z-20 max-w-[1600px] mx-auto px-8 w-full">
@@ -187,10 +190,10 @@ const getProductsByCategory = (catId) => {
 							Established in 2001 and located in Chenghai, Guangdong Province, which is famous as the Toys & Gifts Production Base in China. We are a professional China toys manufacturer and exporter offering excellent OEM/ODM service to global famous brands.
 						</p>
 						<p class="text-gray-400 text-sm leading-[2] uppercase tracking-wide">
-							The factory covers more than 5,000m², passing audits such as GMPC, ISO 22716, GSV, BSCI, and SEDEX. We specialize in high-quality toy production across multiple categories including beauty sets, STEM learning, water guns, and bubble toys. Providing the best quality goods and wonderful services for clients is our principle. No matter how your order quantity is, our professional staff will provide sincere and enthusiastic service.
+							The factory covers 5,000m² with five production lines, 69 staff and four in-house QC inspectors, assessed on site by SGS in August 2026. We specialize in high-quality toy production across multiple categories including beauty sets, STEM learning, water guns, and bubble toys. Providing the best quality goods and wonderful services for clients is our principle. No matter how your order quantity is, our professional staff will provide sincere and enthusiastic service.
 						</p>
 						<div class="grid grid-cols-2 md:grid-cols-3 gap-8 pt-8">
-							{['EN-71', 'ASTM', 'BSCI', 'ISO 22716', 'GSV', 'SEDEX'].map(cert => (
+							{['SGS ASSESSED', '5,000 M²', '5 LINES', '69 STAFF', '4 QC', 'OEM / ODM'].map(cert => (
 								<div class="border border-white/5 p-6 text-center hover:border-gold/30 transition-colors group">
 									<div class="text-white font-bold text-xs uppercase tracking-widest group-hover:text-gold transition-colors">{cert}</div>
 								</div>
@@ -237,14 +240,14 @@ const getProductsByCategory = (catId) => {
 					</div>
 					<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 						{[
-							{ name: 'ISO 9001:2015', desc: 'Quality Management' },
-							{ name: 'BSCI', desc: 'Ethical Manufacturing' },
-							{ name: 'SEDEX / SMETA', desc: 'Social Compliance' },
-							{ name: 'GSV', desc: 'Supply Chain Security' },
-							{ name: 'EN-71 / CE', desc: 'EU Toy Safety' },
-							{ name: 'ASTM F963', desc: 'US Toy Safety' },
+							{ name: '5,000 m²', desc: 'Factory Floor Space' },
+							{ name: '5', desc: 'Production Lines' },
+							{ name: '69', desc: 'Staff On Site' },
+							{ name: '4', desc: 'In-House QC Inspectors' },
+							{ name: '7,000', desc: 'Models In The Wider Range' },
+							{ name: '20 Days', desc: 'Average Lead Time' },
 							{ name: 'RoHS', desc: 'Hazardous Substances' },
-							{ name: 'GMPC / ISO 22716', desc: 'Cosmetics GMP' }
+							{ name: 'SGS', desc: 'Assessed Aug 2026' }
 						].map(c => (
 							<div class="border border-white/5 p-5 flex items-center gap-3 hover:border-gold/20 transition-colors group">
 								<span class="text-gold text-lg shrink-0 group-hover:scale-110 transition">✓</span>
@@ -387,7 +390,7 @@ const getProductsByCategory = (catId) => {
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
 					<div class="space-y-5">
 						<h3 class="text-white text-base font-bold tracking-wide">Where can I wholesale industrial bubble machines from China?</h3>
-						<p class="text-gray-400 text-sm leading-[1.8]">TOYFACTORY is an ISO 9001:2015 certified manufacturer in Shantou, China, specializing in high-volume bubble machines, electric bubble guns, and garden lamp bubble machines. We offer direct factory pricing with MOQ starting from 72 units and global shipping from Yantian port.</p>
+						<p class="text-gray-400 text-sm leading-[1.8]">TOYFACTORY is a toy manufacturer in Chenghai, Shantou, China, working from a 5,000 m2 factory with 5 production lines and 4 in-house QC inspectors, assessed on site by SGS in August 2026. Direct factory pricing runs from 30 to 720 units depending on the model, shipping from Shantou or Yantian.</p>
 					</div>
 					<div class="space-y-5">
 						<h3 class="text-white text-base font-bold tracking-wide">Does TOYFACTORY support OEM and private label manufacturing?</h3>
@@ -395,7 +398,7 @@ const getProductsByCategory = (catId) => {
 					</div>
 					<div class="space-y-5">
 						<h3 class="text-white text-base font-bold tracking-wide">What certifications does this toy factory hold?</h3>
-						<p class="text-gray-400 text-sm leading-[1.8]">Factory level: ISO 9001:2015 quality management, plus BSCI, SEDEX and GSV factory audits. Product level: safety certification is issued per model and per destination market &mdash; CE and EN-71 for the EU, ASTM F963 and CPSIA for the US, UKCA for the UK. Send us the item number and target market and we confirm which test reports exist for that item.</p>
+						<p class="text-gray-400 text-sm leading-[1.8]">Factory level: 5,000 m2 floor space, 5 production lines, 69 staff and 4 in-house QC inspectors, assessed on site by SGS in August 2026. Product level: safety certification is issued per model and per destination market &mdash; CE and EN-71 for the EU, ASTM F963 and CPSIA for the US, UKCA for the UK. Send us the item number and target market and we confirm which test reports exist for that item.</p>
 					</div>
 					<div class="space-y-5">
 						<h3 class="text-white text-base font-bold tracking-wide">How does the wholesale pricing and MOQ work?</h3>
@@ -425,7 +428,7 @@ const getProductsByCategory = (catId) => {
 					<p class="text-[11px] text-gray-400 leading-[2.5] uppercase tracking-[0.2em] max-w-md">
 						Elite manufacturing infrastructure specializing in high-demand toy export. 
 						Precision engineering and global distribution standards. 
-						ISO 9001:2015 Certified Facility.
+						SGS-assessed on site, August 2026.
 					</p>
 				</div>
 				<div>
@@ -448,8 +451,11 @@ const getProductsByCategory = (catId) => {
 							</div>
 						</div>
 						<div class="flex flex-col gap-4 text-gray-400">
+							<a href="/factory" class="hover:text-gold transition">Inside the factory</a>
+							<a href="/oem-odm" class="hover:text-gold transition">OEM / ODM process</a>
+							<a href="/about" class="hover:text-gold transition">About us</a>
 							<a href="/return" class="hover:text-gold transition">Compliance</a>
-							<a href="/blog" target="_blank" class="hover:text-gold transition">Case Studies</a>
+							<a href="/blog" class="hover:text-gold transition">Sourcing guides</a>
 						</div>
 					</div>
 				</div>
