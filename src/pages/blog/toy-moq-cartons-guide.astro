@@ -70,7 +70,7 @@ const faqs = [
   },
   {
     q: 'Which model is the cheapest to start with?',
-    a: `By cash outlay rather than unit price, it is the ${byCash[0].id}: ${byCash[0].moq} pieces at $${byCash[0].price} is about $${byCash[0].cash.toLocaleString('en-US')} in goods value, which is ${byCash[0].cartons} cartons. The model with the lowest unit price in the catalogue is the ${cheapestUnit.id} at $${cheapestUnit.price}, but its minimum is ${cheapestUnit.moq} pieces, so it needs about $${cheapestUnit.cash.toLocaleString('en-US')} to enter — roughly ${Math.round(cheapestUnit.cash / byCash[0].cash)} times the cash.`,
+    a: `By cash outlay rather than unit price, it is the ${byCash[0].id}: ${byCash[0].moq} pieces at $${byCash[0].price} is about $${byCash[0].cash.toLocaleString('en-US')} ex-works, which is ${byCash[0].cartons} cartons. The model with the lowest unit price in the catalogue is the ${cheapestUnit.id} at $${cheapestUnit.price}, but its minimum is ${cheapestUnit.moq} pieces, so it needs about $${cheapestUnit.cash.toLocaleString('en-US')} to enter — roughly ${Math.round(cheapestUnit.cash / byCash[0].cash)} times the cash.`,
   },
   {
     q: 'Does a custom packaging order change the minimum?',
@@ -202,7 +202,7 @@ const faqSchema = {
             terrible test order.
           </p>
           <p class="text-gray-500 text-sm">
-            Cash to enter is the minimum multiplied by the <em>first</em> price tier shown on the product page. Higher
+            Cash to enter is the minimum multiplied by the <em>first</em> ex-works tier shown on the product page. Higher
             volumes move to a quoted tier, so at the full minimum the real figure is normally lower than this — treat the
             column as an upper bound, before freight and before any packaging run. It is not a quotation; it is the size
             of the commitment.

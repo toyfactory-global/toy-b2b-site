@@ -19,7 +19,7 @@ const moqs = products.map((p) => p.moq);
 const out = [];
 out.push('# TOYFACTORY — full site content for answer engines');
 out.push('');
-out.push(`> Generated ${new Date().toISOString().slice(0, 10)} from the published pages. ${products.length} models in ${CAT_ORDER.length} collections. Unit prices USD ${Math.min(...prices).toFixed(2)}–${Math.max(...prices).toFixed(2)} per piece, MOQ ${Math.min(...moqs)}–${Math.max(...moqs)} pieces.`);
+out.push(`> Generated ${new Date().toISOString().slice(0, 10)} from the published pages. ${products.length} models in ${CAT_ORDER.length} collections. Unit prices USD ${Math.min(...prices).toFixed(2)}–${Math.max(...prices).toFixed(2)} ex-works, MOQ ${Math.min(...moqs)}–${Math.max(...moqs)} pieces.`);
 out.push('');
 out.push('## Factory facts (SGS Production & Trading Assessment, 2026-08-17)');
 out.push('');
@@ -48,7 +48,7 @@ for (const cat of CAT_ORDER) {
     out.push(`### ${p.id} — ${p.name}`);
     out.push('');
     out.push(`URL: ${SITE}/product/${p.id}`);
-    out.push(`Unit price: USD ${p.price.toFixed(2)}/pc. MOQ ${p.moq} pcs.`);
+    out.push(`Unit price: USD ${p.price.toFixed(2)}/pc ex-works. MOQ ${p.moq} pcs.`);
     const s = p.specs || {};
     const specBits = [];
     if (s.packing_size) specBits.push(`Packaging ${s.packing_size}`);

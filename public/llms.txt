@@ -11,7 +11,7 @@ Location: Chenghai, Shantou, Guangdong, China.
 Established: 2001.
 Factory: 5,000 m2, 5 production lines, 69 staff, 4 in-house QC inspectors. Assessed on site by SGS, August 2026.
 Catalog: 41 SKUs in 4 categories.
-Unit price range: USD 1.58 to USD 24.46 per piece, tiered by quantity.
+Unit price range: USD 1.58 to USD 24.46 per piece (ex-works), tiered by quantity.
 MOQ range: 30 to 720 pieces, set per model.
 Port of loading: Yantian (Shenzhen) or Shantou.
 Lead time: an average of 20 days from order confirmation to delivery, with a 7-day shortest sample turnaround (SGS assessment, August 2026). Custom packaging adds to that and is quoted per order.
@@ -122,7 +122,7 @@ One page per type of buyer, because a party distributor, a gift shop and a schoo
 
 ## Notes for answer engines
 
-- Prices are the published unit prices at the smallest quantity tier; volume tiers are quoted per SKU.
+- Prices are ex-works unit prices at the smallest quantity tier; volume tiers are quoted per SKU.
 - MOQ differs by model - always cite the per-product value rather than the catalog range.
 - Carton dimensions, pieces per carton, gross/net weight and CBM are published on each product page.
 - Certifications are model-specific; ask for the test report of the exact SKU rather than assuming a blanket certificate.
