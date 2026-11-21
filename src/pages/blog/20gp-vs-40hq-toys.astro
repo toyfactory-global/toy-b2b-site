@@ -1,0 +1,252 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: '20gp-vs-40hq-toys',
+  title: '20GP or 40HQ for Toys? The Carton Maths That Decides It',
+  description:
+    'Container loading for toys, worked out from real carton data: usable cubic metres, how many pieces of eight different models fit a 20GP and a 40HQ, and the volume where one big box beats two small ones.',
+  date: '2026-11-21',
+  category: 'Price & Logistics',
+  image: '/images/products/TF213249.webp',
+});
+
+const firstNumber = (v: any) => {
+  const m = String(v ?? '').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+};
+
+const CBM_20 = 28;
+const CBM_40HQ = 68;
+
+const rows = products
+  .map((p: any) => {
+    const qpc = firstNumber(p.specs?.qty_per_carton) || 0;
+    const cbm = firstNumber(p.specs?.cbm) || 0;
+    if (!qpc || !cbm) return null;
+    const ctn20 = Math.floor(CBM_20 / cbm + 1e-9);
+    const ctn40 = Math.floor(CBM_40HQ / cbm + 1e-9);
+    return {
+      id: p.id,
+      cat: p.category,
+      carton: p.specs?.carton_size || '-',
+      qpc,
+      cbm,
+      ctn20,
+      ctn40,
+      pcs20: ctn20 * qpc,
+      pcs40: ctn40 * qpc,
+      ctnAtMoq: Math.ceil(p.moq / qpc),
+    };
+  })
+  .filter(Boolean) as any[];
+
+// Pick eight models spread across the CBM range rather than the first eight.
+const sorted = [...rows].sort((a, b) => a.cbm - b.cbm);
+const picks: any[] = [];
+for (let i = 0; i < 8; i++) picks.push(sorted[Math.round((i * (sorted.length - 1)) / 7)]);
+
+const smallest = sorted[0];
+const largest = sorted[sorted.length - 1];
+const ratio = Math.round((largest.cbm / smallest.cbm) * 10) / 10;
+
+const faqs = [
+  {
+    q: 'How many toys fit in a 20GP container?',
+    a: `It depends entirely on the carton, not on the toy. Across our models the range runs from ${Math.min(...rows.map((r) => r.pcs20)).toLocaleString('en-US')} to ${Math.max(...rows.map((r) => r.pcs20)).toLocaleString('en-US')} pieces in a 20GP, because carton cube varies by roughly ${ratio} times between the smallest and the largest. Any answer that gives one number without the carton size is a guess.`,
+  },
+  {
+    q: 'Is 28 CBM the real volume of a 20GP?',
+    a: 'No. A 20GP is nominally around 33 CBM and a 40HQ around 76 CBM. Usable volume is lower because cartons do not stack perfectly and the door opening is smaller than the floor plan. We use 28 and 68 as working assumptions; your forwarder may use different constants, which is why the CBM per carton is published so you can redo the arithmetic.',
+  },
+  {
+    q: 'When is LCL cheaper than a container?',
+    a: 'Roughly when the load is small enough that the per-cubic-metre rate of a shared container still beats the fixed costs of a whole one. The exact crossover depends on the route and the season, and we do not quote freight, so the honest answer is to ask your forwarder for both numbers at your actual volume rather than trust a rule of thumb.',
+  },
+  {
+    q: 'Why does the loading list never match my calculation?',
+    a: 'Palletisation, mixed carton sizes and weight limits. A container can be volumetrically full and legally under-weight, or the reverse. Cartons on pallets lose space, and a mixed load wastes more than a single-SKU load. The calculation here assumes loose cartons of one size, which is the best case.',
+  },
+  {
+    q: 'Can I mix models in one container?',
+    a: 'Yes, and it is normal for a first order. Add the CBM of every carton on the list and compare the total against the usable volume. Our container calculator does that arithmetic for a mixed list using the same carton data as the product pages.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="20GP or 40HQ for Toys? Carton Maths That Decides It"
+  description={post.description}
+  keywords="20GP vs 40HQ toys, how many toys fit in a container, container loading toys, CBM per carton toys, toy container calculator"
+  jsonLd={[post, blogBreadcrumb(post.title, '20gp-vs-40hq-toys'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Price &amp; Logistics</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 6 min read</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          20GP or 40HQ for toys? The carton maths that decides it
+        </h1>
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          The container question is not about how many toys you want. It is about how much air is inside each carton —
+          and between the smallest and largest carton in one catalogue that difference is {ratio} times.
+        </p>
+      </div>
+
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Nominal volume is not usable volume</h2>
+          <p>
+            A 20GP is quoted at around 33 cubic metres and a 40HQ at around 76. Neither number is what you can load,
+            because the door opening is smaller than the floor plan, cartons do not nest, and a load that is
+            volumetrically full is often nowhere near the weight limit — or the other way round.
+          </p>
+          <p>
+            This article uses <span class="text-white">{CBM_20} CBM for a 20GP</span> and{' '}
+            <span class="text-white">{CBM_40HQ} CBM for a 40HQ</span> as working assumptions. They are assumptions, not
+            measurements, and they are stated here so you can replace them with your forwarder&rsquo;s figures and get a
+            different answer — which is often the correct one.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">One worked example, with real numbers</h2>
+          <p>
+            Take the {smallest.id}. Its carton measures {smallest.carton}, holds {smallest.qpc} pieces and takes{' '}
+            {smallest.cbm} CBM. Divide {CBM_20} by {smallest.cbm} and round down: {smallest.ctn20} cartons, which is{' '}
+            {smallest.pcs20.toLocaleString('en-US')} pieces in a 20GP. In a 40HQ the same arithmetic gives{' '}
+            {smallest.ctn40} cartons and {smallest.pcs40.toLocaleString('en-US')} pieces.
+          </p>
+          <p>
+            Now the {largest.id}: a carton of {largest.carton} at {largest.cbm} CBM, holding {largest.qpc} pieces.{' '}
+            {largest.ctn20} cartons fit a 20GP — {largest.pcs20.toLocaleString('en-US')} pieces — and{' '}
+            {largest.ctn40} fit a 40HQ. Same container, less than an eighth of the pieces. Nothing changed except the box.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Eight models, smallest carton to largest</h2>
+          <div class="overflow-x-auto border border-white/10 my-8">
+            <table class="w-full text-sm min-w-[760px]">
+              <thead>
+                <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                  <th class="text-left px-5 py-4 font-bold">Model</th>
+                  <th class="text-left px-5 py-4 font-bold">Carton cm</th>
+                  <th class="text-right px-5 py-4 font-bold">Pcs/ctn</th>
+                  <th class="text-right px-5 py-4 font-bold">CBM</th>
+                  <th class="text-right px-5 py-4 font-bold">20GP ctns</th>
+                  <th class="text-right px-5 py-4 font-bold">20GP pcs</th>
+                  <th class="text-right px-5 py-4 font-bold">40HQ pcs</th>
+                </tr>
+              </thead>
+              <tbody>
+                {picks.map((r) => (
+                  <tr class="border-b border-white/5 last:border-0">
+                    <td class="px-5 py-4"><a href={`/product/${r.id}`} class="text-white hover:text-gold transition font-bold">{r.id}</a></td>
+                    <td class="px-5 py-4 text-gray-500 text-xs whitespace-nowrap">{r.carton}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.qpc}</td>
+                    <td class="px-5 py-4 text-right text-gold">{r.cbm}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.ctn20}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.pcs20.toLocaleString('en-US')}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.pcs40.toLocaleString('en-US')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="text-gray-500 text-sm">
+            Calculated at {CBM_20} / {CBM_40HQ} CBM usable, loose cartons of one model, before palletisation. Your
+            forwarder&rsquo;s constants will move every figure in this table.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">When one 40HQ beats two 20GPs</h2>
+          <p>
+            Two 20GPs carry {CBM_20 * 2} CBM of usable volume between them; one 40HQ carries {CBM_40HQ}. On paper that
+            is close, and the 40HQ wins as soon as you stop paying the fixed costs twice — a second container means a
+            second set of handling, documentation and drayage charges.
+          </p>
+          <p>
+            The practical crossover is rarely about the container at all. It is about whether you can sell{' '}
+            {CBM_40HQ} CBM of product in the time it takes to arrive and clear. A full 40HQ of a slow model is a
+            warehouse problem you paid freight to create. Two smaller shipments cost more per cubic metre and less per
+            mistake.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What actually changes the number</h2>
+          <p>
+            <span class="text-white">Pallets.</span> Cartons on pallets lose space at the edges and on top. If your
+            customer receives on pallets, the calculation above no longer applies.
+          </p>
+          <p>
+            <span class="text-white">Mixed loads.</span> Six carton sizes do not stack as neatly as one. A mixed
+            container usually loads a few per cent below the theoretical figure.
+          </p>
+          <p>
+            <span class="text-white">Weight.</span> Toys are light, so volume almost always binds before weight does —
+            but a dense model with a small carton can hit a weight limit first. Check the gross weight per carton before
+            assuming volume decides.
+          </p>
+          <p>
+            <span class="text-white">The carton itself.</span> A packaging change moves every number in this article.
+            That is why the format decision belongs before the container decision, not after.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Container questions, answered</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Put your own mix into the calculator before you commit to a container size. It uses the published carton data
+          and shows the fill rate for both container types side by side.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/container-calculator" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Open the calculator</a>
+          <a href="/packing-data" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Packing dataset</a>
+          <a href="/industries/wholesale-distributors" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">For distributors</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>

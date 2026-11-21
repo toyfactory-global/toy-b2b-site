@@ -1,0 +1,282 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'toy-moq-cartons-guide',
+  title: 'Toy MOQ Explained: Why a 300-Piece Minimum Is Not a 300-Piece Order',
+  description:
+    'A minimum order quantity is a carton count in disguise. Here is how all 41 of our models price out at their minimum, which one costs the least cash to start, and why the cheapest unit price is usually the worst first order.',
+  date: '2026-11-21',
+  category: 'Price & Logistics',
+  image: '/images/products/TF200892.webp',
+});
+
+/* All figures computed from products.json at build time. */
+const firstNumber = (v: any) => {
+  const m = String(v ?? '').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+};
+
+const rows = products
+  .map((p: any) => {
+    const qpc = firstNumber(p.specs?.qty_per_carton) || 0;
+    const cbm = firstNumber(p.specs?.cbm) || 0;
+    const cartons = qpc ? Math.ceil(p.moq / qpc) : null;
+    return {
+      id: p.id,
+      name: p.name,
+      cat: p.category,
+      moq: p.moq,
+      price: p.price,
+      qpc,
+      cartons,
+      cash: Math.round(p.moq * p.price),
+      volume: cartons && cbm ? Math.round(cartons * cbm * 1000) / 1000 : null,
+    };
+  })
+  .filter((r: any) => r.cartons);
+
+const byCash = [...rows].sort((a, b) => a.cash - b.cash);
+const cheapestUnit = [...rows].sort((a, b) => a.price - b.price)[0];
+const highestUnit = [...rows].sort((a, b) => b.price - a.price)[0];
+const oneCarton = rows.filter((r) => r.cartons === 1);
+const maxCash = byCash[byCash.length - 1];
+const medianCash = byCash[Math.floor(byCash.length / 2)].cash;
+
+const buckets = [
+  { label: 'One carton', test: (c: number) => c === 1 },
+  { label: 'Two to three', test: (c: number) => c >= 2 && c <= 3 },
+  { label: 'Four to six', test: (c: number) => c >= 4 && c <= 6 },
+  { label: 'Seven to ten', test: (c: number) => c >= 7 && c <= 10 },
+  { label: 'More than ten', test: (c: number) => c > 10 },
+].map((b) => ({ ...b, count: rows.filter((r) => b.test(r.cartons as number)).length }));
+
+const showcase = [
+  ...byCash.slice(0, 5),
+  cheapestUnit,
+  maxCash,
+].filter((r, i, arr) => arr.findIndex((x) => x.id === r.id) === i);
+
+const faqs = [
+  {
+    q: 'Is the minimum order quantity the same as one carton?',
+    a: `No, and the difference is where most first orders go wrong. Across our ${rows.length} published models only ${oneCarton.length} reach their minimum at exactly one carton. The rest need several, because a minimum is set in pieces while the factory builds in cartons. On the cheapest-to-order model the minimum is five cartons, not one.`,
+  },
+  {
+    q: 'Why can I not order half a carton?',
+    a: 'Because the carton is manufactured as a unit: the inner packing, the printed box and the shipping carton are produced together. A factory that will break a carton is either repacking by hand or shipping you a carton that has already been opened, and neither is good news on arrival.',
+  },
+  {
+    q: 'Which model is the cheapest to start with?',
+    a: `By cash outlay rather than unit price, it is the ${byCash[0].id}: ${byCash[0].moq} pieces at $${byCash[0].price} is about $${byCash[0].cash.toLocaleString('en-US')} ex-works, which is ${byCash[0].cartons} cartons. The model with the lowest unit price in the catalogue is the ${cheapestUnit.id} at $${cheapestUnit.price}, but its minimum is ${cheapestUnit.moq} pieces, so it needs about $${cheapestUnit.cash.toLocaleString('en-US')} to enter — roughly ${Math.round(cheapestUnit.cash / byCash[0].cash)} times the cash.`,
+  },
+  {
+    q: 'Does a custom packaging order change the minimum?',
+    a: 'Yes. A model minimum comes from the carton; a packaging run has its own minimum on top of that, because the printed box is produced separately. That is why a private label project is quoted as its own line rather than as the model price plus a logo.',
+  },
+  {
+    q: 'How do I calculate the cash needed for a first order?',
+    a: 'Multiply the minimum by the unit price for each model, add the lines together, then add freight and any packaging run. Our packing dataset lists every model with its minimum, pieces per carton and CBM in one downloadable file, so the arithmetic can be done before you talk to anyone.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="Toy MOQ Explained: Minimums Are Cartons In Disguise"
+  description={post.description}
+  keywords="toy MOQ, minimum order quantity toys, wholesale toy MOQ cartons, toy factory minimum order, toy first order cost"
+  jsonLd={[post, blogBreadcrumb(post.title, 'toy-moq-cartons-guide'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Price &amp; Logistics</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 7 min read</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          Toy MOQ explained: why a 300-piece minimum is not a 300-piece order
+        </h1>
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          A minimum order quantity looks like a sales policy. It is not — it is a carton count in disguise, and the
+          difference between the two numbers is what decides how much cash a first order actually takes.
+        </p>
+      </div>
+
+      <div class="prose-custom space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Where a minimum actually comes from</h2>
+          <p>
+            Nobody sets a minimum by mood. It comes off the carton: the inner packing, the retail box and the shipping
+            carton are produced as one unit, so the smallest order that can be built without opening a carton is one
+            carton. Publish that number in pieces and you get the figure buyers compare — which is why two models with
+            the same minimum in pieces can require very different commitments in practice.
+          </p>
+          <p>
+            On our own catalogue the spread is wide. The lowest minimum is {byCash[0].moq} pieces; the highest is{' '}
+            {maxCash.moq}. But the piece count is the least interesting number in that sentence, because {byCash[0].moq}{' '}
+            pieces on one model is {byCash[0].cartons} cartons while {maxCash.moq} pieces on another is {maxCash.cartons}.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">How the 41 models split by cartons</h2>
+          <p>
+            Counted in cartons rather than pieces, the catalogue looks different from the way it looks on a price list.
+          </p>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/5 border border-white/10 my-8">
+            {buckets.map((b) => (
+              <div class="bg-[#0A0A0F] px-5 py-6">
+                <div class="text-2xl font-display font-extrabold text-gold">{b.count}</div>
+                <div class="text-[9px] uppercase tracking-[0.2em] text-gray-500 mt-2">{b.label} carton{b.count === 1 ? '' : 's'}</div>
+              </div>
+            ))}
+          </div>
+          <p>
+            Only {oneCarton.length} model{oneCarton.length === 1 ? '' : 's'} can be ordered at a single carton. Most sit
+            between two and six. If you are testing a market, that distribution is more useful than the unit price,
+            because it tells you which models are cheap to try and which are not.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The cheapest unit price is rarely the cheapest first order</h2>
+          <p>
+            This is the part that surprises buyers. The lowest unit price in our catalogue is the {cheapestUnit.id} at
+            ${cheapestUnit.price} per piece. The cheapest model to actually start with is the {byCash[0].id} at ${byCash[0].price}
+            {' '}per piece — more than double the unit price, and less than a third of the cash, because its
+            minimum is {byCash[0].moq} pieces instead of {cheapestUnit.moq}.
+          </p>
+          <div class="overflow-x-auto border border-white/10 my-8">
+            <table class="w-full text-sm min-w-[720px]">
+              <thead>
+                <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                  <th class="text-left px-5 py-4 font-bold">Model</th>
+                  <th class="text-left px-5 py-4 font-bold">Collection</th>
+                  <th class="text-right px-5 py-4 font-bold">MOQ</th>
+                  <th class="text-right px-5 py-4 font-bold">Cartons</th>
+                  <th class="text-right px-5 py-4 font-bold">Unit price</th>
+                  <th class="text-right px-5 py-4 font-bold">Cash to enter</th>
+                </tr>
+              </thead>
+              <tbody>
+                {showcase.map((r) => (
+                  <tr class="border-b border-white/5 last:border-0">
+                    <td class="px-5 py-4"><a href={`/product/${r.id}`} class="text-white hover:text-gold transition font-bold">{r.id}</a></td>
+                    <td class="px-5 py-4 text-gray-500 text-xs whitespace-nowrap">{r.cat}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.moq}</td>
+                    <td class="px-5 py-4 text-right text-gold font-bold">{r.cartons}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">${r.price}</td>
+                    <td class="px-5 py-4 text-right text-white">${r.cash.toLocaleString('en-US')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Median cash to enter across the catalogue is about ${medianCash.toLocaleString('en-US')}. The highest is the
+            {' '}{maxCash.id} at roughly ${maxCash.cash.toLocaleString('en-US')} — a perfectly good model that makes a
+            terrible test order.
+          </p>
+          <p class="text-gray-500 text-sm">
+            Cash to enter is minimum × unit price, ex-works, before freight and before any packaging run. It is not a
+            quotation; it is the size of the commitment.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">How to lower the commitment without lying to yourself</h2>
+          <p>
+            There are four honest ways to reduce a first order, and one dishonest one.
+          </p>
+          <p>
+            <span class="text-white">Test on the low-minimum models first.</span> Order the two or three models that sit
+            at one to three cartons, and treat the rest of the range as a second order. You lose breadth in the first
+            month and gain the ability to reorder what works.
+          </p>
+          <p>
+            <span class="text-white">Compare cash, not price.</span> A model at a high unit price with a small minimum
+            can need less money than a cheap model with a big one. The table above is sorted the way a bank account
+            sorts, not the way a price list does.
+          </p>
+          <p>
+            <span class="text-white">Check the carton before you negotiate.</span> If a minimum is six cartons, the
+            question is whether six cartons fit your storage and your cash, not whether the supplier will do four. The
+            answer to the second question is nearly always no, and asking it wastes the goodwill you need later for
+            something that matters.
+          </p>
+          <p>
+            <span class="text-white">Use a sample to test the product, not the market.</span> A sample tells you whether
+            the item is right. It tells you nothing about whether it sells. Buyers who expect a sample to de-risk a
+            market test usually order the same quantity anyway.
+          </p>
+          <p>
+            <span class="text-gray-500">The dishonest one</span> is ordering below the minimum and hoping nobody notices.
+            What arrives is a repacked carton, and the first thing you lose is the ability to claim a shortage.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What to ask before you compare two suppliers</h2>
+          <p>
+            Ask both for the same five numbers: minimum in pieces, pieces per carton, carton dimensions, CBM, and the
+            price at the minimum. A supplier who answers four of the five is telling you which one they would rather you
+            did not check.
+          </p>
+          <p>
+            Our own version of that answer is published as a single downloadable table — 41 models, minimums, carton
+            sizes, CBM and pieces per container — so the comparison can be made before a single email is sent.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Questions buyers ask about minimums</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Open the packing dataset, pick two models that sit at one or two cartons, and send those item numbers with the
+          destination country. The quotation comes back with the carton count already worked out.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/packing-data" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Download the packing data</a>
+          <a href={`/product/${byCash[0].id}`} class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">See the cheapest to start</a>
+          <a href="/industries/online-sellers" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">For online sellers</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>

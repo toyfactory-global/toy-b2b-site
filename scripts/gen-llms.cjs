@@ -27,6 +27,10 @@ const CAT_BLURB = {
 };
 
 const GUIDES = [
+  ['toy-moq-cartons-guide', 'Toy MOQ Explained: Why a 300-Piece Minimum Is Not a 300-Piece Order', '2026-11-21'],
+  ['20gp-vs-40hq-toys', '20GP or 40HQ for Toys? The Carton Maths That Decides It', '2026-11-21'],
+  ['toy-packaging-formats', 'Colour Box, Display Box or Sealed Box: Choosing Toy Packaging', '2026-11-21'],
+  ['how-to-pay-china-toy-supplier', 'How to Pay a Chinese Toy Supplier Without Losing the Deposit', '2026-11-21'],
   ['water-gun-models-compared', 'Electric Water Guns Compared: Every Model by Price, MOQ and Container Load', '2026-11-04'],
   ['verify-china-toy-factory', 'How to Verify a China Toy Factory Before You Pay a Deposit', '2026-11-04'],
   ['china-toy-sourcing-guide', 'How to Source Toys from China: Factory Direct Buying Guide 2026', '2026-08-19'],

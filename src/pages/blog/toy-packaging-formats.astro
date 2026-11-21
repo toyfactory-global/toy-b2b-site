@@ -1,0 +1,264 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'toy-packaging-formats',
+  title: 'Colour Box, Display Box or Sealed Box: Choosing Toy Packaging',
+  description:
+    'The four packaging formats in a wholesale toy catalogue, what each one costs you in carton space, the six details a factory needs before it can quote, and why eleven of our own models deliberately show no format.',
+  date: '2026-11-21',
+  category: 'Buying Guides',
+  image: '/images/products/TF210951.webp',
+});
+
+const firstNumber = (v: any) => {
+  const m = String(v ?? '').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+};
+
+const normalise = (raw: any) => {
+  const s = String(raw ?? '').trim();
+  if (!s || /^0\s*PCS$/i.test(s) || /^\d+\s*PCS$/i.test(s)) return null;
+  if (/display/i.test(s)) return 'Display box';
+  if (/colour|color/i.test(s)) return 'Colour box';
+  if (/sealed/i.test(s)) return 'Sealed box';
+  if (/e-?commerce/i.test(s)) return 'E-commerce box';
+  return s;
+};
+
+const rows = products.map((p: any) => ({
+  id: p.id,
+  cat: p.category,
+  moq: p.moq,
+  price: p.price,
+  format: normalise(p.specs?.inner_qty),
+  pack: p.specs?.packing_size || '',
+  carton: p.specs?.carton_size || '',
+  qpc: firstNumber(p.specs?.qty_per_carton) || 0,
+  cbm: firstNumber(p.specs?.cbm) || 0,
+}));
+
+const counts: { [k: string]: number } = {};
+rows.forEach((r: any) => {
+  const k = r.format || 'Not recorded';
+  counts[k] = (counts[k] || 0) + 1;
+});
+const order = ['Colour box', 'Display box', 'Sealed box', 'E-commerce box', 'Not recorded'];
+const tally = order.filter((k) => counts[k]).map((k) => ({ label: k, count: counts[k] }));
+
+const examples = ['Colour box', 'Display box', 'Sealed box', 'E-commerce box']
+  .map((f) => rows.filter((r: any) => r.format === f && r.cbm > 0)[0])
+  .filter(Boolean) as any[];
+
+const recorded = rows.filter((r: any) => r.format).length;
+const missing = rows.length - recorded;
+
+const faqs = [
+  {
+    q: 'What is the difference between a colour box and a display box?',
+    a: 'A colour box is a printed retail carton, one product per box, designed to sit on a shelf or hang. A display box holds several units and is built to be opened in store so the products show without being unpacked individually. Colour boxes are cheaper per unit; display boxes save labour on the shop floor and cost more in carton space.',
+  },
+  {
+    q: 'Does the packaging format change the container load?',
+    a: 'Yes, and usually more than the product does. The retail box sets the shipping carton, the shipping carton sets the CBM, and the CBM sets the container. A model that looks identical on the shelf can take twice the volume of a competitor purely because of how it is boxed.',
+  },
+  {
+    q: 'Why do some models on this site show no packaging format?',
+    a: `Because the format has not been recorded against that model in our product records. ${missing} of the ${rows.length} models are in that position. The page leaves the field out rather than printing a guess, since a wrong format is worse than a blank one — it survives all the way to the printing plate.`,
+  },
+  {
+    q: 'What do I need to send before a packaging quote?',
+    a: 'Six things: the retail box dimensions, the barcode data, the age marking and its exact wording, the language or languages on the box, the units per inner box, and the shipping carton marking. A project that stalls is almost always waiting for one of those six, not for the mould.',
+  },
+  {
+    q: 'Can the box be changed without retooling the toy?',
+    a: 'Usually yes — packaging is a separate production step. That is also why a packaging change does not reduce a model minimum but can add a packaging minimum of its own, because the printed box is produced in its own run.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="Colour Box, Display Box or Sealed Box: Toy Packaging Guide"
+  description={post.description}
+  keywords="toy packaging types, colour box vs display box, sealed box toys, e-commerce box toys, toy packaging specification"
+  jsonLd={[post, blogBreadcrumb(post.title, 'toy-packaging-formats'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Buying Guides</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 5 min read</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          Colour box, display box or sealed box: choosing toy packaging
+        </h1>
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          The box is not decoration. It sets the shipping carton, the carton sets the CBM, and the CBM decides whether a
+          container is half empty. Choose the format before you choose the container.
+        </p>
+      </div>
+
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The four formats, and what each one is for</h2>
+          <p>
+            <span class="text-white">Colour box.</span> A printed retail carton, one product inside, designed for a
+            shelf or a peg. The default for retail. Cheapest per unit, and the one most buyers mean when they say
+            &ldquo;normal packaging&rdquo;.
+          </p>
+          <p>
+            <span class="text-white">Display box.</span> Holds several units and opens in store so the products present
+            themselves without being unpacked. It saves the retailer labour and costs you carton space, because the
+            display structure is mostly air.
+          </p>
+          <p>
+            <span class="text-white">Sealed box.</span> Closed retail packaging with no window and no display function.
+            Common where the product is an assortment, or where the box is meant to be opened at home rather than
+            examined in a shop.
+          </p>
+          <p>
+            <span class="text-white">E-commerce box.</span> Built for a parcel network rather than a shelf: stronger
+            board, no hang tab, dimensions that fit carrier size bands. It usually costs more than a colour box and saves
+            more than it costs once returns are counted.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What our own catalogue actually uses</h2>
+          <p>
+            Across {rows.length} models, {recorded} carry a recorded packaging format. The split looks like this:
+          </p>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/5 border border-white/10 my-8">
+            {tally.map((t) => (
+              <div class="bg-[#0A0A0F] px-5 py-6">
+                <div class="text-2xl font-display font-extrabold text-gold">{t.count}</div>
+                <div class="text-[9px] uppercase tracking-[0.2em] text-gray-500 mt-2">{t.label}</div>
+              </div>
+            ))}
+          </div>
+          <p>
+            Four examples, one per format, with the numbers that matter downstream:
+          </p>
+          <div class="overflow-x-auto border border-white/10 my-8">
+            <table class="w-full text-sm min-w-[720px]">
+              <thead>
+                <tr class="border-b border-white/10 text-[9px] uppercase tracking-[0.2em] text-gray-500">
+                  <th class="text-left px-5 py-4 font-bold">Model</th>
+                  <th class="text-left px-5 py-4 font-bold">Format</th>
+                  <th class="text-left px-5 py-4 font-bold">Retail box cm</th>
+                  <th class="text-right px-5 py-4 font-bold">Pcs/ctn</th>
+                  <th class="text-left px-5 py-4 font-bold">Shipping carton cm</th>
+                  <th class="text-right px-5 py-4 font-bold">CBM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {examples.map((r) => (
+                  <tr class="border-b border-white/5 last:border-0">
+                    <td class="px-5 py-4"><a href={`/product/${r.id}`} class="text-white hover:text-gold transition font-bold">{r.id}</a></td>
+                    <td class="px-5 py-4 text-gold text-xs">{r.format}</td>
+                    <td class="px-5 py-4 text-gray-400 text-xs whitespace-nowrap">{r.pack || '—'}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.qpc || '—'}</td>
+                    <td class="px-5 py-4 text-gray-400 text-xs whitespace-nowrap">{r.carton || '—'}</td>
+                    <td class="px-5 py-4 text-right text-gray-300">{r.cbm || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Why {missing} models show no format at all</h2>
+          <p>
+            Because it has not been recorded in our product data. That is an unglamorous answer, and it is the reason
+            those product pages show a blank instead of a label: a wrong packaging format does not stop at the web page.
+            It gets copied onto a purchase order, then onto a printing plate, and the mistake arrives by sea three months
+            later.
+          </p>
+          <p>
+            The same rule applies to carton weights and CBM. Where a figure is missing the row disappears; it is never
+            printed as a zero. A zero looks like a fact and quietly produces a wrong freight quote, which is worse than
+            an honest blank.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The six details a factory needs before it can quote a box</h2>
+          <p>
+            Send these in one go and a packaging quotation is usually a one-round conversation. Send them one at a time
+            and it becomes five.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/10 my-8">
+            {[
+              ['Retail box dimensions', 'Length × width × depth in millimetres, including lid or hang tab.'],
+              ['Barcode data', 'The actual numbers and symbology, plus where on the box they sit.'],
+              ['Age marking', 'Exact wording and position. It is a manufacturing instruction, not decoration.'],
+              ['Language', 'Which languages, and whether the copy is supplied or translated.'],
+              ['Units per inner', 'How many retail boxes go inside one inner box, if there is one.'],
+              ['Carton marking', 'Shipping marks, side marks and any customer-specific label.'],
+            ].map(([k, v]) => (
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <div class="text-white text-sm font-bold mb-1">{k}</div>
+                <div class="text-gray-400 text-sm leading-[1.7]">{v}</div>
+              </div>
+            ))}
+          </div>
+          <p>
+            One thing worth knowing about age marking: it is a claim about the product, so it cannot be chosen to suit a
+            market. If the artwork says 3+, the box says 3+. Changing it to reach a different shelf is the fastest way to
+            make a compliance problem out of a packaging decision.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Packaging questions</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          If you already know the format you want, send the six details with the item number. If you do not, send the
+          shelf or parcel dimensions you are working with and the format question gets answered against them.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/products" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Browse the catalogue</a>
+          <a href="/oem-odm" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">OEM / ODM process</a>
+          <a href="/packing-data" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Packing data</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>

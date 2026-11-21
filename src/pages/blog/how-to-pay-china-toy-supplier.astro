@@ -1,0 +1,203 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import facts from '../../data/factory.json';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'how-to-pay-china-toy-supplier',
+  title: 'How to Pay a Chinese Toy Supplier Without Losing the Deposit',
+  description:
+    'Incoterms and payment methods are two different decisions. What T/T, L/C, PayPal and money transfer actually cost you in risk, and the one check that stops most deposit fraud before it starts.',
+  date: '2026-11-21',
+  category: 'Buying Guides',
+  image: '/images/products/TF211082.webp',
+});
+
+const faqs = [
+  {
+    q: 'What is the difference between FOB and T/T?',
+    a: 'They answer different questions. FOB, CIF, EXW and CFR describe where the goods stop being the seller\u2019s responsibility and who pays the freight. T/T, L/C and the rest describe how the money moves. A quotation normally fixes both, and confusing the two is how buyers end up thinking a CIF price includes the duty.',
+  },
+  {
+    q: 'Is a deposit normal for a first order?',
+    a: 'Yes. A deposit plus a balance before shipment is the standard structure in Chinese manufacturing, because the factory buys materials before it can produce. The split is a commercial term and belongs on the quotation and again on the invoice; it is not something to agree verbally.',
+  },
+  {
+    q: 'When is a letter of credit worth the cost?',
+    a: 'When the amount is large enough that losing it would hurt more than the bank charges, and when both sides can meet the document requirements exactly. An L/C protects nobody if the paperwork has a discrepancy, and discrepancies are common on first shipments. For small first orders it usually costs more than it protects.',
+  },
+  {
+    q: 'How do I check that a bank account belongs to the supplier?',
+    a: 'Compare the account name on the invoice against the company name on the quotation and, where you have it, on the business licence. If the account name is a person rather than a company, ask why in writing. Then confirm the details through a channel you already had before the invoice arrived \u2014 never through a number or address supplied in the same email as the payment request.',
+  },
+  {
+    q: 'Which payment methods does the factory accept?',
+    a: `The methods recorded in our factory assessment are ${facts.trade.paymentMethods.join(', ')}. Which one applies to your order is stated on the quotation. They are not equivalent: bank transfer and letter of credit give you a paper trail, while money transfer services give you very little recourse, so they are normally used only for samples and small amounts.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="How to Pay a Chinese Toy Supplier Without Losing the Deposit"
+  description={post.description}
+  keywords="pay chinese toy supplier, toy supplier deposit, T/T payment china factory, letter of credit toys, supplier bank account fraud"
+  jsonLd={[post, blogBreadcrumb(post.title, 'how-to-pay-china-toy-supplier'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Buying Guides</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 5 min read</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          How to pay a Chinese toy supplier without losing the deposit
+        </h1>
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          Most deposit losses are not caused by a dishonest factory. They are caused by a buyer paying the right amount
+          to the wrong account, or by a payment method that offered no recourse when something went wrong.
+        </p>
+      </div>
+
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Two decisions, often confused</h2>
+          <p>
+            <span class="text-white">Incoterms</span> — FOB, CIF, EXW, CFR — say where the goods stop being the
+            seller&rsquo;s problem and who pays the freight. <span class="text-white">Payment methods</span> — T/T, L/C,
+            PayPal and the rest — say how the money moves. A quotation fixes both, usually on the same page, which is
+            exactly why buyers mix them up.
+          </p>
+          <p>
+            A CIF price does not include your import duty. An FOB price does not include freight. A T/T payment says
+            nothing about who owns the goods at the port. If a quotation only names one of the two, ask for the other
+            before you send anything.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The one check that stops most deposit fraud</h2>
+          <p>
+            Before the first payment, compare three names: the company name on the quotation, the company name on the
+            invoice, and the <span class="text-white">account holder name</span> on the bank details. All three should be
+            the same legal entity.
+          </p>
+          <p>
+            If the account holder is a person rather than a company, ask why in writing and keep the answer. There are
+            legitimate reasons — small workshops, sole traders — but a legitimate supplier will explain rather than get
+            annoyed.
+          </p>
+          <p>
+            Then the part almost everyone skips: confirm the bank details through a channel you already had <em>before</em>{' '}
+            the invoice arrived. Invoice-interception fraud works by sending a genuine-looking invoice with changed
+            account numbers, and it is convincing precisely because everything else on the document is real. A phone call
+            to a number you already had defeats it completely.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What each method actually costs you</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/10 my-8">
+            {[
+              ['T/T (bank transfer)', 'Cheap, fast, standard. Gives you a paper trail and a named beneficiary. The risk sits with you: once sent, recovery depends on the bank and the police, which in practice means it does not happen.'],
+              ['L/C (letter of credit)', 'Protects both sides through documents rather than trust. Costs bank fees at both ends, needs exact paperwork, and a single discrepancy can stall payment. Sensible for large orders, heavy for a first sample-sized shipment.'],
+              ['PayPal', 'Useful for samples and small balances because the buyer has a dispute route. Expensive as a percentage on large sums, which is why it rarely appears on a production invoice.'],
+              ['Money transfer services', 'Fast and available, but built for person-to-person transfers with almost no recourse. Fine for a sample fee; a poor fit for a deposit.'],
+              ['Credit card', 'Similar trade-off to PayPal: dispute rights in exchange for a fee the seller usually absorbs.'],
+              ['Cash', 'Only realistic when both sides are in the same room — a show, a factory visit. Not a mechanism for an international order.'],
+            ].map(([k, v]) => (
+              <div class="bg-[#0A0A0F] px-6 py-5">
+                <div class="text-white text-sm font-bold mb-2">{k}</div>
+                <div class="text-gray-400 text-sm leading-[1.7]">{v}</div>
+              </div>
+            ))}
+          </div>
+          <p class="text-gray-500 text-sm">
+            The methods the factory records as accepted are {facts.trade.paymentMethods.join(', ')}, on{' '}
+            {facts.trade.incoterms.join(', ')} terms. Which combination applies to your order is fixed on the quotation.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Red flags worth walking away from</h2>
+          <p>
+            <span class="text-white">Account details changed after the order was confirmed.</span> This is the single most
+            common fraud pattern. Verify by phone, not by replying to the email.
+          </p>
+          <p>
+            <span class="text-white">Pressure to pay the full amount up front for a first order.</span> A deposit exists
+            because the factory needs materials; a demand for 100% before production is a different proposition and should
+            come with a different price.
+          </p>
+          <p>
+            <span class="text-white">A quotation that names neither an Incoterm nor a payment method.</span> It is not a
+            quotation, it is a price.
+          </p>
+          <p>
+            <span class="text-white">Refusal to put the deposit split on the invoice.</span> Verbal terms are the ones
+            that get remembered differently six weeks later.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What good looks like on paper</h2>
+          <p>
+            A clean first transaction has four documents: a quotation naming the Incoterm, the payment split, the lead
+            time and the carton data; a proforma invoice with the bank details and the company name matching; a payment
+            confirmation from your bank; and an inspection or loading record before the balance is released.
+          </p>
+          <p>
+            None of that is exotic. It is the difference between a supplier relationship that survives a problem and one
+            that ends with two companies blaming each other across a language barrier.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Payment questions</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Ask for a proforma invoice before you pay anything. It should carry the Incoterm, the split, and a bank account
+          whose name matches the company on the quotation.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Request a proforma</a>
+          <a href="/blog/verify-china-toy-factory" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Verify the factory first</a>
+          <a href="/factory" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Factory figures</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
