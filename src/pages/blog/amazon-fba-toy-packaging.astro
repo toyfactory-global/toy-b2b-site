@@ -1,0 +1,178 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'amazon-fba-toy-packaging',
+  title: 'FBA Toys: The Packaging Decisions That Decide Your Landed Cost',
+  description:
+    'Selling toys through a fulfilment network is a packaging problem before it is a marketing one. The four decisions to fix before the container leaves, and the ones Amazon changes without telling you.',
+  date: '2026-11-21',
+  category: 'Logistics',
+  image: '/images/products/TF213415.webp',
+});
+
+const faqs = [
+  {
+    q: 'Can a toy ship in its retail box without a poly bag?',
+    a: 'Sometimes, and it depends on the box. A sturdy retail carton with no exposed openings is usually accepted as-is; a box with a window, a hang tab or a loose lid normally needs a bag or a sleeve. The rule of thumb is whether it can be damaged or spill small parts in transit, not whether it looks finished.',
+  },
+  {
+    q: 'Do I need a suffocation warning on the bag?',
+    a: 'If the bag opening is large enough for a head to fit — the commonly used threshold is around five inches — a suffocation warning is expected. Amazon publishes the exact wording and thresholds in Seller Central and updates them, so take the current text from there rather than from a blog post, including this one.',
+  },
+  {
+    q: 'Who applies the FNSKU label?',
+    a: 'Either the factory or your prep centre, and the choice changes your unit cost. Factory labelling is cheaper per unit and risks a whole carton if the label placement is wrong; a prep centre costs more and can fix mistakes locally. Decide before the production run, not after it.',
+  },
+  {
+    q: 'What are the carton limits for FBA?',
+    a: 'Amazon publishes weight and dimension limits per marketplace and changes them. Most sellers work to roughly 23 kg per carton and avoid oversized boxes, but confirm the current figure in Seller Central for the marketplace you are shipping to before you approve carton dimensions with the factory.',
+  },
+  {
+    q: 'Do battery toys need anything extra for FBA?',
+    a: 'Yes — a lithium battery inside the product can affect both the inbound shipment rules and the listing. Ask the factory for the UN38.3 summary and the MSDS for the exact item, and declare the battery where the marketplace asks for it. Shipping documents and listing data are two separate requirements.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<Layout
+  title="FBA Toys: Packaging Decisions That Decide Landed Cost"
+  description={post.description}
+  keywords="FBA toys, amazon toy packaging, FNSKU labelling toys, toy poly bag suffocation warning, fba carton limits"
+  jsonLd={[post, blogBreadcrumb(post.title, 'amazon-fba-toy-packaging'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Logistics</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 5 min read</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          FBA toys: the packaging decisions that decide your landed cost
+        </h1>
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          Selling toys through a fulfilment network is a packaging problem before it is a marketing problem. Four
+          decisions are made at the factory, and three of them cannot be fixed cheaply afterwards.
+        </p>
+      </div>
+
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The retail box is not the shipping unit</h2>
+          <p>
+            In a shop, a printed retail box is the product presentation. In a fulfilment centre it is also a parcel, and
+            parcels get dropped. A box designed for a shelf edge has thin corners and no tolerance for a six-foot fall
+            onto concrete — which is why the first question is not "how does it look", it is "does it survive alone".
+          </p>
+          <p>
+            The usual answer is a bag or a sleeve over the retail box. That costs money per unit and saves money per
+            return, and the balance point is different for a two-dollar item and a twenty-dollar one.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Four decisions, fixed at the factory</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/10 my-8">
+            {[
+              ['Bag or no bag', 'Driven by the retail box structure and by whether small parts can escape. Changes unit cost and carton volume.'],
+              ['Where the label goes', 'Factory labelling is cheaper per unit; a prep centre is easier to correct. Decide before the run starts.'],
+              ['Carton weight and size', 'Set by the marketplace limits. A carton that is 2 kg over is repacked on arrival, at your cost.'],
+              ['Battery declaration', 'A lithium pack inside the product touches both shipping documents and the listing. Ask early.'],
+            ].map(([k, v]) => (
+              <div class="bg-[#0A0A0F] px-6 py-6">
+                <div class="text-white font-semibold mb-2">{k}</div>
+                <div class="text-gray-400 text-sm leading-[1.7]">{v}</div>
+              </div>
+            ))}
+          </div>
+          <p>
+            All four are quoted with the goods, not after them. That is the difference between a landed cost you can
+            calculate and one you discover.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What Amazon changes without telling you</h2>
+          <p>
+            Weight limits, dimension limits, suffocation-warning wording, poly bag thresholds and inbound labelling
+            requirements are all published in Seller Central and revised from time to time. Any figure quoted in a blog
+            post — including this one — is a snapshot.
+          </p>
+          <p>
+            The working method is simple: before you approve carton dimensions with the factory, open Seller Central and
+            take the current numbers from there. Then send them to the factory as a specification rather than as a
+            question. A factory cannot guess your marketplace's rules and should not pretend to.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The carton you approve is the carton you pay freight on</h2>
+          <p>
+            A retail box that grows by ten millimetres to fit a display window can push the shipping carton into a
+            different CBM band, and the freight per unit moves with it. This is why the packing columns are published
+            per model rather than summarised: the packaging decision and the freight decision are the same decision, taken
+            months apart.
+          </p>
+          <p>
+            If you are comparing two suppliers for the same item, compare the CBM per unit as well as the unit price. The
+            one with the bigger carton is often the more expensive supplier even when the invoice says otherwise.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">A note on age marking and small parts</h2>
+          <p>
+            Age marking is a statement about the product, not a marketing choice. Where the artwork prints an age, the
+            page shows it; where it does not, the page stays silent. It is worth knowing before you build a listing around
+            a product, because changing the number to reach a different customer is the fastest way to turn a packaging
+            question into a compliance problem.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">FBA packaging questions</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Send the marketplace, the item number and the carton limits you are working to. The quotation comes back with
+          the packaging option priced and the carton confirmed against those limits.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/industries/online-sellers" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">For online sellers</a>
+          <a href="/blog/toy-packaging-formats" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Packaging formats</a>
+          <a href="/packing-data" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Packing data</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>

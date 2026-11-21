@@ -27,6 +27,8 @@ const CAT_BLURB = {
 };
 
 const GUIDES = [
+  ['battery-toys-shipping', 'Shipping Battery Toys: UN38.3, MSDS and What the Forwarder Needs', '2026-11-21'],
+  ['amazon-fba-toy-packaging', 'FBA Toys: The Packaging Decisions That Decide Your Landed Cost', '2026-11-21'],
   ['aql-inspection-toys', 'AQL Inspection for Toys: How Many Pieces Actually Get Checked', '2026-11-21'],
   ['toy-moq-cartons-guide', 'Toy MOQ Explained: Why a 300-Piece Minimum Is Not a 300-Piece Order', '2026-11-21'],
   ['20gp-vs-40hq-toys', '20GP or 40HQ for Toys? The Carton Maths That Decides It', '2026-11-21'],

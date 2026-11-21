@@ -34,6 +34,8 @@ const pages = [
   { loc: '/blog/water-gun-wholesale-guide', priority: 0.6, changefreq: 'monthly' },
   { loc: '/blog/track-car-wholesale-guide', priority: 0.6, changefreq: 'monthly' },
   { loc: '/blog/china-toy-sourcing-guide', priority: 0.6, changefreq: 'monthly' },
+  { loc: '/blog/battery-toys-shipping', priority: 0.8, changefreq: 'monthly' },
+  { loc: '/blog/amazon-fba-toy-packaging', priority: 0.7, changefreq: 'monthly' },
   { loc: '/blog/aql-inspection-toys', priority: 0.8, changefreq: 'monthly' },
   { loc: '/blog/toy-moq-cartons-guide', priority: 0.8, changefreq: 'monthly' },
   { loc: '/blog/20gp-vs-40hq-toys', priority: 0.8, changefreq: 'monthly' },

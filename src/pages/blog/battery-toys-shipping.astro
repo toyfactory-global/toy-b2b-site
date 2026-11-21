@@ -1,0 +1,199 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import products from '../../data/products.json';
+import { blogPosting, blogBreadcrumb } from '../../lib/schema';
+
+const post = blogPosting({
+  slug: 'battery-toys-shipping',
+  title: 'Shipping Battery Toys: UN38.3, MSDS and What the Forwarder Needs',
+  description:
+    'Battery toys are not refused because of the toy. They are refused because a document is missing. What UN38.3, MSDS and the lithium packing instructions actually are, and the order to collect them in.',
+  date: '2026-11-21',
+  category: 'Logistics',
+  image: '/images/products/TF210969.webp',
+});
+
+const faqs = [
+  {
+    q: 'Why does a battery toy need UN38.3 at all?',
+    a: 'UN38.3 is the transport test for a lithium cell or battery — altitude, thermal, vibration, shock, short circuit and a few others. It is a condition of shipping lithium by air and, in most routings, by sea as well. The test belongs to the cell or pack, not to the toy, so the same pack shared across several models shares one report.',
+  },
+  {
+    q: 'What is the difference between UN38.3 and MSDS?',
+    a: 'UN38.3 is the test summary — proof the battery passed the transport tests. MSDS is the safety data sheet, a chemistry and hazard document. Forwarders usually ask for both, and an airline will not accept one in place of the other.',
+  },
+  {
+    q: 'What does PI967 mean?',
+    a: 'It is the packing instruction for lithium ion cells and batteries contained in equipment — the case where the battery is inside the toy rather than shipped loose. Section II of that instruction is the route most toy shipments use, and it carries conditions on cell capacity and state of charge. Your forwarder will tell you which section applies to your shipment; it is not a decision the factory can make for you.',
+  },
+  {
+    q: 'Are dry-cell batteries shipped inside the toy?',
+    a: 'No. Dry-cell batteries are never included with shipments — the toy is packed without them and the buyer sources them locally. Lithium batteries are different: where a model uses lithium, the pack is installed in the unit and shipped inside it. That distinction is stated on the product page because it changes what paperwork you need.',
+  },
+  {
+    q: 'Can you send the battery documents with the quotation?',
+    a: 'Testing scope varies by model and by market, so the answer is given for the exact item number you are ordering. Contact us if you need the UN38.3 report or the MSDS for your forwarder, and say which model — the reply comes in writing rather than as a generic pack of PDFs.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+
+const total = products.length;
+---
+
+<Layout
+  title="Shipping Battery Toys: UN38.3, MSDS and Forwarder Documents"
+  description={post.description}
+  keywords="shipping battery toys, UN38.3 toys, MSDS lithium battery, PI967 section II, air freight toys battery"
+  jsonLd={[post, blogBreadcrumb(post.title, 'battery-toys-shipping'), faqSchema]}
+>
+  <nav class="bg-dark/95 border-b border-white/5 py-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+      <a href="/" class="text-xl font-display font-extrabold tracking-tighter hover:text-gold transition">
+        TOY<span class="text-gold">FACTORY</span>
+      </a>
+      <a href="/blog" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-2">
+        <span>&larr;</span> BACK TO BLOG
+      </a>
+    </div>
+  </nav>
+
+  <article class="py-24 md:py-32 px-8 bg-[#0A0A0F] min-h-screen">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="bg-gold/10 text-gold text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-gold/20">Logistics</span>
+          <span class="text-gray-600 text-[10px] uppercase tracking-widest">2026-11-21 · 6 min read</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+          Shipping battery toys: UN38.3, MSDS and what the forwarder actually needs
+        </h1>
+        <p class="text-gray-400 text-lg leading-[1.8] max-w-3xl">
+          Battery toys are rarely refused because of the toy. They are refused because one document was missing, or
+          because the battery inside the box was not the battery on the paperwork. Here is what each document is for and
+          the order to collect them in.
+        </p>
+      </div>
+
+      <div class="space-y-10 text-gray-400 leading-[1.9]">
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">First, which kind of battery</h2>
+          <p>
+            Two cases behave completely differently, and confusing them is the most common source of a stuck container.
+          </p>
+          <p>
+            <span class="text-white">Dry cell (AA, AAA, button cells).</span> Normally not shipped inside the toy. The
+            buyer sources them locally, which removes the whole regulatory question — this is the policy on our own
+            product pages, and it exists because shipping cells that a local shop sells for pennies is a bad trade for
+            paperwork and freight.
+          </p>
+          <p>
+            <span class="text-white">Lithium ion or lithium polymer.</span> Installed in the unit and shipped inside it.
+            This is the case that needs documents, because lithium is a dangerous good in transport regardless of what it
+            is screwed into.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">The three documents, in plain terms</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/10 my-8">
+            {[
+              ['UN38.3', 'The transport test summary for the cell or pack: altitude simulation, thermal cycling, vibration, shock, external short circuit, impact and overcharge. It belongs to the battery, not the toy.'],
+              ['MSDS', 'The safety data sheet: chemistry, hazards, handling and first aid. A chemistry document, not a test report.'],
+              ['Packing instruction', 'The route the shipment travels under — for lithium ion inside equipment that is PI967. Section II is the common one for toys; your forwarder confirms which applies.'],
+            ].map(([k, v]) => (
+              <div class="bg-[#0A0A0F] px-6 py-6">
+                <div class="text-white font-display font-bold mb-2">{k}</div>
+                <div class="text-gray-400 text-sm leading-[1.7]">{v}</div>
+              </div>
+            ))}
+          </div>
+          <p>
+            Airlines ask for the first two before they will accept the third. A forwarder asking for "the battery papers"
+            usually means all three, and a supplier who sends only the MSDS is the reason a shipment sits at the airport
+            for a week.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Collect them in this order</h2>
+          <p>
+            <span class="text-white">1. Confirm what is inside the product.</span> Capacity in watt-hours, cell type and
+            whether the pack is installed or loose. This determines everything downstream, and it is a fact about the
+            item number rather than about the range.
+          </p>
+          <p>
+            <span class="text-white">2. Get the UN38.3 summary for that cell or pack.</span> If a factory shares one pack
+            across several models, one report covers all of them — ask which models it covers rather than assuming.
+          </p>
+          <p>
+            <span class="text-white">3. Get the MSDS.</span> It should match the capacity on the UN38.3 and on the
+            product label. A mismatch between three documents is the fastest way to be inspected.
+          </p>
+          <p>
+            <span class="text-white">4. Ask your forwarder which packing instruction applies</span> and what state of
+            charge they require. Air shipments of lithium ion batteries carry a state-of-charge limit; sea does not, but
+            the carrier's own rules may. This is the forwarder's call, not the factory's.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">What actually goes wrong in practice</h2>
+          <p>
+            <span class="text-white">The label does not match the paperwork.</span> A toy marked 3.7V/1200mAh shipped
+            against a report for a 3.7V/800mAh pack. It looks trivial and it is the single most common reason a
+            consignment is held.
+          </p>
+          <p>
+            <span class="text-white">The battery was changed and nobody told the buyer.</span> Suppliers substitute a
+            pack when one is short. The toy still works; the documents no longer describe it. Ask, in writing, that any
+            battery substitution be notified before shipment.
+          </p>
+          <p>
+            <span class="text-white">Air freight booked without asking.</span> Sea is more forgiving. If your forwarder
+            books air because it is faster, the document set changes and the schedule does not survive the discovery.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-display font-bold text-white mb-4 tracking-tight">Where this leaves our own catalogue</h2>
+          <p>
+            Of the {total} models published here, the ones that carry lithium packs are the ones that need this
+            paperwork — and testing scope varies by model and by market, so it is confirmed per item number rather than
+            claimed for the catalogue. Product pages state whether batteries are included; the documents are answered in
+            writing when you ask for the model you are ordering.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 border-t border-white/10 pt-12">
+        <h2 class="text-2xl font-display font-bold text-white mb-8 tracking-tight">Battery shipping questions</h2>
+        <div class="space-y-8">
+          {faqs.map((f) => (
+            <div>
+              <h3 class="text-white text-lg font-bold mb-3 tracking-tight">{f.q}</h3>
+              <p class="text-gray-400 leading-[1.9]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-[#0F0F14] border border-white/5 p-8 mt-16">
+        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] block mb-4">Next step</span>
+        <p class="text-gray-300 leading-[1.9] mb-6">
+          Tell us the item number and your forwarder&rsquo;s question. The reply states what exists for that model rather
+          than sending a folder of documents that may belong to something else.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="bg-gold text-dark font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white transition">Ask about a model</a>
+          <a href="/blog/how-to-pay-china-toy-supplier" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Payment risk</a>
+          <a href="/packing-data" class="border border-white/15 text-white font-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:border-gold hover:text-gold transition">Packing data</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
