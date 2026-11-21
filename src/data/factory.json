@@ -10,6 +10,14 @@
     "clients, trade-show participation, overseas showroom, recall procedure.",
     "If a line is not in this file, the page must not claim it."
   ],
+  "ownerStated": {
+    "_note": "Stated by the site owner, not part of the SGS report. Kept separate so nobody deletes it as unsupported, and so nobody mistakes it for audited data.",
+    "foundingYear": 2001,
+    "foundingNote": "Owner's own claim (toy manufacturing in Chenghai since 2001). The business licence in the SGS report shows incorporation on 2018-04-16. Owner decided on 2026-11-21 to keep 2001 and not publish the licence or the incorporation date.",
+    "tradeShows": ["Canton Fair, Guangzhou", "Hong Kong Toys & Games Fair"],
+    "tradeShowNote": "Past participation confirmed by the owner on 2026-11-21; not exhibiting every year. The SGS form records no trade show because none fell in the assessment window.",
+    "productRecallProcedure": "Not documented. Owner decided on 2026-11-21 to leave it off the site entirely."
+  },
   "assessment": {
     "body": "SGS",
     "type": "Production and Trading Assessment",
