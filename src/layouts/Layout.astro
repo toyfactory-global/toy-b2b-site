@@ -1,5 +1,6 @@
 ---
 import { GA4_ID, CLARITY_ID } from '../config/analytics';
+import InquiryGuard from '../components/InquiryGuard.astro';
 
 interface Props {
 	title: string;
@@ -227,14 +228,16 @@ const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/h
 			})();
 		</script>
 	<!-- LEAD LOG. A fire-and-forget copy of every inquiry, sent alongside the
-	     normal submission. The form still posts straight to Formspree, so a
-	     blocked or lost beacon costs us one row in the log, never the inquiry. -->
+	     normal submission. This project has no D1 binding, so the beacon — not
+	     /api/inquiry — is what writes the row; a blocked or lost beacon costs us
+	     one row in the log, never the inquiry. Fires for both the old direct
+	     Formspree action and the /api/inquiry proxy. -->
 	<script is:inline>
 		(function () {
 			var LOG = 'https://kidstoyglobal.com/api/inquiry-log';
 			function send(form) {
 				var action = form.getAttribute('action') || '';
-				if (action.indexOf('formspree.io') === -1) return;
+				if (action.indexOf('formspree.io') === -1 && action.indexOf('/api/inquiry') === -1) return;
 				try {
 					var body = new URLSearchParams();
 					new FormData(form).forEach(function (value, key) {
@@ -257,6 +260,7 @@ const ogImage = `https://toyfactoryglobal.com${Astro.props.ogImage || '/images/h
 			);
 		})();
 	</script>
+	<InquiryGuard />
 	</body>
 </html>
 <style is:global>

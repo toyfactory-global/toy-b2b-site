@@ -643,7 +643,7 @@ const compareSet = [product, ...related.slice(0, 3)]
 
 					{/* This form used to have no action, no method and unnamed inputs, so
 					    every inquiry typed into a product page was discarded on submit. */}
-					<form action="https://formspree.io/f/mkoyapvg" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-10">
+					<form action="/api/inquiry" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-10">
 						<input type="hidden" name="_subject" value={`RFQ ${product.id} - ${product.name}`} />
 						<input type="hidden" name="item_number" value={product.id} />
 						<input type="hidden" name="product_page" value={`https://toyfactoryglobal.com/product/${product.id}`} />

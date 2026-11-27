@@ -1,0 +1,369 @@
+---
+/**
+ * Wires every inquiry form on the page to /api/inquiry instead of posting
+ * straight at Formspree.
+ *
+ * Why the submit is intercepted rather than left as a plain POST:
+ *   - The buyer stays on the page and gets an inline confirmation, instead of
+ *     being thrown onto a third-party domain after writing a long RFQ.
+ *   - Turnstile runs at submit time, not page load. Tokens are valid for 300 s
+ *     and single use, so a buyer who spends six minutes describing a container
+ *     order would otherwise submit an expired token.
+ *   - On failure the text stays in the form and we hand over WhatsApp + email,
+ *     so a rejected challenge never costs an inquiry.
+ *
+ * Degrades to a normal POST of the same payload (plus no token) if JS is off;
+ * the server tags those [unverified] rather than dropping them.
+ */
+---
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+
+<script is:inline>
+  (function () {
+    // toyfactoryglobal.com has its own widget on purpose: revoking one site
+    // must never take the other down. Leave empty until the key exists —
+    // the guard below then skips the widget and the server fails open.
+    var SITEKEY = "0x4AAAAAAGVYxwG8S6LcvgdS";
+    var WA =
+      "https://wa.me/8615976917707?text=" +
+      encodeURIComponent(
+        "Hello Toy Factory, the form on your website did not go through. My inquiry: "
+      );
+    var MAIL =
+      "mailto:hntoys7@sinuotoys.com?subject=Inquiry%20from%20toyfactoryglobal.com";
+
+    // Proof-of-page-load ticket, one per page load and shared by every form on
+    // the page. Issued by our own origin (/api/inquiry GET), so it keeps working
+    // on networks that block challenges.cloudflare.com — those buyers used to
+    // rely on the server failing open, and they must not start losing inquiries.
+    var ticketPromise = null;
+
+    function getTicket() {
+      if (ticketPromise) return ticketPromise;
+      ticketPromise = fetch("/api/inquiry", {
+        headers: { accept: "application/json" },
+        credentials: "same-origin",
+      })
+        .then(function (res) {
+          return res.ok ? res.json() : null;
+        })
+        .then(function (data) {
+          if (data && data.ticket && data.t && data.sig) {
+            return { t: data.t, sig: data.sig };
+          }
+          // Either the server has no signing key or it failed: clear the cache so
+          // a submit can try once more rather than being stuck on a null.
+          ticketPromise = null;
+          return null;
+        })
+        .catch(function () {
+          ticketPromise = null;
+          return null;
+        });
+      return ticketPromise;
+    }
+
+    function onReady(fn) {
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", fn);
+      } else {
+        fn();
+      }
+    }
+
+    onReady(function () {
+      var forms = document.querySelectorAll('form[action="/api/inquiry"]');
+      for (var i = 0; i < forms.length; i++) wire(forms[i]);
+    });
+
+    function wire(form) {
+      if (form.getAttribute("data-inq") === "1") return;
+      form.setAttribute("data-inq", "1");
+
+      var btn = form.querySelector('button[type="submit"]');
+      var box = document.createElement("div");
+      box.className = "pt-1";
+
+      var holder = document.createElement("div");
+
+      var status = document.createElement("p");
+      status.className = "inq-status text-sm font-bold mt-3 hidden";
+      status.setAttribute("role", "status");
+      status.setAttribute("aria-live", "polite");
+
+      box.appendChild(holder);
+      box.appendChild(status);
+      form.insertBefore(box, btn || null);
+
+      // Which page this form was on. Without it the digest's "page" column was
+      // permanently blank and an inquiry could not be traced to a product.
+      if (!form.querySelector('input[name="page_path"]')) {
+        var pp = document.createElement("input");
+        pp.type = "hidden";
+        pp.name = "page_path";
+        pp.value = window.location.pathname;
+        form.appendChild(pp);
+      }
+
+      // Start the ticket fetch now, not at submit time: it is a same-origin round
+      // trip and the buyer should never wait for it.
+      getTicket();
+
+      var widgetId = null;
+      var busy = false;
+
+      // Render the widget as soon as the Turnstile script is available.
+      // Rendering at submit time and calling execute() in the same tick never
+      // yields a token: the widget has not finished initialising, so the
+      // challenge hangs and every submission falls through on the timeout.
+      (function () {
+        var tries = 0;
+        (function bootWidget() {
+          tries++;
+          if (tries > 80) return;
+          if (!window.turnstile) {
+            setTimeout(bootWidget, 250);
+            return;
+          }
+          ensureWidget();
+          if (!widgetId) setTimeout(bootWidget, 1000);
+        })();
+      })();
+
+      function say(text, withContacts) {
+        if (withContacts) {
+          status.innerHTML =
+            text +
+            ' <a class="underline" href="' +
+            WA +
+            '" target="_blank" rel="noopener">WhatsApp</a> · <a class="underline" href="' +
+            MAIL +
+            '">' +
+            "hntoys7@sinuotoys.com</a>";
+        } else {
+          status.textContent = text;
+        }
+        status.classList.remove("hidden");
+      }
+
+      function clear() {
+        status.classList.add("hidden");
+        status.textContent = "";
+      }
+
+      var tokenWaiter = null;
+
+      function finishToken(token) {
+        if (!tokenWaiter) return;
+        var resolve = tokenWaiter;
+        tokenWaiter = null;
+        resolve(token || "");
+      }
+
+      function ensureWidget() {
+        if (widgetId || !window.turnstile || !SITEKEY) return;
+        try {
+          widgetId = window.turnstile.render(holder, {
+            sitekey: SITEKEY,
+            execution: "execute",
+            appearance: "interaction-only",
+            callback: function (token) {
+              finishToken(token);
+            },
+            "timeout-callback": function () {
+              finishToken("");
+            },
+            "error-callback": function () {
+              finishToken("");
+            },
+          });
+        } catch (e) {
+          widgetId = null;
+        }
+      }
+
+      // Resolves with a fresh token, or "" when we cannot get one in time.
+      // "" is not an error: the server fails open on a missing token.
+      //
+      // Do NOT call turnstile.reset() before execute(): reset is asynchronous
+      // and racing it against execute makes execute throw, which silently
+      // produced token-less submissions. The widget re-arms itself after each
+      // successful execute, so no reset is needed between attempts.
+      function getToken() {
+        return new Promise(function (resolve) {
+          if (!window.turnstile) return resolve("");
+          ensureWidget();
+          if (!widgetId) return resolve("");
+
+          var settled = false;
+          var timer = setTimeout(function () {
+            if (!settled) {
+              settled = true;
+              tokenWaiter = null;
+              resolve("");
+            }
+          }, 10000);
+
+          tokenWaiter = function (token) {
+            if (settled) return;
+            settled = true;
+            clearTimeout(timer);
+            resolve(token || "");
+          };
+
+          try {
+            var p = window.turnstile.execute(widgetId);
+            if (p && typeof p.then === "function") {
+              p.then(function (token) {
+                if (settled) return;
+                settled = true;
+                clearTimeout(timer);
+                tokenWaiter = null;
+                resolve(token || "");
+              }).catch(function () {
+                if (settled) return;
+                settled = true;
+                clearTimeout(timer);
+                tokenWaiter = null;
+                resolve("");
+              });
+            }
+          } catch (e) {
+            if (!settled) {
+              settled = true;
+              clearTimeout(timer);
+              tokenWaiter = null;
+              resolve("");
+            }
+          }
+        });
+      }
+
+      function succeed() {
+        // Only fires when the server confirmed the inquiry was actually forwarded, so
+        // bot submissions rejected at the Turnstile check never inflate the lead count.
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "generate_lead", {
+            form_name: form.getAttribute("id") || "inquiry",
+            page_path: window.location.pathname,
+          });
+        }
+        var card = document.createElement("div");
+        card.className =
+          "rounded-2xl bg-emerald-50 border-2 border-emerald-200 p-8 text-center";
+        card.innerHTML =
+          '<p class="font-black text-emerald-800 text-lg">Received — thank you.</p>' +
+          '<p class="text-sm text-emerald-700 mt-2 leading-relaxed">' +
+          "We reply within one business day. A model number and a target quantity get you a priced answer faster." +
+          "</p>";
+        if (form.parentNode) form.parentNode.replaceChild(card, form);
+      }
+
+      // Native submit: the browser posts the form and navigates to the server's
+      // HTML confirmation. Only used when the ticket endpoint is unreachable.
+      function nativeSubmit(f) {
+        try {
+          HTMLFormElement.prototype.submit.call(f);
+        } catch (e) {
+          f.submit();
+        }
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (busy) return;
+
+        if (typeof form.checkValidity === "function" && !form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        busy = true;
+        if (btn) btn.disabled = true;
+        say("Sending…", false);
+        status.classList.remove("hidden");
+        status.className = "inq-status text-sm font-bold mt-3 text-gray-500";
+
+        var ticket = null;
+
+        getTicket()
+          .then(function (t) {
+            if (t) {
+              ticket = t;
+              return;
+            }
+            // One retry — the first attempt may have hit a blip.
+            return getTicket().then(function (t2) {
+              ticket = t2;
+            });
+          })
+          .then(function () {
+            if (!ticket) {
+              // The ticket endpoint is unreachable, which means our own API is
+              // down; a fetch submit would be rejected as unticketed. Hand the
+              // form back to the browser so the inquiry still travels, just with
+              // a page navigation instead of the inline card.
+              nativeSubmit(form);
+              return { native: true };
+            }
+            return getToken()
+              .then(function (token) {
+                var fd = new FormData(form);
+                if (token) fd.set("cf-turnstile-response", token);
+                fd.set("form_ts", String(ticket.t));
+                fd.set("form_sig", ticket.sig);
+                return fetch(form.getAttribute("action"), {
+                  method: "POST",
+                  body: fd,
+                  headers: { Accept: "application/json" },
+                });
+              })
+              .then(function (res) {
+                return res
+                  .json()
+                  .catch(function () {
+                    return { ok: false, reason: "bad-response" };
+                  })
+                  .then(function (data) {
+                    if (res.ok && data && data.ok) return { done: true };
+                    return { done: false, reason: (data && data.reason) || "unknown" };
+                  });
+              });
+          })
+          .then(function (result) {
+            if (!result || result.native) return; // the page is navigating away
+            if (result.done) {
+              succeed();
+              return;
+            }
+            busy = false;
+            if (btn) btn.disabled = false;
+            status.className =
+              "inq-status text-sm font-bold mt-3 leading-relaxed text-red-600";
+            if (result.reason === "challenge") {
+              say(
+                "The verification step did not pass. Nothing was lost — your text is still above. Send the same details via",
+                true
+              );
+            } else {
+              say(
+                "We could not send it just now. Nothing was lost — your text is still above. Send the same details via",
+                true
+              );
+            }
+          })
+          .catch(function () {
+            busy = false;
+            if (btn) btn.disabled = false;
+            status.className =
+              "inq-status text-sm font-bold mt-3 leading-relaxed text-red-600";
+            say(
+              "Connection failed. Nothing was lost — your text is still above. Send the same details via",
+              true
+            );
+          });
+      });
+    }
+  })();
+</script>
